@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- i18n/zh_CN/strings.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="appname">TimeSheet</string>
+	<string name="appname">考勤表(TimeSheet)</string>
 	<string name="str_to_work">可以上班吗</string>
 	<string name="str_to_delete">可以删除吗</string>
 	<string name="str_work_only_onece">一天只可以打一次上班卡</string>
@@ -20,30 +19,29 @@
 	<string name="str_finish">结束</string>
 	<string name="str_send_mail">用邮件发送</string>
 	<string name="str_credit">赞扬</string>
-	
 	<string name="str_on_work">上班</string>
 	<string name="str_suspend">中断</string>
 	<string name="str_return">恢复</string>
 	<string name="str_leave">下班</string>
 	<string name="str_rest">休息</string>
-	
-    <string name="str_home">首页</string>
-    <string name="str_list">一览表</string>
-    <string name="str_summary">合计</string>
-    <string name="str_setting">设定</string>
+	<string name="str_home">首页</string>
+	<string name="str_list">一览表</string>
+	<string name="str_summary">合计</string>
+	<string name="str_setting">设定</string>
 	<string name="str_memo">备忘录</string>
-    <string name="str_detail">详细</string>
+	<string name="str_detail">详细</string>
 	<string name="str_rest_fix">固定时间休息</string>
 	<string name="str_set_wage">计时工资设定</string>
 	<string name="str_set_wage_hint">请输入计时工资</string>
 	<string name="str_set_wage_message">设定计时工资默认值</string>
 	<string name="str_suspend_edit">编辑中断时间</string>
+	<string name="str_support">支持
+</string>
 	<string name="str_about">关于这个程序</string>
-	
 	<string name="str_worktime">上班时间</string>
 	<string name="str_total_worktime">上班总时间</string>
 	<string name="str_total_worktime2">上班时间合计</string>
-	<string name="str_mail_subject">TimeSheet %s</string>
+	<string name="str_mail_subject">考勤表(TimeSheet) %s</string>
 	<string name="str_mail_header">合计,%s</string>
 	<string name="str_mail_header2">日期,星期,上班,下班,上班时间,休息时间合计,中断时间合计,加班时间,备忘录</string>
 	<string name="str_now">现在的时间</string>
@@ -66,12 +64,10 @@
 	<string name="str_setting_mail_address">发送对象设定</string>
 	<string name="str_setting_mail_address_hint">请输入邮件地址</string>
 	<string name="str_mail_address">地址</string>
-	
 	<string name="str_month_prev">前月</string>
 	<string name="str_month_next">次月</string>
 	<string name="str_day_prev">前日</string>
 	<string name="str_day_next">次日</string>
-	
 	<string name="str_month_1">1</string>
 	<string name="str_month_2">2</string>
 	<string name="str_month_3">3</string>
