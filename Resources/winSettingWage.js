@@ -10,6 +10,14 @@ var winData = VCC.Utils.copyObject(win.data);
 
 win.toolBar.btnRight.addEventListener('click', function(e) {
   // 保存と前の画面に戻る処理
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].type == 'setWage') {
+      var textField = data[i].child.value;
+      winData.value = getTextFieldValue(textField);
+      Ti.API.info('setWage value:' + winData.value);
+      break;
+    }
+  }
   win.returnData = winData;
   win.close();
 });
@@ -104,14 +112,15 @@ function onEventTextField(e) {
   var textField = e.source;
   Ti.API.info('textField.type:' + textField.type);
   Ti.API.info('textField.value:' + [textField.value, /^([0-9.]*)$/.test(textField.value)]);
+  textField.value = getTextFieldValue(textField);
+}
+
+function getTextFieldValue(textField) {
   var value = parseFloat(textField.value);
   if (isNaN(value)) {
-    textField.value = '';
+    return '';
   } else {
-    textField.value = value;
+    return value;
   }
-  winData.value = textField.value;
-//  if (textField.type == 'mailAddress') {
-//    controller.setMailAddress(textField.value);
-//  }
 }
+

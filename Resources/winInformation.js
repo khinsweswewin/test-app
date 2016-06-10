@@ -10,8 +10,17 @@ var imgLogo = Ti.UI.createImageView({
   height: 50,
   top: logoTop
 });
+var version = Ti.App.version;
+var parts = version.split('.');
+if (parts.length == 2) {
+  if (parts[1].length >= 2) {
+    parts[2] = parts[1].substr(1);
+    parts[1] = parts[1].substr(0, 1);
+  }
+  version = parts.join('.');
+}
 var lblVer = Ti.UI.createLabel({
-  text: 'Version: ' + Ti.App.version,
+  text: 'Version: ' + version,
 //  left: 10,
   top: logoTop + 70,
   height: 25,
@@ -68,6 +77,6 @@ button.addEventListener('click', function(e) {
 win.add(imgLogo);
 win.add(lblVer);
 win.add(button);
-win.add(imgPowered);
+//win.add(imgPowered);
 //win.add(url);
 Ti.API.info('Ti.Platform.displayCaps.platformHeight:' + Ti.Platform.displayCaps.platformHeight);

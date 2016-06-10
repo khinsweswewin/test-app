@@ -453,7 +453,7 @@ VCC.DB.prototype = {
   getWageData: function() {
     var value = this.getProperty(this.PROPERTY_WAGE_VALUE) || '';
     var enabled = +this.getProperty(this.PROPERTY_WAGE_ENABLED) || 0;
-    if (typeof value == 'string' && value.indexOf('0.0') == value.length - 3) {
+    if (typeof value == 'string' && value.indexOf('.0') == value.length - 2) {
       value = '' + (+value);
     }
     return {value: value, enabled: enabled};
