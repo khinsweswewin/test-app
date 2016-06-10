@@ -358,6 +358,11 @@ VCC.DB.prototype = {
     var type = +stateRows.fieldByName('type');
     var startTime = +stateRows.fieldByName('startTime');
     var endTime = +stateRows.fieldByName('endTime');
+    // TODO:disabled check time 2012.3.13
+    // invalid data check
+    //if (endTime > 0 && startTime > endTime) {
+    //  endTime = 0;
+    //}
     var state = {
       id: +stateRows.fieldByName('id'),
       type: type,

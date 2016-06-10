@@ -21,11 +21,12 @@ function info(message) {
 function setGlobal(key, value) {
   var golbal = Ti.App.Global || {};
   golbal[key] = value;
+  info('Ti.App.Global:' + Ti.App.Global);
   Ti.App.Global = golbal;
-};
+}
 function getGlobal(key) {
   return Ti.App.Global ? Ti.App.Global[key] : undefined;
-};
+}
 var VCC;
 if (typeof VCC == 'undefined') {
   VCC = {};
@@ -643,7 +644,7 @@ if (typeof VCC.Utils == 'undefined') {
     var baseTime = VCC.Utils.resetTime(workTimes[0].startTime * 60000).getTime() / 60000;
     var _workTimes = convTime(workTimes);
     var minusTimes = convTime(interruptTimes);
-    var dayLength = Math.round((VCC.Utils.resetTime(workTimes[workTimes.length - 1].endTime) - baseTime) / (24 * 60)) + 1;
+    var dayLength = Math.round((VCC.Utils.resetTime(workTimes[workTimes.length - 1].endTime * 60000).getTime() / 60000 - baseTime) / (24 * 60)) + 1;
     if (restTimes && restTimes.length) {
       var _restTimes = [];
       for (var i = 0; i < dayLength; i++) {
@@ -675,7 +676,6 @@ if (typeof VCC.Utils == 'undefined') {
         }
       }
     }
-    var restEndTime = 0;
     var _minusTimes = [];
     for (var i = 0; i < minusTimes.length; i++) {
       if (i < minusTimes.length - 1) {
@@ -689,14 +689,24 @@ if (typeof VCC.Utils == 'undefined') {
           }
         }
         if (minusTimes[i].endTime > minusTimes[i + 1].startTime) {
-          if (minusTimes[i + 1].endTime < minusTimes[i].endTime) {
-            minusTimes[i + 1].endTime = minusTimes[i].endTime;
-          }
           if (minusTimes[i].isRest) {
-            restEndTime = minusTimes[i].endTime;
-            minusTimes[i + 1].startTime = minusTimes[i].endTime;
+            info('2 minusTimes[i + 1].endTime, minusTimes[i].endTime:' + [minusTimes[i + 1].endTime, minusTimes[i].endTime]);
+            info('2 minusTimes[i + 1].startTime, minusTimes[i].endTime:' + [minusTimes[i + 1].startTime, minusTimes[i].endTime]);
+            if (minusTimes[i + 1].endTime > minusTimes[i].endTime) {
+              minusTimes[i + 1].startTime = minusTimes[i].endTime;
+            } else {
+              minusTimes = [].concat(minusTimes.slice(0, i + 1), minusTimes.slice(i + 2, minusTimes.length));
+            }
           } else {
-            minusTimes[i].endTime = minusTimes[i + 1].startTime;
+            info('3 minusTimes[i + 1].endTime, minusTimes[i].endTime:' + [minusTimes[i + 1].endTime, minusTimes[i].endTime]);
+            info('3 minusTimes[i].endTime, minusTimes[i + 1].startTime:' + [minusTimes[i].endTime, minusTimes[i + 1].startTime]);
+            if (minusTimes[i + 1].endTime >= minusTimes[i].endTime) {
+              minusTimes[i].endTime = minusTimes[i + 1].startTime;
+            } else {
+              var _time = {startTime: minusTimes[i + 1].endTime, endTime: minusTimes[i].endTime, _endTime: minusTimes[i].endTime};
+              minusTimes = [].concat(minusTimes.slice(0, i + 2), [_time], minusTimes.slice(i + 2, minusTimes.length));
+              minusTimes[i].endTime = minusTimes[i + 1].startTime;
+            }
           }
         }
       }
@@ -715,6 +725,7 @@ if (typeof VCC.Utils == 'undefined') {
       totalTime += workTime.endTime - workTime.startTime;
       while (minusTime && workTime.endTime > minusTime.startTime) {
         var endTime = minusTime.endTime, startTime = minusTime.startTime;
+        info('startTime, endTime:' + [startTime, endTime, new Date((startTime + baseTime) * 60000), new Date((endTime + baseTime) * 60000), minusTime.isRest]);
         if (workTime.startTime > startTime) startTime = workTime.startTime;
         if (workTime.endTime < endTime) endTime = workTime.endTime;
         if (endTime > startTime) {
@@ -900,14 +911,24 @@ if (typeof VCC.Utils == 'undefined') {
     }
     if (dataItem.value !== undefined) {
       if (dataItem.valueType == 'textField') {
-        var value = Ti.UI.createTextField({
+        var opt2 = {
           textAlign: 'right',
           left: dataItem.left,
           right: 10,
           value: dataItem.value,
           type: dataItem.type,
           hintText: dataItem.hintText
-        });
+        };
+        if (dataItem.keyboardType) {
+          opt2.keyboardType = dataItem.keyboardType;
+        }
+        if (dataItem.returnKeyType) {
+          opt2.returnKeyType = dataItem.returnKeyType;
+        }
+        if (dataItem.borderStyle) {
+          opt2.borderStyle = dataItem.borderStyle;
+        }
+        var value = Ti.UI.createTextField(opt2);
         value.addEventListener('return', dataItem.callback);
       } else {
         var valueOpt = {

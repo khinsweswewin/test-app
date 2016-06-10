@@ -29,12 +29,13 @@ var ta1 = Ti.UI.createTextArea({
   font: {fontSize: 20},
   color: '#000',
   textAlign: 'left',
-  appearance: Ti.UI.KEYBOARD_APPEARANCE_ALERT,
-  keyboardType: Ti.UI.KEYBOARD_NUMBERS_PUNCTUATION,
-  returnKeyType: Ti.UI.RETURNKEY_DEFAULT,
+  //appearance: Ti.UI.KEYBOARD_APPEARANCE_ALERT,
+  //keyboardType: Ti.UI.KEYBOARD_DEFAULT,
+  //returnKeyType: Ti.UI.RETURNKEY_DEFAULT,
   borderWidth: 2,
   borderColor: '#bbb',
-  borderRadius: 5
+  borderRadius: 5,
+  suppressReturn: false
 });
 win.add(ta1);
 

@@ -137,7 +137,8 @@ DataMonth.prototype = {
       cols.push(timeStr.endTime ? VCC.Utils.formatHourMinute(data.interruptTime, null, true) : '');
       cols.push(timeStr.endTime ? VCC.Utils.formatHourMinute(data.overTime, null, true) : '');
       var memo = data.memo || '';
-      if (memo.indexOf(',') >= 0) {
+      memo = memo.replace(/\n+$/, '');
+      if (memo.indexOf(',') >= 0 || memo.indexOf('\n') >= 0) {
         memo = '"' + memo + '"';
       }
       cols.push(memo);

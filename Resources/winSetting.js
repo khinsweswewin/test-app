@@ -83,7 +83,9 @@ var datas = [
     value: controller.getMailAddress(),
     left: 10,
     selectionStyle: 'NONE',
-    type: 'mailAddress'
+    type: 'mailAddress',
+    keyboardType: Ti.UI.KEYBOARD_EMAIL,
+    returnKeyType: Ti.UI.RETURNKEY_DONE
   },
   {
     header: L('str_setting_others'),

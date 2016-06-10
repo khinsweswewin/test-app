@@ -9,6 +9,7 @@ var isAndroid = Ti.App.VCC.isAndroid;
 var winHeight = win.height || Ti.Platform.displayCaps.platformHeight;
 
 var now;
+var currentStateTime = null;
 // add admob
 VCC.Utils.addAdmob(win);
 
@@ -106,10 +107,11 @@ function setStatus() {
   currentState.time = VCC.Utils.getGlobal('time');
   currentState.come_time = VCC.Utils.getGlobal('come_time');
   var timeType = state == Ti.App.VCC.STATE_COME ? 'come_time' : 'time';
-  var time = currentState[timeType];
+  currentStateTime = currentState[timeType];
+  info('currentStateTime:' + currentStateTime);
   var dateStr = '';
-  if (time > 0) {
-    var date = VCC.Utils.makeDate(time * 60000);
+  if (currentStateTime > 0) {
+    var date = VCC.Utils.makeDate(currentStateTime * 60000);
     dateStr = String.format('(%s)', VCC.Utils.formatDate(null, date.month, date.day, null, date.hour, date.minute));
   }
   var newButtons = [];
@@ -220,6 +222,10 @@ function onButtonClick(e) {
     };
     VCC.Utils.createDialog(title, options, callback, cancelIndex, 1);
   } else {
+    // TODO:disabled check time 2012.3.13
+    //if (new Date() / 60000 < currentStateTime) {
+    //  return;
+    //}
     if (controller.clickAction(e.source.action)) {
       setStatus();
     }

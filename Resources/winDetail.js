@@ -205,7 +205,7 @@ function onTableViewClick(e) {
         var value = e.source.value;
         if (row.data != value) {
           row.data = value;
-          row.child.value.text = value;
+          row.child.value.text = value.replace(/\n/g, ' ');
           controller.setMemo(value);
           win.isChanged = true;
         }
@@ -415,7 +415,9 @@ function setView() {
     VCC.Utils.setTableViewRowEnabled(tableData.suspend[i], !!dataWorks[0]);
   }
   VCC.Utils.setTableViewRowValues(tableData.worktime, {value: workData, data: workTime});
-  VCC.Utils.setTableViewRowValues(tableData.memo, {value: dbDatas.memo, data: dbDatas.memo, dbId: dbDatas.memoId});
+  info([tableData.memo, typeof tableData.memo]);
+  var memo = dbDatas.memo.replace(/\n/g, ' ');
+  VCC.Utils.setTableViewRowValues(tableData.memo, {value: memo, data: dbDatas.memo, dbId: dbDatas.memoId});
 }
 
 // get time from seconds
