@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- i18n/en/strings.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="appname">TimeSheet</string>
 	<string name="str_to_work">Checking in?</string>
 	<string name="str_to_delete">Delete?</string>
 	<string name="str_work_only_onece">You can only check-in once a day</string>
-	<string name="str_change_work_time">Change today's check-in time</string>
+	<string name="str_change_work_time">Change today\'s check-in time</string>
 	<string name="str_leave_time_since_now">Check-out time is later than current time</string>
 	<string name="str_change_leave_time">Change check-out time</string>
 	<string name="str_open_setting">Open settings</string>
@@ -20,26 +19,24 @@
 	<string name="str_finish">Finish</string>
 	<string name="str_send_mail">Send e-mail</string>
 	<string name="str_credit">Credits</string>
-	
 	<string name="str_on_work">Check-in</string>
 	<string name="str_suspend">Pause</string>
 	<string name="str_return">Resume</string>
 	<string name="str_leave">Check-out</string>
 	<string name="str_rest">Break</string>
-	
-    <string name="str_home">Home</string>
-    <string name="str_list">View</string>
-    <string name="str_summary">Total</string>
-    <string name="str_setting">Settings</string>
+	<string name="str_home">Home</string>
+	<string name="str_list">View</string>
+	<string name="str_summary">Total</string>
+	<string name="str_setting">Settings</string>
 	<string name="str_memo">Memo</string>
-    <string name="str_detail">Details</string>
+	<string name="str_detail">Details</string>
 	<string name="str_rest_fix">Set break time</string>
 	<string name="str_set_wage">Set hourly wage</string>
 	<string name="str_set_wage_hint">Insert value</string>
 	<string name="str_set_wage_message">Set hourly wage</string>
 	<string name="str_suspend_edit">Pause to edit</string>
+	<string name="str_support">Support</string>
 	<string name="str_about">About this application</string>
-	
 	<string name="str_worktime">Hours worked</string>
 	<string name="str_total_worktime">Total hours worked</string>
 	<string name="str_total_worktime2">Total hours worked</string>
@@ -66,12 +63,10 @@
 	<string name="str_setting_mail_address">Send to</string>
 	<string name="str_setting_mail_address_hint">Enter e-mail address</string>
 	<string name="str_mail_address">Address</string>
-	
 	<string name="str_month_prev">Prev</string>
 	<string name="str_month_next">Next</string>
 	<string name="str_day_prev">Prev</string>
 	<string name="str_day_next">Next</string>
-	
 	<string name="str_month_1">Jan</string>
 	<string name="str_month_2">Feb</string>
 	<string name="str_month_3">Mar</string>

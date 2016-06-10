@@ -9,7 +9,8 @@ VCC.Utils.addAdmob(win);
 var controller = require("controller/detail");
 controller = controller.create();
 
-win.toolBar.btnRight.addEventListener('click', function(e) {
+var toolBar = win.toolBar;
+toolBar.btnRight.addEventListener('click', function(e) {
   var callback = function() {
     controller.deleteDateData();
     setView();
@@ -177,7 +178,7 @@ function onTableViewClick(e) {
           setWorkTimeStr();
           win.isChanged = true;
           if (row.type == 'startTime') {
-            win.toolBar.btnRight.enabled = true;
+            toolBar.btnRight.enabled = true;
             VCC.Utils.setTableViewRowEnabled(tableData.endTime[row.dataIndex], true);
             VCC.Utils.setTableViewRowEnabled(tableData.suspend[0], true);
           }
@@ -206,7 +207,7 @@ function onTableViewClick(e) {
           win.isChanged = true;
         }
         if (e.source.value != '') {
-          win.toolBar.btnRight.enabled = true;
+          toolBar.btnRight.enabled = true;
         }
       }
     });
@@ -314,7 +315,7 @@ function setView() {
   controller.setDateTime(win.dateTime);
   dbDatas = controller.getDateData();
   Ti.API.info('dbDatas:' + [dbDatas.workStates.length, dbDatas.interruptStates.length, dbDatas.memo]);
-  win.toolBar.btnRight.enabled = !!(dbDatas.workStates.length || dbDatas.interruptStates.length || dbDatas.memo != '');
+  toolBar.btnRight.enabled = !!(dbDatas.workStates.length || dbDatas.interruptStates.length || dbDatas.memo != '');
   dataWorks = dbDatas.workStates;
   dataInterrupts = dbDatas.interruptStates;
   restTimeData = controller.getRestTimeData();
@@ -369,6 +370,7 @@ function setView() {
       tableData.endTime = tableData.endTime.slice(0, dataWorks.length || 1);
     }
   }
+  Ti.API.info('tableData.suspend.length, dataInterruptsLength:' + [tableData.suspend.length, dataInterruptsLength]);
   if (tableData.suspend.length != dataInterruptsLength) {
     isRowCountChange = true;
     var section = tableData.suspend[0].parent;

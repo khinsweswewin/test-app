@@ -74,6 +74,14 @@ var datas = [
   },
   {
     header: L('str_setting_others'),
+    title: L('str_support'),
+    velueAlign: 'right',
+    data: 'http://vccorp.net/intersuite/timesheet/',
+    hasChild: true,
+    action: 'gotoSupportURL',
+    type: ''
+  },
+  {
     title: L('str_about'),
     hasChild: true,
     action: 'information',
@@ -154,6 +162,7 @@ tableView.addEventListener('click', function(e) {
           restTimeData = row.data = returnData;
           row.child.value.text = makeRestTimeStr(row.data);
           win.isChanged = true;
+          VCC.Utils.setGlobal('updateList', true);
         }
       }
     });
@@ -179,6 +188,9 @@ tableView.addEventListener('click', function(e) {
   case 'information':
     var winInfo = VCC.Utils.createWin('winInformation.js');
     VCC.Utils.openWin(winInfo, tab);
+    break;
+  case 'gotoSupportURL':
+    Ti.Platform.openURL(row.data + '?locale=' + Ti.Platform.locale);
     break;
   }
 });

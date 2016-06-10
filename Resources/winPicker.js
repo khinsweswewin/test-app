@@ -8,7 +8,8 @@ var winHeight = win.height || Titanium.Platform.displayCaps.platformHeight;
 var title = win.title;
 var offsetData = 0;
 
-win.toolBar.btnRight.addEventListener('click', function(e) {
+var toolBar = win.toolBar;
+toolBar.btnRight.addEventListener('click', function(e) {
   // 保存と前の画面に戻る処理
   win.value = getPickerValue();
   var returnData = win.value / 60000 - offsetData;

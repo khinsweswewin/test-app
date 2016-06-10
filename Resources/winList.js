@@ -24,7 +24,8 @@ var totalLeft = Ti.Platform.displayCaps.platformWidth / 2 + 70;
 VCC.Utils.addAdmob(win);
 
 // setting toolbar
-win.toolBar.btnRight.addEventListener('click', function(e) {
+var toolBar = win.toolBar;
+toolBar.btnRight.addEventListener('click', function(e) {
   controller.exportProcess();
 });
 // header
@@ -41,8 +42,11 @@ var btnNextEnabled = false;
 
 //win.addEventListener('swipe', onSwipe);
 win.focusCallback = function(isChangeWindow, isChangeTab) {
-  if (isChangeTab) {
+  var updateList = VCC.Utils.getGlobal('updateList');
+  if (isChangeTab || updateList) {
     setView();
+  } else if (isChangeWindow) {
+    win.winDetail = null;
   }
 }
 
@@ -123,6 +127,7 @@ function setTitle() {
 }
 
 function setView() {
+  Ti.API.info('setView(), winList');
   if (!tableData) {
     initView();
   }
@@ -187,6 +192,7 @@ function setView() {
     workTotalTime += workTime;
   }
   tableData.total.text = createWorkTotalStr(workTotalTime);
+  VCC.Utils.setGlobal('updateList', false);
   //tableView.data = tableView.data;
 }
 function initView(offsetLeft) {
@@ -204,6 +210,8 @@ function initView(offsetLeft) {
     selectedBackgroundColor: '#fff',
     className: 'total'
   });
+  Ti.API.info('totalRow:' + totalRow);
+  Ti.API.info('totalRow.add:' + totalRow.add);
   totalRow.add(lblTotal);
   tableData.total = lblTotal;
   rowData.push(totalRow);

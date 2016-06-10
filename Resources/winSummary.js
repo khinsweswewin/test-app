@@ -19,8 +19,9 @@ if (!pageYear) {
 // add admob
 VCC.Utils.addAdmob(win);
 
+var toolBar = win.toolBar;
 // setting toolbar
-win.toolBar.btnRight.addEventListener('click', function(e) {
+toolBar.btnRight.addEventListener('click', function(e) {
   controller.exportProcess();
 });
 
@@ -125,10 +126,10 @@ function setView(offsetLeft) {
   // create table view data object
   var datas = [
     {name: 'daysCount', title: L('str_work_days'), data: summary.workDay + L('str_days')},
-    {name: 'totalWork', header: '', title: L('str_worktime') + '（' + L('str_total') + '）', data: VCC.Utils.formatHourMinute(workTimeTotal)},
-    {name: 'averageWork', title: L('str_worktime') + '（' + L('str_average') + '）', data: VCC.Utils.formatHourMinute(summary.workDay ? (workTimeTotal / summary.workDay) : 0)},
-    {name: 'totalOver', header: '', title: L('str_work_overtime') + '（' + L('str_total') + '）', data: VCC.Utils.formatHourMinute(overTimeTotal)},
-    {name: 'averageOver', title: L('str_work_overtime') + '（' + L('str_average') + '）', data: VCC.Utils.formatHourMinute(summary.workDay ? (overTimeTotal / summary.workDay) : 0)},
+    {name: 'totalWork', header: '', title: VCC.Utils.removeReturnCodeInIpad(L('str_worktime', null, true) + '\n（' + L('str_total', null, true) + '）'), data: VCC.Utils.formatHourMinute(workTimeTotal)},
+    {name: 'averageWork', title: VCC.Utils.removeReturnCodeInIpad(L('str_worktime', null, true) + '\n（' + L('str_average', null, true) + '）'), data: VCC.Utils.formatHourMinute(summary.workDay ? (workTimeTotal / summary.workDay) : 0)},
+    {name: 'totalOver', header: '', title: VCC.Utils.removeReturnCodeInIpad(L('str_work_overtime', null, true) + '\n（' + L('str_total', null, true) + '）'), data: VCC.Utils.formatHourMinute(overTimeTotal)},
+    {name: 'averageOver', title: VCC.Utils.removeReturnCodeInIpad(L('str_work_overtime', null, true) + '\n（' + L('str_average', null, true) + '）'), data: VCC.Utils.formatHourMinute(summary.workDay ? (overTimeTotal / summary.workDay) : 0)},
     {name: 'totalSalary', header: '', title: L('str_salary') + '（' + L('str_total') + '）', data: salaryTotal},
   ];
   if (!tableData) {

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- i18n/ja/strings.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="appname">タイムシート</string>
 	<string name="str_to_work">出社でよろしいですか？</string>
@@ -20,26 +19,24 @@
 	<string name="str_finish">完了</string>
 	<string name="str_send_mail">メールで送信</string>
 	<string name="str_credit">クレジット</string>
-	
 	<string name="str_on_work">出社</string>
 	<string name="str_suspend">中断</string>
 	<string name="str_return">復帰</string>
 	<string name="str_leave">退社</string>
 	<string name="str_rest">休憩</string>
-	
-    <string name="str_home">ホーム</string>
-    <string name="str_list">一覧</string>
-    <string name="str_summary">集計</string>
-    <string name="str_setting">設定</string>
+	<string name="str_home">ホーム</string>
+	<string name="str_list">一覧</string>
+	<string name="str_summary">集計</string>
+	<string name="str_setting">設定</string>
 	<string name="str_memo">メモ</string>
-    <string name="str_detail">詳細</string>
+	<string name="str_detail">詳細</string>
 	<string name="str_rest_fix">休憩固定</string>
 	<string name="str_set_wage">時給設定</string>
 	<string name="str_set_wage_hint">時給を入力してください</string>
 	<string name="str_set_wage_message">時給を設定できます</string>
 	<string name="str_suspend_edit">中断編集</string>
+	<string name="str_support">サポート</string>
 	<string name="str_about">このアプリについて</string>
-	
 	<string name="str_worktime">就業時間</string>
 	<string name="str_total_worktime">就業総時間</string>
 	<string name="str_total_worktime2">就業時間合計</string>
@@ -66,12 +63,10 @@
 	<string name="str_setting_mail_address">メール送信先設定</string>
 	<string name="str_setting_mail_address_hint">メールアドレスを入力してください</string>
 	<string name="str_mail_address">アドレス</string>
-	
 	<string name="str_month_prev">前月</string>
 	<string name="str_month_next">翌月</string>
 	<string name="str_day_prev">前日</string>
 	<string name="str_day_next">翌日</string>
-	
 	<string name="str_month_1">1</string>
 	<string name="str_month_2">2</string>
 	<string name="str_month_3">3</string>

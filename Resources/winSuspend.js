@@ -12,7 +12,8 @@ if (winData.endTime < win.dateTime) {
   winData.endTime = 0;
 }
 
-win.toolBar.btnRight.addEventListener('click', function(e) {
+var toolBar = win.toolBar;
+toolBar.btnRight.addEventListener('click', function(e) {
   // 保存と前の画面に戻る処理
   var callback = function() {
     win.returnAction = 'delete';
@@ -75,7 +76,7 @@ if (!isAndroid) {
 
 var tableView = Ti.UI.createTableView(tableViewOptions);
 win.add(tableView);
-win.toolBar.btnRight.enabled = !!(winData.startTime && winData.endTime);
+toolBar.btnRight.enabled = !!(winData.startTime && winData.endTime);
 
 var button = Ti.UI.createButton({
   titleid: 'str_finish',
@@ -131,7 +132,7 @@ tableView.addEventListener('click', function(e) {
           row.data = value;
           row.child.value.text = VCC.Utils.getTimeStr(row.data, win.dateTime);
           winData[row.type] = value;
-          win.toolBar.btnRight.enabled = true;
+          toolBar.btnRight.enabled = true;
           if (row.type == 'startTime') {
             VCC.Utils.setTableViewRowEnabled(tableDatas[1], true);
           }

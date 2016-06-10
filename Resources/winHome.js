@@ -10,7 +10,8 @@ var now;
 VCC.Utils.addAdmob(win);
 
 // setting toolbar
-win.toolBar.btnRight.addEventListener('click', function(e) {
+var toolBar = win.toolBar;
+toolBar.btnRight.addEventListener('click', function(e) {
   var dateTime = VCC.Utils.resetTime(VCC.Utils.getGlobal('come_time') * 60000) / 60000;
   var winMemo = VCC.Utils.createWin('winMemo.js', null, {  
     dateTime: dateTime
@@ -113,19 +114,19 @@ function setStatus() {
   case Ti.App.VCC.STATE_COME:
     newButtons = ['suspend', 'leave'];
     statusLabel.text = VCC.Utils.stateToText(state) + dateStr;
-    win.toolBar.btnRight.enabled = true;
+    toolBar.btnRight.enabled = true;
     break;
   case Ti.App.VCC.STATE_INTERRUPT:
     newButtons = ['return'];
     statusLabel.text = VCC.Utils.stateToText(state) + dateStr;
-    win.toolBar.btnRight.enabled = true;
+    toolBar.btnRight.enabled = true;
     break;
   case Ti.App.VCC.STATE_LEFT:
 //    break;
   default:
     newButtons = ['on_work'];
     statusLabel.text = VCC.Utils.stateToText(state) + dateStr;
-    win.toolBar.btnRight.enabled = false;
+    toolBar.btnRight.enabled = false;
     break;
   }
   var isChangeButton = newButtons.length != winButtons.length;
@@ -147,7 +148,7 @@ function setStatus() {
     var buttonPitch = winWidth > 320 ? 30 : 15;
     for (var i = 0; i < newButtons.length; i++) {
       var button = Ti.UI.createButton({
-        title: L('str_' + newButtons[i]),
+        title: L('str_' + newButtons[i], null, true),
         color: '#000',
         font: {fontSize:20},
         backgroundImage: 'images/button_large.png',
@@ -161,6 +162,7 @@ function setStatus() {
       button.left = winWidth / 2 - ((buttonWidth + buttonPitch) * newButtons.length - buttonPitch) / 2 + (buttonWidth + buttonPitch) * i;
       win.add(button);
       winButtons.push(button);
+      Ti.API.info('button.title:' + button.title);
     }
     setDateTime();
   }
@@ -192,7 +194,7 @@ function onButtonClick(e) {
       return;
     }
     for (var i = 0; i < dialgButtons.length; i++) {
-      options.push(L('str_' + dialgButtons[i]));
+      options.push(L('str_' + dialgButtons[i], null, true));
     }
     var callback = function(e) {
       var updateState = false;

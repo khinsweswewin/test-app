@@ -8,7 +8,8 @@ var isAndroid = Ti.App.VCC.isAndroid;
 
 var winData = VCC.Utils.copyObject(win.data);
 
-win.toolBar.btnRight.addEventListener('click', function(e) {
+var toolBar = win.toolBar;
+toolBar.btnRight.addEventListener('click', function(e) {
   // 保存と前の画面に戻る処理
   for (var i = 0; i < data.length; i++) {
     if (data[i].type == 'setWage') {

@@ -14,7 +14,8 @@ if (win.dateTime) {
   value = win.data;
 }
 
-win.toolBar.btnRight.addEventListener('click', function(e) {
+var toolBar = win.toolBar;
+toolBar.btnRight.addEventListener('click', function(e) {
   // 保存と前の画面に戻る処理
   if (controller) controller.setMemo(ta1.value);
   win.value = ta1.value;
