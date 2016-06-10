@@ -82,11 +82,15 @@ DataMonth.prototype = {
   createExportBody: function() {
     var datas = this.getMonthlyData();
     var summary = this.getMonthlySummary(datas);
+    var salaryTotal = typeof summary.salaryTotal == 'undefined' ? '' : summary.salaryTotal;
     var text = String.format(L('str_mail_header'), VCC.Utils.formatDate(this.year, this.month).replace(/,/, ' ')) + '\n' +
       L('str_work_days') + ',' + summary.workDay + '\n' +
-      L('str_worktime') + L('str_total') + ',' + VCC.Utils.formatHourMinute(summary.totalTime, null, true) + '\n' +
-      L('str_work_overtime') + L('str_total') + ',' + VCC.Utils.formatHourMinute(summary.overTime, null, true) + '\n' +
-      '\n' +
+      L('str_total_worktime2') + ',' + VCC.Utils.formatHourMinute(summary.totalTime, null, true) + '\n' +
+      L('str_total_work_overtime') + ',' + VCC.Utils.formatHourMinute(summary.overTime, null, true) + '\n';
+    if (salaryTotal !== '') {
+      text += L('str_total_salary') + ',' + salaryTotal + '\n';
+    }
+    text += '\n' +
       L('str_detail') + '\n' +
       L('str_mail_header2') + '\n';
     var startDayOfWeek = this.getStartDayOfWeek();
@@ -155,10 +159,19 @@ DataMonth.prototype = {
         }
       }
     }
+    var wageData = this.getWageData();
+    if (wageData.enabled == 1) {
+      var salaryTotal = summary.totalTime > 0 ? ((summary.totalTime / 60) * (wageData.value || 0)) : 0;
+      summary.salaryTotal = Math.round(salaryTotal * 100) / 100;
+    }
     return summary;
   },
   getRestTimeData: function() {
     return this.restTimeData;
+  },
+  getWageData: function() {
+    var data = this.db.getWageData();
+    return VCC.Utils.extend({value: null, enabled: 0}, data);
   },
   dummy: function() {
   }

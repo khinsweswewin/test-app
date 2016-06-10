@@ -10,7 +10,7 @@
 	<string name="str_change_leave_time">Change check-out time</string>
 	<string name="str_open_setting">Open settings</string>
 	<string name="str_notice_mail_address">Set e-mail address to enable this function</string>
-	<string name="str_notice_going_to_work">Function unavaialbe due to set working hours (%s-%s)</string>
+	<string name="str_notice_going_to_work">Function unavailable due to set working hours (%s-%s)</string>
 	<string name="str_ok">OK</string>
 	<string name="str_cancel">Cancel</string>
 	<string name="str_change">Edit</string>
@@ -34,11 +34,15 @@
 	<string name="str_memo">Memo</string>
     <string name="str_detail">Details</string>
 	<string name="str_rest_fix">Set break time</string>
+	<string name="str_set_wage">Set hourly wage</string>
+	<string name="str_set_wage_hint">Insert value</string>
+	<string name="str_set_wage_message">Set hourly wage</string>
 	<string name="str_suspend_edit">Pause to edit</string>
 	<string name="str_about">About this application</string>
 	
 	<string name="str_worktime">Hours worked</string>
 	<string name="str_total_worktime">Total hours worked</string>
+	<string name="str_total_worktime2">Total hours worked</string>
 	<string name="str_mail_subject">TimeSheet %s</string>
 	<string name="str_mail_header">Total,%s</string>
 	<string name="str_mail_header2">Date,Day of week,Check-in,Check-out,Working hours,Total break time,Total pause time,Overtime,Memo</string>
@@ -48,6 +52,9 @@
 	<string name="str_suspend_start">Start pause</string>
 	<string name="str_work_days">Days worked</string>
 	<string name="str_work_overtime">Overtime</string>
+	<string name="str_total_work_overtime">Total overtime</string>
+	<string name="str_salary">Salary</string>
+	<string name="str_total_salary">Total salary</string>
 	<string name="str_total">Total</string>
 	<string name="str_average">Average</string>
 	<string name="str_days"> days</string>

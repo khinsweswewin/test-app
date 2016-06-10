@@ -4,7 +4,7 @@
 	<string name="appname">タイムシート</string>
 	<string name="str_to_work">出社でよろしいですか？</string>
 	<string name="str_to_delete">削除してよろしいですか？</string>
-	<string name="str_work_only_onece">出社は1日1回しかできません。</string>
+	<string name="str_work_only_onece">出社は1日1回しかできません</string>
 	<string name="str_change_work_time">本日の出社時間を変更する</string>
 	<string name="str_leave_time_since_now">退社時刻が現在時刻より後に設定されています</string>
 	<string name="str_change_leave_time">退社時間を変更する</string>
@@ -34,11 +34,15 @@
 	<string name="str_memo">メモ</string>
     <string name="str_detail">詳細</string>
 	<string name="str_rest_fix">休憩固定</string>
+	<string name="str_set_wage">時給設定</string>
+	<string name="str_set_wage_hint">時給を入力してください</string>
+	<string name="str_set_wage_message">時給を設定できます</string>
 	<string name="str_suspend_edit">中断編集</string>
 	<string name="str_about">このアプリについて</string>
 	
 	<string name="str_worktime">就業時間</string>
 	<string name="str_total_worktime">就業総時間</string>
+	<string name="str_total_worktime2">就業時間合計</string>
 	<string name="str_mail_subject">タイムシート %s</string>
 	<string name="str_mail_header">集計,%s</string>
 	<string name="str_mail_header2">日付,曜日,出社,退社,就業時間,休憩時間合計,中断時間合計,残業時間,メモ</string>
@@ -48,6 +52,9 @@
 	<string name="str_suspend_start">中断開始</string>
 	<string name="str_work_days">就業日数</string>
 	<string name="str_work_overtime">残業時間</string>
+	<string name="str_total_work_overtime">残業時間合計</string>
+	<string name="str_salary">給与</string>
+	<string name="str_total_salary">給与合計</string>
 	<string name="str_total">合計</string>
 	<string name="str_average">平均</string>
 	<string name="str_days">日</string>

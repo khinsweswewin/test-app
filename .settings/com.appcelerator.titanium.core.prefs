@@ -1,4 +1,4 @@
-#Fri May 20 17:17:22 JST 2011
+#Fri Jul 22 19:20:50 JST 2011
 eclipse.preferences.version=1
 provisioning_profiles/development/2768DBE7-062A-41C3-A049-87C1CB1E345F/appid=net.vccop.test
 provisioning_profiles/development/2768DBE7-062A-41C3-A049-87C1CB1E345F/filepath=/Users/vccair02/Desktop/test.mobileprovision
@@ -8,7 +8,15 @@ provisioning_profiles/development/379B34C9-20AC-42A5-B64D-65F98BAF6277/appid=net
 provisioning_profiles/development/379B34C9-20AC-42A5-B64D-65F98BAF6277/filepath=/Users/vccorp/Desktop/timecard4iphone.mobileprovision
 provisioning_profiles/development/379B34C9-20AC-42A5-B64D-65F98BAF6277/name=timecard4iphone
 provisioning_profiles/development/379B34C9-20AC-42A5-B64D-65F98BAF6277/uuid=379B34C9-20AC-42A5-B64D-65F98BAF6277
+provisioning_profiles/development/AE1FB46A-1612-4776-ACCD-79A05D14B433/appid=net.vccorp.timesheet4sp
+provisioning_profiles/development/AE1FB46A-1612-4776-ACCD-79A05D14B433/filepath=/docs/Titanium Studio Workspace/timesheet4sp/Provisioning/timesheet4sp.mobileprovision
+provisioning_profiles/development/AE1FB46A-1612-4776-ACCD-79A05D14B433/name=timesheet4sp
+provisioning_profiles/development/AE1FB46A-1612-4776-ACCD-79A05D14B433/uuid=AE1FB46A-1612-4776-ACCD-79A05D14B433
 provisioning_profiles/development/ED5D848C-8776-4406-B9E6-C2120A19DC75/appid=net.vccorp.titaniumtest
 provisioning_profiles/development/ED5D848C-8776-4406-B9E6-C2120A19DC75/filepath=/Users/vccair02/Desktop/titaniumtest.mobileprovision
 provisioning_profiles/development/ED5D848C-8776-4406-B9E6-C2120A19DC75/name=titaniumtest
 provisioning_profiles/development/ED5D848C-8776-4406-B9E6-C2120A19DC75/uuid=ED5D848C-8776-4406-B9E6-C2120A19DC75
+provisioning_profiles/distribution/9686FC89-CE91-4F36-95F9-3039506E4AF0/appid=net.vccorp.timesheet4sp
+provisioning_profiles/distribution/9686FC89-CE91-4F36-95F9-3039506E4AF0/filepath=/docs/Titanium Studio Workspace/timesheet4sp/Provisioning/dist2timesheet4sp.mobileprovision
+provisioning_profiles/distribution/9686FC89-CE91-4F36-95F9-3039506E4AF0/name=dist2timesheet4sp
+provisioning_profiles/distribution/9686FC89-CE91-4F36-95F9-3039506E4AF0/uuid=9686FC89-CE91-4F36-95F9-3039506E4AF0

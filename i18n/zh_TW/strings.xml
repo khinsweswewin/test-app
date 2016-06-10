@@ -34,11 +34,15 @@
 	<string name="str_memo">備忘錄</string>
     <string name="str_detail">詳細</string>
 	<string name="str_rest_fix">固定時間休息</string>
+	<string name="str_set_wage">計時工資設定</string>
+	<string name="str_set_wage_hint">請輸入計時工資</string>
+	<string name="str_set_wage_message">設定計時工資默認值</string>
 	<string name="str_suspend_edit">編輯中斷時間</string>
 	<string name="str_about">關於這個程序</string>
 	
 	<string name="str_worktime">上班時間</string>
 	<string name="str_total_worktime">上班總時間</string>
+	<string name="str_total_worktime2">上班時間合計</string>
 	<string name="str_mail_subject">TimeSheet %s</string>
 	<string name="str_mail_header">合計,%s</string>
 	<string name="str_mail_header2">日期,星期,上班,下班,上班時間,休息時間合計,中斷時間合計,加班時間,備忘錄</string>
@@ -48,6 +52,9 @@
 	<string name="str_suspend_start">中斷開始</string>
 	<string name="str_work_days">上班天數</string>
 	<string name="str_work_overtime">加班時間</string>
+	<string name="str_total_work_overtime">加班時間合計</string>
+	<string name="str_salary">工資</string>
+	<string name="str_total_salary">工資合計</string>
 	<string name="str_total">合計</string>
 	<string name="str_average">平均</string>
 	<string name="str_days">天</string>

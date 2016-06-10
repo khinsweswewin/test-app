@@ -19,6 +19,7 @@ controller = controller.create();
 
 var regularTimeData = controller.getRegularTimeData();
 var restTimeData = controller.getRestTimeData();
+var wageData = controller.getWageData();
 var enabledStartTime = regularTimeData.startTime == +regularTimeData.startTime;
 // create table view data object
 var datas = [
@@ -49,6 +50,15 @@ var datas = [
     data: restTimeData,
     hasChild: true,
     action: 'settingBreak',
+    type: ''
+  },
+  {
+    title: L('str_set_wage'),
+    value: makeWageStr(wageData),
+    velueAlign: 'right',
+    data: wageData,
+    hasChild: true,
+    action: 'settingWage',
     type: ''
   },
   {
@@ -97,11 +107,11 @@ tableView.addEventListener('click', function(e) {
   var row = e.row;
   var rowdata = e.rowData;
   var tab = Ti.UI.currentTab;
+  var data = VCC.Utils.copyObject(row.data);
 
   switch (row.action) {
   case 'picker':
     var limitTime = VCC.Utils.createMinMaxTime(regularTimeData, row.type);
-    var data = row.data;
     if (data === undefined) {
       data = defaultRegularTime[row.type];
     }
@@ -128,7 +138,6 @@ tableView.addEventListener('click', function(e) {
     VCC.Utils.openWin(winPicker, tab);
     break;
   case 'settingBreak':
-    var data = VCC.Utils.copyObject(row.data);
     if (data.startTime == undefined && data.endTime == undefined) {
       for (var n in defaultRestTime) {
         data[n] = defaultRestTime[n];
@@ -150,6 +159,23 @@ tableView.addEventListener('click', function(e) {
     });
     VCC.Utils.openWin(winSettingBreak, tab);
     break;
+  case 'settingWage':
+    var winSettingWage = VCC.Utils.createWin('winSettingWage.js', null, {
+      data: data
+    });
+    winSettingWage.addEventListener('close', function(e) {
+      if (e.source.returnData) {
+        var returnData = e.source.returnData;
+        if (!VCC.Utils.compareObject(row.data, returnData)) {
+          controller.setWageData(returnData);
+          wageData = row.data = returnData;
+          row.child.value.text = makeWageStr(row.data);
+          win.isChanged = true;
+        }
+      }
+    });
+    VCC.Utils.openWin(winSettingWage, tab);
+    break;
   case 'information':
     var winInfo = VCC.Utils.createWin('winInformation.js');
     VCC.Utils.openWin(winInfo, tab);
@@ -160,6 +186,15 @@ tableView.addEventListener('click', function(e) {
 function makeRestTimeStr(restTimeData) {
   if (restTimeData.enabled) {
     return VCC.Utils.createTimeRangeStr(restTimeData);
+  } else {
+    return L('str_off');
+  }
+}
+
+function makeWageStr(wageData) {
+  Ti.API.info('wageData.enabled:' + [typeof wageData.enabled, wageData.enabled]);
+  if (wageData.enabled) {
+    return wageData.value || 0;
   } else {
     return L('str_off');
   }

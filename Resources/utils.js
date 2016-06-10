@@ -16,6 +16,15 @@ VCC.Utils.addNoCacheParam = function (url) {
   return url + (url.indexOf('?') == -1 ? '?' : '&') + 't=' + new Date().getTime();
 };
 
+VCC.Utils.extend = function (obj1, obj2) {
+  if (!obj1) obj1 = {};
+  if (!obj2) obj2 = {};
+  for (var n in obj2) {
+    obj1[n] = obj2[n];
+  }
+  return obj1;
+};
+
 VCC.Utils.copyObject = function (obj) {
   if (typeof obj != 'object' || !Ti.App.VCC.isAndroid) return obj;
   var newObj = {};
@@ -414,6 +423,11 @@ VCC.Utils.createWin = function (url, parent, options) {
     break;
   case 'winSettingBreak.js':
     title = L('str_rest_fix');
+    backButtonTitle = L('str_cancel');
+    toolbar = VCC.Utils.createToolbar(title, null, {titleid: 'str_finish'}, false);
+    break;
+  case 'winSettingWage.js':
+    title = L('str_set_wage');
     backButtonTitle = L('str_cancel');
     toolbar = VCC.Utils.createToolbar(title, null, {titleid: 'str_finish'}, false);
     break;

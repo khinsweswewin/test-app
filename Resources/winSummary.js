@@ -121,6 +121,7 @@ function setView(offsetLeft) {
   var summary = controller.getMonthlySummary();
   var workTimeTotal = summary.totalTime;
   var overTimeTotal = summary.overTime;
+  var salaryTotal = typeof summary.salaryTotal == 'undefined' ? L('str_set_wage_message') : summary.salaryTotal;
   // create table view data object
   var datas = [
     {name: 'daysCount', title: L('str_work_days'), data: summary.workDay + L('str_days')},
@@ -128,6 +129,7 @@ function setView(offsetLeft) {
     {name: 'averageWork', title: L('str_worktime') + '（' + L('str_average') + '）', data: VCC.Utils.formatHourMinute(summary.workDay ? (workTimeTotal / summary.workDay) : 0)},
     {name: 'totalOver', header: '', title: L('str_work_overtime') + '（' + L('str_total') + '）', data: VCC.Utils.formatHourMinute(overTimeTotal)},
     {name: 'averageOver', title: L('str_work_overtime') + '（' + L('str_average') + '）', data: VCC.Utils.formatHourMinute(summary.workDay ? (overTimeTotal / summary.workDay) : 0)},
+    {name: 'totalSalary', header: '', title: L('str_salary') + '（' + L('str_total') + '）', data: salaryTotal},
   ];
   if (!tableData) {
     tableData = {};

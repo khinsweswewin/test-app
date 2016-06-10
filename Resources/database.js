@@ -26,6 +26,8 @@ VCC.DB.prototype = {
   TIMESETTING_RECORD_TYPE_WORK_TIME: 1,
   TIMESETTING_RECORD_TYPE_REST_TIME: 2,
   TIMESETTING_RECORD_TYPE_MIDNIGHT_TIME: 3,
+  PROPERTY_WAGE_VALUE: 'wageValue',
+  PROPERTY_WAGE_ENABLED: 'wageEnabled',
   initialize: function(options) {
     this.options = options;
     this.setUserId(1);
@@ -437,6 +439,24 @@ VCC.DB.prototype = {
   },
   getRestTimeData: function() {
     return this.getTimesettingTableData(this.TIMESETTING_RECORD_TYPE_REST_TIME, false);
+  },
+  setWageData: function(data) {
+    data = data || {};
+    if (typeof data.value != 'undefined') {
+      this.setProperty(this.PROPERTY_WAGE_VALUE, data.value);
+    }
+    if (typeof data.enabled != 'undefined') {
+      this.setProperty(this.PROPERTY_WAGE_ENABLED, data.enabled);
+    }
+    return ;
+  },
+  getWageData: function() {
+    var value = this.getProperty(this.PROPERTY_WAGE_VALUE) || '';
+    var enabled = +this.getProperty(this.PROPERTY_WAGE_ENABLED) || 0;
+    if (typeof value == 'string' && value.indexOf('0.0') == value.length - 3) {
+      value = '' + (+value);
+    }
+    return {value: value, enabled: enabled};
   },
   convertData: function() {
     Ti.API.info('convertData');

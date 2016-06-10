@@ -35,6 +35,13 @@ Setting.prototype = {
   setRestTimeData: function(data) {
     this.restTimeId = this.db.setRestTimeData(this.restTimeId, data);
   },
+  getWageData: function() {
+    var data = this.db.getWageData();
+    return VCC.Utils.extend({value: null, enabled: 0}, data);
+  },
+  setWageData: function(data) {
+    this.db.setWageData(data);
+  },
   getMailAddress: function() {
     this.email = this.db.getProperty('mailAddress');
     return this.email;
