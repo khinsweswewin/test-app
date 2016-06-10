@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- i18n/en/strings.xml -->
+<resources>
+	<string name="appname">TimeSheet</string>
+	<string name="str_to_work">Checking in?</string>
+	<string name="str_to_delete">Delete?</string>
+	<string name="str_work_only_onece">You can only check-in once a day</string>
+	<string name="str_change_work_time">Change today's check-in time</string>
+	<string name="str_leave_time_since_now">Check-out time is later than current time</string>
+	<string name="str_change_leave_time">Change check-out time</string>
+	<string name="str_open_setting">Open settings</string>
+	<string name="str_notice_mail_address">Set e-mail address to enable this function</string>
+	<string name="str_notice_going_to_work">Function unavaialbe due to set working hours (%s-%s)</string>
+	<string name="str_ok">OK</string>
+	<string name="str_cancel">Cancel</string>
+	<string name="str_change">Edit</string>
+	<string name="str_back">Back</string>
+	<string name="str_save">Save</string>
+	<string name="str_delete">Delete</string>
+	<string name="str_finish">Finish</string>
+	<string name="str_send_mail">Send e-mail</string>
+	<string name="str_credit">Credits</string>
+	
+	<string name="str_on_work">Check-in</string>
+	<string name="str_suspend">Pause</string>
+	<string name="str_return">Resume</string>
+	<string name="str_leave">Check-out</string>
+	<string name="str_rest">Break</string>
+	
+    <string name="str_home">Home</string>
+    <string name="str_list">View</string>
+    <string name="str_summary">Total</string>
+    <string name="str_setting">Settings</string>
+	<string name="str_memo">Memo</string>
+    <string name="str_detail">Details</string>
+	<string name="str_rest_fix">Set break time</string>
+	<string name="str_suspend_edit">Pause to edit</string>
+	<string name="str_about">About this application</string>
+	
+	<string name="str_worktime">Hours worked</string>
+	<string name="str_total_worktime">Total hours worked</string>
+	<string name="str_mail_subject">TimeSheet %s</string>
+	<string name="str_mail_header">Total,%s</string>
+	<string name="str_mail_header2">Date,Day of week,Check-in,Check-out,Working hours,Total break time,Total pause time,Overtime,Memo</string>
+	<string name="str_now">Current time</string>
+	<string name="str_rest_start">Start break</string>
+	<string name="str_rest_end">End break</string>
+	<string name="str_suspend_start">Start pause</string>
+	<string name="str_work_days">Days worked</string>
+	<string name="str_work_overtime">Overtime</string>
+	<string name="str_total">Total</string>
+	<string name="str_average">Average</string>
+	<string name="str_days"> days</string>
+	<string name="str_setting_general">General settings</string>
+	<string name="str_setting_others">Others</string>
+	<string name="str_regular_start">Starting Time</string>
+	<string name="str_regular_end">Finishing Time</string>
+	<string name="str_off">Off</string>
+	<string name="str_setting_mail_address">Send to</string>
+	<string name="str_setting_mail_address_hint">Enter e-mail address</string>
+	<string name="str_mail_address">Address</string>
+	
+	<string name="str_month_prev">Prev</string>
+	<string name="str_month_next">Next</string>
+	<string name="str_day_prev">Prev</string>
+	<string name="str_day_next">Next</string>
+	
+	<string name="str_month_1">Jan</string>
+	<string name="str_month_2">Feb</string>
+	<string name="str_month_3">Mar</string>
+	<string name="str_month_4">Apr</string>
+	<string name="str_month_5">May</string>
+	<string name="str_month_6">Jun</string>
+	<string name="str_month_7">Jul</string>
+	<string name="str_month_8">Aug</string>
+	<string name="str_month_9">Sep</string>
+	<string name="str_month_10">Oct</string>
+	<string name="str_month_11">Nov</string>
+	<string name="str_month_12">Dec</string>
+	<string name="str_sunday">Sun</string>
+	<string name="str_monday">Mon</string>
+	<string name="str_tuesday">Tue</string>
+	<string name="str_wednesday">Wed</string>
+	<string name="str_thursday">Thu</string>
+	<string name="str_friday">Fri</string>
+	<string name="str_saturday">Sat</string>
+</resources>

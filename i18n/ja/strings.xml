@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- i18n/ja/strings.xml -->
+<resources>
+	<string name="appname">タイムシート</string>
+	<string name="str_to_work">出社でよろしいですか？</string>
+	<string name="str_to_delete">削除してよろしいですか？</string>
+	<string name="str_work_only_onece">出社は1日1回しかできません。</string>
+	<string name="str_change_work_time">本日の出社時間を変更する</string>
+	<string name="str_leave_time_since_now">退社時刻が現在時刻より後に設定されています</string>
+	<string name="str_change_leave_time">退社時間を変更する</string>
+	<string name="str_open_setting">設定画面を開く</string>
+	<string name="str_notice_mail_address">この機能を使用するには\nメールアドレスの設定が必要です</string>
+	<string name="str_notice_going_to_work">出勤時間中(出社 %s、退社 %s)のため入力できません</string>
+	<string name="str_ok">OK</string>
+	<string name="str_cancel">キャンセル</string>
+	<string name="str_change">変更する</string>
+	<string name="str_back">戻る</string>
+	<string name="str_save">保存</string>
+	<string name="str_delete">削除</string>
+	<string name="str_finish">完了</string>
+	<string name="str_send_mail">メールで送信</string>
+	<string name="str_credit">クレジット</string>
+	
+	<string name="str_on_work">出社</string>
+	<string name="str_suspend">中断</string>
+	<string name="str_return">復帰</string>
+	<string name="str_leave">退社</string>
+	<string name="str_rest">休憩</string>
+	
+    <string name="str_home">ホーム</string>
+    <string name="str_list">一覧</string>
+    <string name="str_summary">集計</string>
+    <string name="str_setting">設定</string>
+	<string name="str_memo">メモ</string>
+    <string name="str_detail">詳細</string>
+	<string name="str_rest_fix">休憩固定</string>
+	<string name="str_suspend_edit">中断編集</string>
+	<string name="str_about">このアプリについて</string>
+	
+	<string name="str_worktime">就業時間</string>
+	<string name="str_total_worktime">就業総時間</string>
+	<string name="str_mail_subject">タイムシート %s</string>
+	<string name="str_mail_header">集計,%s</string>
+	<string name="str_mail_header2">日付,曜日,出社,退社,就業時間,休憩時間合計,中断時間合計,残業時間,メモ</string>
+	<string name="str_now">現在時刻</string>
+	<string name="str_rest_start">休憩開始</string>
+	<string name="str_rest_end">休憩終了</string>
+	<string name="str_suspend_start">中断開始</string>
+	<string name="str_work_days">就業日数</string>
+	<string name="str_work_overtime">残業時間</string>
+	<string name="str_total">合計</string>
+	<string name="str_average">平均</string>
+	<string name="str_days">日</string>
+	<string name="str_setting_general">一般設定</string>
+	<string name="str_setting_others">その他</string>
+	<string name="str_regular_start">定時開始</string>
+	<string name="str_regular_end">定時終了</string>
+	<string name="str_off">オフ</string>
+	<string name="str_setting_mail_address">メール送信先設定</string>
+	<string name="str_setting_mail_address_hint">メールアドレスを入力してください</string>
+	<string name="str_mail_address">アドレス</string>
+	
+	<string name="str_month_prev">前月</string>
+	<string name="str_month_next">翌月</string>
+	<string name="str_day_prev">前日</string>
+	<string name="str_day_next">翌日</string>
+	
+	<string name="str_month_1">1</string>
+	<string name="str_month_2">2</string>
+	<string name="str_month_3">3</string>
+	<string name="str_month_4">4</string>
+	<string name="str_month_5">5</string>
+	<string name="str_month_6">6</string>
+	<string name="str_month_7">7</string>
+	<string name="str_month_8">8</string>
+	<string name="str_month_9">9</string>
+	<string name="str_month_10">10</string>
+	<string name="str_month_11">11</string>
+	<string name="str_month_12">12</string>
+	<string name="str_sunday">日</string>
+	<string name="str_monday">月</string>
+	<string name="str_tuesday">火</string>
+	<string name="str_wednesday">水</string>
+	<string name="str_thursday">木</string>
+	<string name="str_friday">金</string>
+	<string name="str_saturday">土</string>
+</resources>
