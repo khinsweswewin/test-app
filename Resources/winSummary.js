@@ -123,8 +123,10 @@ function setView(offsetLeft) {
   var workTimeTotal = summary.totalTime;
   var overTimeTotal = summary.overTime;
   var salaryTotal = typeof summary.salaryTotal == 'undefined' ? L('str_set_wage_message') : summary.salaryTotal;
+  var periodStr = VCC.Utils.getMonthDateStr(controller.getStartDateTime()) + ' - ' + VCC.Utils.getMonthDateStr(controller.getEndDateTime());
   // create table view data object
   var datas = [
+    {name: 'calcTerm', title: L('str_period'), data: periodStr},
     {name: 'daysCount', title: L('str_work_days'), data: summary.workDay + L('str_days')},
     {name: 'totalWork', header: '', title: VCC.Utils.removeReturnCodeInIpad(L('str_worktime', null, true) + '\n（' + L('str_total', null, true) + '）'), data: VCC.Utils.formatHourMinute(workTimeTotal)},
     {name: 'averageWork', title: VCC.Utils.removeReturnCodeInIpad(L('str_worktime', null, true) + '\n（' + L('str_average', null, true) + '）'), data: VCC.Utils.formatHourMinute(summary.workDay ? (workTimeTotal / summary.workDay) : 0)},

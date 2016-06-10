@@ -27,6 +27,12 @@ Summary.prototype = {
   exportProcess: function() {
     return this.base.exportProcess();
   },
+  getStartDateTime: function() {
+    return this.base.getStartDateTime();
+  },
+  getEndDateTime: function() {
+    return this.base.getEndDateTime();
+  },
   dummy: function() {
   }
 };

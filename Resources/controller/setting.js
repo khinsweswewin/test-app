@@ -52,6 +52,19 @@ Setting.prototype = {
       this.email = email;
     }
   },
+  getCuttOffDate: function() {
+    this.cuttOffDate = this.db.getProperty('cuttOffDate');
+    if (this.cuttOffDate == + this.cuttOffDate) {
+      this.cuttOffDate = Math.abs(this.cuttOffDate);
+    }
+    return this.cuttOffDate;
+  },
+  setCuttOffDate: function(cuttOffDate) {
+    if (this.cuttOffDate != cuttOffDate) {
+      this.db.setProperty('cuttOffDate', cuttOffDate);
+      this.cuttOffDate = cuttOffDate;
+    }
+  },
   dummy: function() {
   }
 };

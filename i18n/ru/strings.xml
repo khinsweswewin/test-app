@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="appname">TimeSheet</string>
+	<string name="appname">Табель</string>
 	<string name="str_to_work">Отмечаетесь?</string>
 	<string name="str_to_delete">Удалить?</string>
 	<string name="str_work_only_onece">Вы можете отметиться лишь один раз в день</string>
@@ -86,4 +86,8 @@
 	<string name="str_thursday">Чт.</string>
 	<string name="str_friday">Пт.</string>
 	<string name="str_saturday">Сб.</string>
+	<string name="str_cut_off_date">крайний срок</string>
+	<string name="str_end_of_the_month">конец месяца</string>
+	<string name="str_period">период</string>
+	<string name="str_month"></string>
 </resources>

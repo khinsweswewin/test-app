@@ -241,6 +241,10 @@ if (typeof VCC.Utils == 'undefined') {
   VCC.Utils.createTimeRangeStr = function (timeData) {
     return VCC.Utils.formatHourMinute(timeData.startTime) + ' - ' + VCC.Utils.formatHourMinute(timeData.endTime)
   }
+  VCC.Utils.getMonthDateStr = function (dateTime) {
+    var date = new Date(dateTime * 60000);
+    return VCC.Utils.formatDate(null, date.getMonth() + 1, date.getDate());
+  }
   VCC.Utils.openEmail = function (to, subject, body, cc, bcc, atachment) {
     var dialog = Ti.UI.createEmailDialog({
       toRecipients: to,
@@ -425,6 +429,11 @@ if (typeof VCC.Utils == 'undefined') {
       toolbar = VCC.Utils.createToolbar(title, null, {titleid: 'str_save'}, false);
       break;
     case 'winPicker.js':
+      title = '';
+      backButtonTitle = L('str_cancel');
+      toolbar = VCC.Utils.createToolbar(title, null, {titleid: 'str_save'}, false);
+      break;
+    case 'winDatePicker.js':
       title = '';
       backButtonTitle = L('str_cancel');
       toolbar = VCC.Utils.createToolbar(title, null, {titleid: 'str_save'}, false);

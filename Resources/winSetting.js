@@ -20,6 +20,7 @@ controller = controller.create();
 var regularTimeData = controller.getRegularTimeData();
 var restTimeData = controller.getRestTimeData();
 var wageData = controller.getWageData();
+var cuttOffDate = controller.getCuttOffDate();
 var enabledStartTime = regularTimeData.startTime == +regularTimeData.startTime;
 // create table view data object
 var datas = [
@@ -50,6 +51,15 @@ var datas = [
     data: restTimeData,
     hasChild: true,
     action: 'settingBreak',
+    type: ''
+  },
+  {
+    title: L('str_cut_off_date'),
+    value: makeCuttOffDateStr(cuttOffDate),
+    velueAlign: 'right',
+    data: cuttOffDate,
+    hasChild: true,
+    action: 'datePicker',
     type: ''
   },
   {
@@ -168,6 +178,29 @@ tableView.addEventListener('click', function(e) {
     });
     VCC.Utils.openWin(winSettingBreak, tab);
     break;
+  case 'datePicker':
+    var winDatePicker = VCC.Utils.createWin('winDatePicker.js', null, {  
+      title: row.child.title.text,
+      data: data,
+      dataType: 'minutes',
+      pickerType: Ti.UI.PICKER_TYPE_TIME,
+      makeValueStr: makeCuttOffDateStr
+    });
+    winDatePicker.addEventListener('close', function(e) {
+      if (e.source.returnData != undefined) {
+        var returnData = e.source.returnData;
+        Ti.API.info('row.data, returnData:' + [row.data, returnData]);
+        if (row.data != returnData) {
+          controller.setCuttOffDate(returnData);
+          cuttOffDate = row.data = returnData;
+          row.child.value.text = makeCuttOffDateStr(cuttOffDate);
+          win.isChanged = true;
+          VCC.Utils.setGlobal('updateList', true);
+        }
+      }
+    });
+    VCC.Utils.openWin(winDatePicker, tab);
+    break;
   case 'settingWage':
     var winSettingWage = VCC.Utils.createWin('winSettingWage.js', null, {
       data: data
@@ -210,6 +243,10 @@ function makeWageStr(wageData) {
   } else {
     return L('str_off');
   }
+}
+
+function makeCuttOffDateStr(data) {
+  return !data ? L('str_end_of_the_month') : (data);
 }
 
 function onEventTextField(e) {

@@ -86,4 +86,8 @@
 	<string name="str_thursday">Do</string>
 	<string name="str_friday">Vr</string>
 	<string name="str_saturday">Za</string>
+	<string name="str_cut_off_date">deadline</string>
+	<string name="str_end_of_the_month">maand eind</string>
+	<string name="str_period">periode</string>
+	<string name="str_month"></string>
 </resources>

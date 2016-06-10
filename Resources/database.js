@@ -284,25 +284,37 @@ VCC.DB.prototype = {
     this.closeDB();
     return datas;
   },
-  getMonthlyData: function(year, month) {
-    var endYear = year;
-    var endMonth = month + 1;
-    if (endMonth == 13) {
-      endMonth = 1;
-      endYear++;
+  getMonthlyData: function(year, month, cuttOffDate) {
+    if (!cuttOffDate || cuttOffDate != +cuttOffDate) {
+      cuttOffDate = 0;
     }
-    var startDateTime = new Date(year + '/' + month + '/1').getTime() / 60000;
-    var endDateTime = new Date(endYear + '/' + endMonth + '/1').getTime() / 60000;
+    var startYear = year, endYear = year;
+    var startMonth = month, endMonth = month;
+    if (cuttOffDate == 0) {
+      endMonth++;
+      if (endMonth == 13) {
+        endMonth = 1;
+        endYear++;
+      }
+    } else {
+      startMonth--;
+      if (startMonth == 0) {
+        startMonth = 12;
+        startYear--;
+      }
+    }
+    var startDateTime = new Date(startYear + '/' + startMonth + '/' + (cuttOffDate + 1)).getTime() / 60000;
+    var endDateTime = new Date(endYear + '/' + endMonth + '/' + (cuttOffDate + 1)).getTime() / 60000;
     var stateRows = this.execute('SELECT * FROM timestate WHERE userId = ? AND startTime >= ? AND startTime < ? AND enabled=1 ORDER BY startTime', this.userId, startDateTime, endDateTime);
     var memoRows = this.execute('SELECT * FROM memo WHERE userId = ? AND dateTime >= ? AND dateTime < ? AND enabled=1 ORDER BY dateTime', this.userId, startDateTime, endDateTime);
-    var datas = new Array(31);
+    var length = (endDateTime - startDateTime) / (24 * 60);
+    var datas = new Array(length);
     var data;
     while (stateRows.isValidRow()) {
       var state = this.getStateData(stateRows);
       switch (state.type) {
       case this.TIMECARD_RECORD_TYPE_WORK:
-        var startDate = new Date(state.startTime * 60000);
-        var dataIndex = startDate.getDate() - 1;
+        var dataIndex = Math.floor((state.startTime - startDateTime) / (24 * 60));
         data = checkData(datas[dataIndex]);
         data.workStates.push(state);
         break;
@@ -319,8 +331,7 @@ VCC.DB.prototype = {
     while (memoRows.isValidRow()) {
       var string = memoRows.fieldByName('string');
       var dateTime = memoRows.fieldByName('dateTime');
-      var date = new Date(dateTime * 60000);
-      var dataIndex = date.getDate() - 1;
+      var dataIndex = Math.floor((dateTime - startDateTime) / (24 * 60));
       var data = checkData(datas[dataIndex]);
       data.memo = string;
       data.memoId = +memoRows.fieldByName('id');

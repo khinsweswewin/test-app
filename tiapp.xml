@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <deployment-targets>
         <target device="mobileweb">true</target>
@@ -10,7 +10,7 @@
     <id>net.vccorp.timesheet4sp</id>
     <name>TimeSheet</name>
     <appname>TimeSheet</appname>
-    <version>1.20</version>
+    <version>1.30</version>
     <publisher>Virtual Communications Corporation</publisher>
     <url>http://www.vccorp.net/</url>
     <description>timesheet</description>
@@ -24,23 +24,23 @@
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
     <guid>6cedeae6-56d1-44a8-bb1c-056e512562e8</guid>
-	<iphone>
-		<orientations device="iphone">
-			<orientation>Ti.UI.PORTRAIT</orientation>
-		</orientations>
-		<orientations device="ipad">
-			<orientation>Ti.UI.PORTRAIT</orientation>
-		</orientations>
-	</iphone>
-	<android xmlns:android="http://schemas.android.com/apk/res/android">
-		<manifest>
-			<application android:label="TimeSheet">
-				<activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" android:screenOrientation="portrait">
-				</activity>
-			</application>
-		</manifest>
-	</android>
-	<modules>
-		<module version="1.0a">ti.admob</module>
-	</modules>
+    <iphone>
+        <orientations device="iphone">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+        </orientations>
+        <orientations device="ipad">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+        </orientations>
+    </iphone>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest>
+            <application android:label="TimeSheet">
+                <activity
+                    android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" android:screenOrientation="portrait"/>
+            </application>
+        </manifest>
+    </android>
+    <modules>
+        <module version="1.0a">ti.admob</module>
+    </modules>
 </ti:app>

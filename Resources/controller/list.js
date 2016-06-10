@@ -33,6 +33,9 @@ List.prototype = {
   exportProcess: function() {
     return this.base.exportProcess();
   },
+  getCuttOffDate: function() {
+    return this.base.getCuttOffDate();
+  },
   dummy: function() {
   }
 };

@@ -86,4 +86,8 @@
 	<string name="str_thursday">Jue</string>
 	<string name="str_friday">Vie</string>
 	<string name="str_saturday">Sáb</string>
+	<string name="str_cut_off_date">fecha límite</string>
+	<string name="str_end_of_the_month">fin de mes</string>
+	<string name="str_period">periodo</string>
+	<string name="str_month"></string>
 </resources>

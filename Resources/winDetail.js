@@ -390,6 +390,10 @@ function setView() {
       }
     }
   }
+  if (isRowCountChange) {
+    tableView.data = tableView.data;
+  }
+  Ti.API.info('dataWorks.length:' + dataWorks.length);
   for (var i = 0; i < 1 || i < dataWorks.length; i++) {
     var data = dataWorks[i] || {};
     var startData = data.startTime > 0 ? VCC.Utils.getTimeStr(data.startTime, win.dateTime) : '';
@@ -398,7 +402,9 @@ function setView() {
     VCC.Utils.setTableViewRowValues(tableData.endTime[i], {value: endData, data: data.endTime, dataIndex: i})
     VCC.Utils.setTableViewRowEnabled(tableData.endTime[i], startData != '');
   }
+  Ti.API.info('setTableViewRowValues:' + tableData.rest);
   VCC.Utils.setTableViewRowValues(tableData.rest, {value: restStr});
+  Ti.API.info('dataInterrupts.length, tableData.suspend.length:' + [dataInterrupts.length, tableData.suspend.length]);
   for (var i = 0; i <= dataInterrupts.length; i++) {
     var data = dataInterrupts[i] || {};
     var interruptStr = getInterruptStr(data.startTime, data.endTime);
@@ -407,9 +413,6 @@ function setView() {
   }
   VCC.Utils.setTableViewRowValues(tableData.worktime, {value: workData, data: workTime});
   VCC.Utils.setTableViewRowValues(tableData.memo, {value: dbDatas.memo, data: dbDatas.memo, dbId: dbDatas.memoId});
-  if (isRowCountChange) {
-    tableView.data = tableView.data;
-  }
 }
 
 // get time from seconds

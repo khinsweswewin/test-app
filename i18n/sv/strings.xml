@@ -86,4 +86,8 @@
 	<string name="str_thursday">Tor</string>
 	<string name="str_friday">Fre</string>
 	<string name="str_saturday">Lör</string>
+	<string name="str_cut_off_date">tidsgräns</string>
+	<string name="str_end_of_the_month">slutet av månaden</string>
+	<string name="str_period">period</string>
+	<string name="str_month"></string>
 </resources>

@@ -86,4 +86,8 @@
 	<string name="str_thursday">Do</string>
 	<string name="str_friday">Fr</string>
 	<string name="str_saturday">Sa</string>
+	<string name="str_cut_off_date">Frist</string>
+	<string name="str_end_of_the_month">Monatsende</string>
+	<string name="str_period">Zeitraum</string>
+	<string name="str_month"></string>
 </resources>

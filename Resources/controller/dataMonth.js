@@ -16,8 +16,19 @@ DataMonth.prototype = {
   setYaerMonth: function(year, month) {
     this.year = year;
     this.month = month;
-    this.startDate = new Date(this.year + '/' + this.month + '/1');
-    this.lastDay = VCC.Utils.getLastDay(this.year, this.month);
+    this.cuttOffDate = this.setting.getCuttOffDate() || 0;
+    this.startYear = this.year;
+    if (this.cuttOffDate) {
+      this.startMonth = month - 1;
+      if (this.startMonth == 0) {
+        this.startMonth = 12;
+        this.startYear--;
+      }
+    } else {
+      this.startMonth = this.month;
+    }
+    this.startDate = new Date(this.startYear + '/' + this.startMonth + '/' + (this.cuttOffDate + 1));
+    this.lastDay = VCC.Utils.getLastDay(this.startYear, this.startMonth);
     this.restTimeData = this.setting.getRestTimeData();
     this.regularTimeData = this.setting.getRegularTimeData();
   },
@@ -35,7 +46,7 @@ DataMonth.prototype = {
   },
   getMonthlyData: function() {
     var datas = [];
-    var dbDatas = this.db.getMonthlyData(this.year, this.month);
+    var dbDatas = this.db.getMonthlyData(this.year, this.month, this.cuttOffDate);
     for (var i = 0; i < this.lastDay; i++) {
       datas.push(this.makeDayData(dbDatas[i]));
     }
@@ -83,7 +94,13 @@ DataMonth.prototype = {
     var datas = this.getMonthlyData();
     var summary = this.getMonthlySummary(datas);
     var salaryTotal = typeof summary.salaryTotal == 'undefined' ? '' : summary.salaryTotal;
+    var endDate = new Date(this.startDate.getTime() + (this.lastDay - 1) * 24 * 60 * 60000);
     var text = String.format(L('str_mail_header'), VCC.Utils.formatDate(this.year, this.month).replace(/,/, ' ')) + '\n' +
+      L('str_period') + ',' + 
+        VCC.Utils.formatDate(this.startDate.getFullYear(), this.startDate.getMonth() + 1, this.startDate.getDate()).replace(/,/, ' ') +
+        '-' +
+        VCC.Utils.formatDate(endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate()).replace(/,/, ' ') +
+        '\n' +
       L('str_work_days') + ',' + summary.workDay + '\n' +
       L('str_total_worktime2') + ',' + VCC.Utils.formatHourMinute(summary.totalTime, null, true) + '\n' +
       L('str_total_work_overtime') + ',' + VCC.Utils.formatHourMinute(summary.overTime, null, true) + '\n';
@@ -96,9 +113,11 @@ DataMonth.prototype = {
     var startDayOfWeek = this.getStartDayOfWeek();
     for (var i = 0; i < datas.length; i++) {
       var data = datas[i];
+      var _date = new Date(this.startDate.getTime() + i * 24 * 60 * 60000);
+      Ti.API.info('_date:' + _date);
       var timeStr = VCC.Utils.createStartEndTimeStr(data, null, true);
       var cols = [];
-      cols.push(VCC.Utils.formatDate(this.year, this.month, i + 1).replace(/,/, ' '));
+      cols.push(VCC.Utils.formatDate(_date.getFullYear(), _date.getMonth() + 1, _date.getDate()).replace(/,/, ' '));
       cols.push(VCC.Utils.replaceDayStr((startDayOfWeek + i) % 7));
       cols.push(timeStr.startTime);
       cols.push(timeStr.endTime);
@@ -172,6 +191,9 @@ DataMonth.prototype = {
   getWageData: function() {
     var data = this.db.getWageData();
     return VCC.Utils.extend({value: null, enabled: 0}, data);
+  },
+  getCuttOffDate: function() {
+    return this.cuttOffDate;
   },
   dummy: function() {
   }
