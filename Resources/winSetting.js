@@ -1,3 +1,6 @@
+setTimeout(
+initialize, 0);
+function initialize() {
 Ti.include('utils.js');
 
 var defaultRegularTime = {
@@ -187,6 +190,8 @@ tableView.addEventListener('click', function(e) {
       makeValueStr: makeCuttOffDateStr
     });
     winDatePicker.addEventListener('close', function(e) {
+      info(e.source);
+      info(e.source.returnData);
       if (e.source.returnData != undefined) {
         var returnData = e.source.returnData;
         Ti.API.info('row.data, returnData:' + [row.data, returnData]);
@@ -246,7 +251,7 @@ function makeWageStr(wageData) {
 }
 
 function makeCuttOffDateStr(data) {
-  return !data ? L('str_end_of_the_month') : (data);
+  return !data ? L('str_end_of_the_month') : ('' + data);
 }
 
 function onEventTextField(e) {
@@ -254,4 +259,5 @@ function onEventTextField(e) {
   if (textField.type == 'mailAddress') {
     controller.setMailAddress(textField.value);
   }
+}
 }

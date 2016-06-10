@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">Altere a hora de saída</string>
 	<string name="str_open_setting">Abrir as preferências</string>
 	<string name="str_notice_mail_address">Defina o endereço de e-mail para activar esta função</string>
-	<string name="str_notice_going_to_work">Função indisponível devido às horas de trabalho definidas (%s-%s)</string>
+	<string name="str_notice_going_to_work">Função indisponível devido às horas de trabalho definidas (%1$s-%2$s)</string>
 	<string name="str_ok">OK</string>
 	<string name="str_cancel">Cancelar</string>
 	<string name="str_change">Editar</string>

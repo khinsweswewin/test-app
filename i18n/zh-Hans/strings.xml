@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">变更下班时间</string>
 	<string name="str_open_setting">打开设定页面</string>
 	<string name="str_notice_mail_address">要使用这个功能就必须设定邮件</string>
-	<string name="str_notice_going_to_work">上班时间是从%s到下午%s,其他时间不能打卡</string>
+	<string name="str_notice_going_to_work">上班时间是从%1$s到下午%2$s,其他时间不能打卡</string>
 	<string name="str_ok">OK</string>
 	<string name="str_cancel">取消</string>
 	<string name="str_change">变更</string>

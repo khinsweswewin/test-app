@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">Cambiar la hora del registro de salida</string>
 	<string name="str_open_setting">Abrir configuración</string>
 	<string name="str_notice_mail_address">Configurar la dirección de correo electrónico para permitir esta función</string>
-	<string name="str_notice_going_to_work">Función no disponible debido a las horas laborales establecidas (%s-%s)</string>
+	<string name="str_notice_going_to_work">Función no disponible debido a las horas laborales establecidas (%1$s-%2$s)</string>
 	<string name="str_ok">Aceptar</string>
 	<string name="str_cancel">Cancelar</string>
 	<string name="str_change">Editar</string>

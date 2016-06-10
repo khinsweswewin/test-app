@@ -1,3 +1,6 @@
+setTimeout(
+initialize, 0);
+function initialize() {
 Ti.include('utils.js');
 
 var win = Ti.UI.currentWindow;
@@ -39,7 +42,7 @@ var dateLabel = Ti.UI.createLabel({
   textAlign: 'center'
 });
 var statusLabel = Ti.UI.createLabel({
-  text: 'ststus label',
+  text: ' ',
   height: 50,
   shadowColor: '#aaa',
   color: '#888',
@@ -78,6 +81,7 @@ win.focusCallback = function(isChangeWindow, isChangeTab) {
   startTimer();
 }
 setView();
+startTimer();
 
 function setView() {
   currentState = controller.getCurrentState();
@@ -239,4 +243,5 @@ function setDateTime() {
       VCC.Utils.setButtonEnabled(winButtons[i], !buttonEnabled);
     }
   }
+}
 }

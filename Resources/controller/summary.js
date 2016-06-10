@@ -33,7 +33,8 @@ Summary.prototype = {
   getEndDateTime: function() {
     return this.base.getEndDateTime();
   },
-  dummy: function() {
+  getCurrentPageYearMonth: function() {
+    return this.base.getCurrentPageYearMonth();
   }
 };
 

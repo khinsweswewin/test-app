@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">Change check-out time</string>
 	<string name="str_open_setting">Open settings</string>
 	<string name="str_notice_mail_address">Set e-mail address to enable this function</string>
-	<string name="str_notice_going_to_work">Function unavailable due to set working hours (%s-%s)</string>
+	<string name="str_notice_going_to_work">Function unavailable due to set working hours (%1$s-%2$s)</string>
 	<string name="str_ok">OK</string>
 	<string name="str_cancel">Cancel</string>
 	<string name="str_change">Edit</string>

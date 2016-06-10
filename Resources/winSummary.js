@@ -1,3 +1,6 @@
+setTimeout(
+initialize, 0);
+function initialize() {
 Ti.include('utils.js');
 
 var win = Ti.UI.currentWindow;
@@ -12,9 +15,9 @@ var pageYear;
 var pageMonth;
 
 if (!pageYear) {
-  var now = VCC.Utils.makeDate();
-  pageYear = now.year;
-  pageMonth = now.month;
+  var yearMonth = controller.getCurrentPageYearMonth();
+  pageYear = yearMonth.year;
+  pageMonth = yearMonth.month;
 }
 // add admob
 VCC.Utils.addAdmob(win);
@@ -42,8 +45,8 @@ win.focusCallback = function(isChangeWindow, isChangeTab) {
   }
 }
 
-setView();
 setTitle();
+setView();
 
 function onSwipe(e) {
   if (!isAnimate) {
@@ -194,4 +197,5 @@ function setView(offsetLeft) {
       row.child.time.text = dataItem.data;
     }
   }
+}
 }

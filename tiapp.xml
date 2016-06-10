@@ -10,7 +10,7 @@
     <id>net.vccorp.timesheet4sp</id>
     <name>TimeSheet</name>
     <appname>TimeSheet</appname>
-    <version>1.30</version>
+    <version>1.31</version>
     <publisher>Virtual Communications Corporation</publisher>
     <url>http://www.vccorp.net/</url>
     <description>timesheet</description>
@@ -36,7 +36,7 @@
         <manifest>
             <application android:label="TimeSheet">
                 <activity
-                    android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" android:screenOrientation="portrait"/>
+                    android:name="org.appcelerator.titanium.TiActivity" android:screenOrientation="portrait"/>
             </application>
         </manifest>
     </android>

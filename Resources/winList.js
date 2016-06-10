@@ -1,3 +1,6 @@
+setTimeout(
+initialize, 0);
+function initialize() {
 Ti.include('utils.js');
 
 var win = Ti.UI.currentWindow;
@@ -11,9 +14,9 @@ var pageYear;
 var pageMonth;
 
 if (!pageYear) {
-  var now = VCC.Utils.makeDate();
-  pageYear = now.year;
-  pageMonth = now.month;
+  var yearMonth = controller.getCurrentPageYearMonth();
+  pageYear = yearMonth.year;
+  pageMonth = yearMonth.month;
 }
 
 var titleWidth = Ti.Platform.displayCaps.platformWidth > 320 ? 100 : 80;
@@ -40,6 +43,9 @@ var workTotalTime = 0;
 var isAnimate = false;
 var btnNextEnabled = false;
 
+var views = [{}, {}];
+var viewIndex = 0;
+
 //win.addEventListener('swipe', onSwipe);
 win.focusCallback = function(isChangeWindow, isChangeTab) {
   var updateList = VCC.Utils.getGlobal('updateList');
@@ -49,9 +55,29 @@ win.focusCallback = function(isChangeWindow, isChangeTab) {
     win.winDetail = null;
   }
 }
-
-setView();
+/*
+var imgLoading = Ti.UI.createImageView({
+  image: 'images/loading.png',
+  backgroundColor: 'transparent',
+  width: 32,
+  height: 32,
+  top: Ti.Platform.displayCaps.platformHeight / 2 - 20
+});
+win.add(imgLoading);
+var t = Ti.UI.create2DMatrix();
+t = t.rotate(30);
+var a = Titanium.UI.createAnimation();
+a.transform = t;
+a.duration = 100;
+a.addEventListener('complete', function(e) {
+  t = t.rotate(30);
+  a.transform = t;
+  if (imgLoading) imgLoading.animate(a);
+});
+imgLoading.animate(a);
+*/
 setTitle();
+setView();
 
 if (win.openWinDetailDateTime) {
   setTimeout(function() {
@@ -99,18 +125,21 @@ function changeData(direction, callback) {
 function changePage(direction, callback) {
   isAnimate = true;
   var winWidth = Ti.Platform.displayCaps.platformWidth;
-  var oldTableView = tableView;
+  var oldTableView = views[viewIndex].tableView;
   tableView = null;
   tableData = null;
-  initView(winWidth * direction);
-  setView();
+  //initView(winWidth * direction);
+  setView(winWidth * direction);
+  var tableView = views[viewIndex].tableView;
+  setTimeout(function() {
   VCC.Utils.slideView(win, tableView, oldTableView, direction, function() {
     isAnimate = false;
     setTitle();
     if (callback) {
       callback();
     }
-  });
+  }, false);
+  }, 500);
 }
 
 function headerButtonClick(e) {
@@ -131,14 +160,26 @@ var startDateTime;
 var endDateTime;
 var todayDateTime;
 
-function setView() {
-  Ti.API.info('setView(), winList:' + tableData);
-  if (!tableData) {
-    initView();
+function setView(offsetLeft) {
+  if (offsetLeft) {
+    viewIndex = (viewIndex + 1) % 2;
   }
+  var view = views[viewIndex];
+  if (!view.tableData) {
+    initView(offsetLeft);
+  } else if (offsetLeft) {
+    view.tableView.left = offsetLeft;
+    view.tableView.right = -offsetLeft;
+  }
+  setTimeout(function() {
+    _setView(view, offsetLeft);
+  }, 0);
+}
+function _setView(view, offsetLeft) {
+  info('setView(), winList:' + view.tableData);
   controller.setYaerMonth(pageYear, pageMonth);
   var startDayOfWeek = controller.getStartDayOfWeek();
-  Ti.API.info('startDayOfWeek:' + startDayOfWeek);
+  info('startDayOfWeek:' + startDayOfWeek);
   var todayDateTime = VCC.Utils.getDayDateTime();
   var startDateTime = controller.getStartDateTime();
   var endDateTime = controller.getEndDateTime();
@@ -152,10 +193,11 @@ function setView() {
   }
   workTotalTime = 0;
 
-  Ti.API.info('tableView.data:' + tableView.data);
-  var data = tableView.data;
-  var sections = [data[1], data[2]];
-  Ti.API.info('sections[0].headerTitle:' + sections[0].headerTitle);
+  info('tableView.data:' + view.tableView.data);
+  var data = view.tableView.data;
+  //var sections = [data[1], data[2]];
+  var sections = [Ti.UI.createTableViewSection(), Ti.UI.createTableViewSection()];
+  info('sections[0].headerTitle:' + sections[0].headerTitle);
   if (!cuttOffDate) {
     cuttOffDate = 0;
 //    sections[0].headerView.hide();
@@ -177,23 +219,47 @@ function setView() {
     sections[1].headerTitle = L('str_month_' + pageMonth) + L('str_month');
   }
   var dayLnegths = [lastDay - cuttOffDate, cuttOffDate];
-  Ti.API.info('data[1].rows.length:' + (data[1].rows ? data[1].rows.length : 0));
-  Ti.API.info('data[2].rows.length:' + (data[2].rows ? data[2].rows.length : 0));
+  info('data[1].rows.length:' + (data[1].rows ? data[1].rows.length : 0));
+  info('data[2].rows.length:' + (data[2].rows ? data[2].rows.length : 0));
+  info('dayLnegths.length:' + dayLnegths.length);
   var index = 0;
   var day;
   for (var k = 0; k < dayLnegths.length; k++) {
     day = k == 0 ? (k + dayLnegths[1]) : (k + 1);
     var section = sections[k];
-    var rows = tableData.sectionRows[k];
+    var rows = view.tableData.sectionRows[k];
+    //view.tableView.remove(section);
     //if (k == 1) break;
     var row;
     for (var i = 0; i < dayLnegths[k]; i++) {
+      //info('k:' + k + ', i:' + i);
+      if (rows.length > i) {
+        row = rows[i];
+      } else {
+        row = createDayRow();
+        //info('createDayRow');
+        rows.push(row);
+        //section.add(row);
+      }
+      var dateTime = startDateTime + 24 * 60 * index;
+      workTotalTime += 
+      setRowData(
+        row,
+        dbDatas[index],
+        (k == 0 ? (cuttOffDate + index) : (index - dayLnegths[0])) + 1,
+        (startDayOfWeek + index) % 7,
+        dateTime,
+        dateTime <= todayDateTime
+        );
+      index++;
+      continue;
       if (section.rowCount > i) {
         row = rows[i];
       } else {
         row = createDayRow();
+        info('createDayRow');
         rows.push(row);
-        section.add(row);
+        //section.add(row);
       }
       var dateTime = startDateTime + 24 * 60 * index;
       workTotalTime += 
@@ -208,92 +274,39 @@ function setView() {
       index++;
     }
     if (rows.length > dayLnegths[k]) {
-      Ti.API.info('length:' + [rows.length, dayLnegths[k]]);
+      info('length:' + [rows.length, dayLnegths[k]]);
       var n = rows.length - dayLnegths[k];
       for (var i = 0; i < n; i++) {
         var row = rows.pop();
-        Ti.API.info('rows.length:' + rows.length);
-        section.remove(row);
+        //section.remove(row);
+        //view.tableView.remove(row);
       }
     }
-    tableData.sectionRows[k] = rows;
-    tableView.data[k + 1].rows = rows;
+    view.tableData.sectionRows[k] = rows;
+    section.rows = rows;
+    data[k + 1] = section;
+    //data[k + 1].rows = rows;
+    //if (imgLoading) {
+      //win.remove(imgLoading);
+      //imgLoading = null;
+    //}
   }
-  Ti.API.info('tableView.data[1]:' + [tableView.data[1].rows.length, tableView.data[1].rowCount]);
-  //Ti.API.info('tableView.data[1].headerTitle:' + tableView.data[1]);
-  tableView.data = tableView.data;
-  tableData.total.text = createWorkTotalStr(workTotalTime);
+  info('tableView.data[1]:' + [data[1].rows.length, data[1].rowCount]);
+  //info('view.tableView.data[1].headerTitle:' + view.tableView.data[1]);
+  //view.tableView.data = view.tableView.data;
+  view.tableView.setData(data);
+  view.tableData.total.text = createWorkTotalStr(workTotalTime);
   VCC.Utils.setGlobal('updateList', false);
-  return;
-
-  if (tableData.dayRows.length != lastDay) {
-    if (tableData.dayRows.length < lastDay) {
-      for (var i = tableData.dayRows.length; i < lastDay; i++) {
-        var row = createDayRow();
-        tableData.dayRows.push(row);
-      }
-      Ti.API.info('data[1].rows:' + data[1]);
-      var rows = data[1].rows;
-      //var newRows = [rows[0], rows[1]];
-      //newRows = newRows.concat(tableData.dayRows, [rows[rows.length - 1]]);
-      data[1].rows = tableData.dayRows;
-    } else {
-      for (var i = lastDay; i < tableData.dayRows.length; i++) {
-        data[1].rows.remove(tableData.dayRows[i]);
-      }
-      tableData.dayRows = tableData.dayRows.slice(0, lastDay);
-    }
-    tableView.data = data;
-  }
-  var startDayOfWeek = controller.getStartDayOfWeek();
-  var startDateTime = controller.getStartDateTime();
-  var todayDateTime = VCC.Utils.getDayDateTime();
-  var endDateTime = controller.getEndDateTime();
-  var _btnNextEnabled = btnNextEnabled;
-  btnNextEnabled = todayDateTime > endDateTime;
-  if (!isAnimate || !_btnNextEnabled) {
-    VCC.Utils.setButtonEnabled(headerView.child.btnNext, btnNextEnabled);
-  }
-  workTotalTime = 0;
-  for (var i = 0; i < lastDay; i++) {
-    var row = tableData.dayRows[i];
-    row.child.title.text = VCC.Utils.formatDate(null, null, i + 1, (startDayOfWeek + i) % 7);
-    var strTime = '', strWorkTime = '', isMemo = false, workTime = 0;
-    if (dbDatas[i] != undefined) {
-      var day = 0;
-      var timeStr = VCC.Utils.createStartEndTimeStr(dbDatas[i], null, true);
-      strTime = timeStr.startTime ? (timeStr.startTime + ' - ' + timeStr.endTime) : '';
-      if (timeStr.endTime) {
-        workTime = dbDatas[i].totalTime || 0;
-        strWorkTime = VCC.Utils.formatHourMinute(workTime, null, true);
-      }
-      isMemo = dbDatas[i].isMemo;
-    }
-    row.child.memo.visible = isMemo;
-    row.child.time.text = strTime;
-    row.child.total.text = strWorkTime;
-    row.dateTime = startDateTime + 24 * 60 * i;
-    row.workTime = workTime;
-    row.hasChild = row.dateTime <= todayDateTime;
-    //row.selectedBackgroundColor = row.hasChild ? undefined : '#fff';
-    if (row.hasChild) {
-      if (row.selectedBackgroundColor) delete row.selectedBackgroundColor;
-    } else {
-      row.selectedBackgroundColor = '#fff';
-    }
-    workTotalTime += workTime;
-  }
-  tableData.total.text = createWorkTotalStr(workTotalTime);
-  VCC.Utils.setGlobal('updateList', false);
-  //tableView.data = tableView.data;
+  view.tableView.show();
 }
 function initView(offsetLeft) {
-  tableData = {totalRows: [], dayRows: [], sectionRows: [[], []]};
+  var view = views[viewIndex];
+  view.tableData = {totalRows: [], dayRows: [], sectionRows: [[], []]};
   // tab view
   var rowData = [];
   // total
   var lblTotal = Ti.UI.createLabel({
-    text: L('str_total_worktime'),
+    text: '', //L('str_total_worktime'),
     color: '#000',
     textAlign: 'center'
   });
@@ -302,11 +315,11 @@ function initView(offsetLeft) {
     selectedBackgroundColor: '#fff',
     className: 'total'
   });
-  Ti.API.info('totalRow:' + totalRow);
+  info('totalRow:' + totalRow);
   totalRow.add(lblTotal);
-  tableData.total = lblTotal;
+  view.tableData.total = lblTotal;
   rowData.push(totalRow);
-  tableData.totalRows.push(totalRow);
+  view.tableData.totalRows.push(totalRow);
   
   // セクション追加
   rowData.push(Ti.UI.createTableViewSection());
@@ -314,27 +327,28 @@ function initView(offsetLeft) {
   for (var i = 0; i < 28; i++) {
     var row = createDayRow();
     rowData.push(row);
-    tableData.dayRows.push(row);
-    tableData.sectionRows[0].push(row);
+    view.tableData.dayRows.push(row);
+    view.tableData.sectionRows[0].push(row);
   }
   */
   rowData.push(Ti.UI.createTableViewSection());
   rowData.push(Ti.UI.createTableViewSection());
   rowData.push(totalRow);
-  tableData.totalRows.push(totalRow);
+  view.tableData.totalRows.push(totalRow);
   var tableViewOptions = {
     data: rowData,
     top: 89,
-    footerView: Ti.UI.createView({height: 48})
+    footerView: Ti.UI.createView({height: 48}),
+    visible: false
   };
   if (offsetLeft) {
     tableViewOptions.left = offsetLeft;
     tableViewOptions.right = -offsetLeft;
   }
-  Ti.API.info('totalRow1:' + totalRow);
-  tableView = Ti.UI.createTableView(tableViewOptions);
-  win.add(tableView);
-  tableView.addEventListener('click', function(e) {
+  info('totalRow1:' + totalRow);
+  view.tableView = Ti.UI.createTableView(tableViewOptions);
+  win.add(view.tableView);
+  view.tableView.addEventListener('click', function(e) {
     var index = e.index;
     var section = e.section;
     var row = e.row;
@@ -417,7 +431,7 @@ function createWorkTotalStr(workTotalTime) {
   return L('str_total_worktime') + ' ' + (time / 10) + 'h';
 }
 function setRowData(row, data, day, dayOfWeek, dateTime, hasChild) {
-  //Ti.API.info('row.child.title.text:' + VCC.Utils.formatDate(null, null, i + 1, (startDayOfWeek + i) % 7));
+  //info('row.child.title.text:' + VCC.Utils.formatDate(null, null, i + 1, (startDayOfWeek + i) % 7));
   row.child.title.text = VCC.Utils.formatDate(null, null, day, dayOfWeek);
   var strTime = '', strWorkTime = '', isMemo = false, workTime = 0;
   if (data != undefined) {
@@ -443,4 +457,5 @@ function setRowData(row, data, day, dayOfWeek, dateTime, hasChild) {
     row.selectedBackgroundColor = '#fff';
   }
   return workTime;
+}
 }

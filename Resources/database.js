@@ -1,5 +1,8 @@
 // database.js
-Ti.include('utils.js');
+var database_js = true;
+if (typeof utils_js == 'undefined') {
+  Ti.include('utils.js');
+}
 
 function getDB() {
   var db = VCC.Utils.getGlobal('db');
@@ -73,9 +76,10 @@ VCC.DB.prototype = {
       for (var i = 0; i < arguments.length; i++) {
         parameterStrings.push('arguments[' + i + ']');
       }
-       return eval('this.db.execute(' + parameterStrings.join(',') + ')');
+      //Ti.API.info('eval this.db.execute(' + parameterStrings.join(',') + ')');
+      return eval('this.db.execute(' + parameterStrings.join(',') + ')');
     } else {
-      Ti.API.info('DB execute:' + sql);
+      //Ti.API.info('DB execute:' + sql);
       return this.db.execute(sql);      
     }
   },
@@ -285,6 +289,7 @@ VCC.DB.prototype = {
     return datas;
   },
   getMonthlyData: function(year, month, cuttOffDate) {
+    Ti.API.info(String.format('getMonthlyData:year:%d, month:%d, cuttOffDate:%d', year, month, cuttOffDate));
     if (!cuttOffDate || cuttOffDate != +cuttOffDate) {
       cuttOffDate = 0;
     }
@@ -307,7 +312,7 @@ VCC.DB.prototype = {
     var endDateTime = new Date(endYear + '/' + endMonth + '/' + (cuttOffDate + 1)).getTime() / 60000;
     var stateRows = this.execute('SELECT * FROM timestate WHERE userId = ? AND startTime >= ? AND startTime < ? AND enabled=1 ORDER BY startTime', this.userId, startDateTime, endDateTime);
     var memoRows = this.execute('SELECT * FROM memo WHERE userId = ? AND dateTime >= ? AND dateTime < ? AND enabled=1 ORDER BY dateTime', this.userId, startDateTime, endDateTime);
-    var length = (endDateTime - startDateTime) / (24 * 60);
+    var length = Math.round((endDateTime - startDateTime) / (24 * 60));
     var datas = new Array(length);
     var data;
     while (stateRows.isValidRow()) {
@@ -438,6 +443,10 @@ VCC.DB.prototype = {
     row.close();
     this.closeDB();
     return value;
+  },
+  deleteProperty: function(key) {
+    this.execute('DELETE FROM property WHERE userId = ? AND key = ? ', this.userId, key);
+    this.closeDB();
   },
   setWorkingTimeData: function(id, data) {
     return this.setTimesettingTableData(this.TIMESETTING_RECORD_TYPE_WORK_TIME, id, data);

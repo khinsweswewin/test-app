@@ -1,24 +1,38 @@
+var utils_js = true;
+L = function(key, hint, isNoRemoveRetrunCode) {
+  var str = hint === undefined ? Ti.Locale.getString(key) : Ti.Locale.getString(key, hint);
+  if (isNoRemoveRetrunCode) {
+    return str;
+  }
+  return VCC.Utils.removeReturnCodeInIpad(str);
+};
+
+function info(message) {
+  var date = new Date();
+  Ti.API.info(message + String.format(' [%s:%s:%s %s]', String.formatDecimal(date.getHours(), '00'), String.formatDecimal(date.getMinutes(), '00'), String.formatDecimal(date.getSeconds(), '00'), String.formatDecimal(date.getMilliseconds(), '000')));
+}
+function setGlobal(key, value) {
+  var golbal = Ti.App.Global || {};
+  golbal[key] = value;
+  Ti.App.Global = golbal;
+};
+function getGlobal(key) {
+  return Ti.App.Global ? Ti.App.Global[key] : undefined;
+};
 var VCC;
 if (typeof VCC == 'undefined') {
   VCC = {};
 }
+VCC.Utils = getGlobal('_VCC_Utils');
 if (typeof VCC.Utils == 'undefined') {
+  info('VCC.Utils new');
   VCC.Utils = {};
 
-  L = function(key, hint, isNoRemoveRetrunCode) {
-    if (isNoRemoveRetrunCode) {
-      return Ti.Locale.getString(key, hint);
-    }
-    return VCC.Utils.removeReturnCodeInIpad(Ti.Locale.getString(key, hint));
-  };
-  
   VCC.Utils.setGlobal = function (key, value) {
-    var golbal = Ti.App.Global || {};
-    golbal[key] = value;
-    Ti.App.Global = golbal;
+    setGlobal(key, value);
   };
   VCC.Utils.getGlobal = function (key) {
-    return Ti.App.Global ? Ti.App.Global[key] : undefined;
+    return getGlobal(key);
   };
   VCC.Utils.addNoCacheParam = function (url) {
     return url + (url.indexOf('?') == -1 ? '?' : '&') + 't=' + new Date().getTime();
@@ -369,7 +383,7 @@ if (typeof VCC.Utils == 'undefined') {
   };
   VCC.Utils.createWin = function (url, parent, options) {
     var isTabWin = parent == +parent;
-    Ti.API.info('createWin:' + [url, isTabWin, parent]);
+    info('createWin:' + [url, isTabWin, parent]);
     var opt = {  
       backgroundColor: '#fff',
       url: url,
@@ -529,20 +543,24 @@ if (typeof VCC.Utils == 'undefined') {
       win.open({animated: true});
     }
   };
-  VCC.Utils.slideView = function (win, newView, oldView, direction, callback) {
+  VCC.Utils.slideView = function (win, newView, oldView, direction, callback, isRemove) {
     var winWidth = Titanium.Platform.displayCaps.platformWidth;
-    var a1 = Titanium.UI.createAnimation();
-    a1.left = -winWidth * direction;;
-    a1.right = winWidth * direction;;
-    a1.duration = 300;
     var a1complete = false;
-    a1.addEventListener('complete', function() {
-      win.remove(oldView);
+    if (oldView) {
+      var a1 = Titanium.UI.createAnimation();
+      a1.left = -winWidth * direction;
+      a1.right = winWidth * direction;
+      a1.duration = 300;
+      a1.addEventListener('complete', function() {
+        if (isRemove) win.remove(oldView);
+        a1complete = true;
+        if (a2complete) {
+          callback();
+        }
+      });
+    } else {
       a1complete = true;
-      if (a2complete) {
-        callback();
-      }
-    });
+    }
     var a2 = Titanium.UI.createAnimation();
     a2.left = 0;
     a2.right = 0;
@@ -554,7 +572,7 @@ if (typeof VCC.Utils == 'undefined') {
         callback();
       }
     });
-    oldView.animate(a1);
+    if (oldView) oldView.animate(a1);
     newView.animate(a2);
   };
   // create state in current time
@@ -774,12 +792,14 @@ if (typeof VCC.Utils == 'undefined') {
     var child = {};
     child.btnPrev = VCC.Utils.createHeaderButton(buttonStrObj.prev, 'prev', buttonsCallback);
     child.title = Ti.UI.createLabel({
-      text: title,
+      text: title || ' ',
       color: '#000',
       textAlign: 'center',
       font: {fontSize: 30}
     });
+    info('buttonStrObj.next:' + buttonStrObj.next);
     child.btnNext = VCC.Utils.createHeaderButton(buttonStrObj.next, 'next', buttonsCallback);
+    info('child.title:' + typeof title);
     var headerView = Ti.UI.createView({
       //backgroundColor: '#eff',
       //selectedBackgroundColor: '#eff',
@@ -847,7 +867,7 @@ if (typeof VCC.Utils == 'undefined') {
         };
         if (dataItem.velueAlign == 'right') {
           valueOpt.textAlign = 'right';
-          valueOpt.right = isAndroid ? 35 : 20;
+          valueOpt.right = Ti.App.VCC.isAndroid ? 35 : 20;
         } else {
           valueOpt.textAlign = 'left';
           valueOpt.left = 10;
@@ -922,4 +942,5 @@ if (typeof VCC.Utils == 'undefined') {
     return str;
   }
 
+  setGlobal('_VCC_Utils', VCC.Utils);
 }

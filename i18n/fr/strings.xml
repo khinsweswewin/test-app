@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">Changer l\'heure de départ</string>
 	<string name="str_open_setting">Ouvrir les configurations</string>
 	<string name="str_notice_mail_address">Sélectionnez une adresse e-mail pour activer cette fonction</string>
-	<string name="str_notice_going_to_work">Cette fonction n\'est pas disponible en raison des heures de travail sélectionnées (%s-%s)</string>
+	<string name="str_notice_going_to_work">Cette fonction n\'est pas disponible en raison des heures de travail sélectionnées (%1$s-%2$s)</string>
 	<string name="str_ok">OK</string>
 	<string name="str_cancel">Annuler</string>
 	<string name="str_change">Éditer</string>

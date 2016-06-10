@@ -18,38 +18,54 @@ toolBar.btnRight.addEventListener('click', function(e) {
 
 var winData = win.data;
 var picker;
+var columnWidth = Math.max(Titanium.Platform.displayCaps.platformWidth / 2, 220);
+var rows = [];
 var columns = [];
 
-var columnWidth = (Titanium.Platform.displayCaps.platformWidth - 30) / 3;
-var picker1 = Ti.UI.createPickerColumn(/*{width: columnWidth}*/);
-columns.push(picker1);
+var max = 28;
+var selectedIndex = null;
+for (var i = 0; i <= max; i++) {
+  var value = i == max ? 0 : (i + 1);
+  var text = win.makeValueStr(value);
+  var rowOption = {
+    value: value,
+    selected: value == winData
+  };
+  if (isAndroid) {
+    rowOption.title = text;
+  }
+  var row = Ti.UI.createPickerRow(rowOption);
+  if (!isAndroid) {
+    var label = Ti.UI.createLabel({
+        text: text,
+        font: {fontSize:24, fontWeight:'bold'},
+        width: 'auto',
+        height: 'auto'
+    });
+    row.add(label);
+  }
+  rows.push(row);
+  if (rowOption.selected) {
+    selectedIndex = i;
+  }
+}
+var pickerColumn = Ti.UI.createPickerColumn({
+  rows: rows,
+  width: columnWidth
+});
+columns.push(pickerColumn);
 picker = Ti.UI.createPicker({
   columns: columns,
   useSpinner: true
 });
-var max = 28;
-for (var i = 0; i <= max; i++) {
-  var value = i == max ? 0 : (i + 1);
-  var text = win.makeValueStr(value);
-  var row = Ti.UI.createPickerRow({
-    value: value,
-    selected: value == winData
-  });
-  var label = Ti.UI.createLabel({
-      text: text,
-      font: {fontSize:24, fontWeight:'bold'},
-      width: 'auto',
-      height: 'auto'
-  });
-  row.add(label);
-  picker.add(row);
-}
-
 picker.top = Math.min(winHeight / 2, winHeight - picker.height - 60);
 picker.selectionIndicator = true;
 
 win.add(picker);
-Ti.API.info('picker.top:' + picker.top);
+setTimeout(function() {
+  picker.setSelectedRow(0, selectedIndex, false);
+}, 1);
+
 function getPickerValue() {
   var row = picker.getSelectedRow(0);
   Ti.API.info('getPickerValue:' + row);

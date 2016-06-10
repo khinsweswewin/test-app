@@ -1,6 +1,10 @@
 // setting.js
-Ti.include('utils.js');
-Ti.include('database.js');
+if (typeof utils_js == 'undefined') {
+  Ti.include('utils.js');
+}
+if (typeof database_js == 'undefined') {
+  Ti.include('database.js');
+}
 
 var Setting = function() {
   this.initialize.apply(this, arguments);
@@ -53,10 +57,11 @@ Setting.prototype = {
     }
   },
   getCuttOffDate: function() {
-    this.cuttOffDate = this.db.getProperty('cuttOffDate');
+    this.cuttOffDate = this.db.getProperty('cuttOffDate') || 0;
     if (this.cuttOffDate == + this.cuttOffDate) {
       this.cuttOffDate = Math.abs(this.cuttOffDate);
     }
+    //this.db.deleteProperty('cuttOffDate');
     return this.cuttOffDate;
   },
   setCuttOffDate: function(cuttOffDate) {

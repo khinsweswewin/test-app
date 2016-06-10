@@ -1,6 +1,10 @@
 // dataMonth.js
-Ti.include('utils.js');
-Ti.include('database.js');
+if (typeof utils_js == 'undefined') {
+  Ti.include('utils.js');
+}
+if (typeof database_js == 'undefined') {
+  Ti.include('database.js');
+}
 
 var DataMonth = function() {
   this.initialize.apply(this, arguments);
@@ -193,9 +197,24 @@ DataMonth.prototype = {
     return VCC.Utils.extend({value: null, enabled: 0}, data);
   },
   getCuttOffDate: function() {
+    if (this.cuttOffDate === undefined) {
+      this.cuttOffDate = this.setting.getCuttOffDate();
+    }
     return this.cuttOffDate;
   },
-  dummy: function() {
+  getCurrentPageYearMonth: function() {
+    var cuttOffDate = this.getCuttOffDate();
+    var now = VCC.Utils.makeDate();
+    var year = now.year;
+    var month = now.month;
+    if (cuttOffDate && now.day > cuttOffDate) {
+      month++;
+      if (month == 13) {
+        month = 1;
+        year++;
+      }
+    }
+    return {year: year, month: month};
   }
 };
 

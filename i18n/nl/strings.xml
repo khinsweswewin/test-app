@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">Verander uitchecktijd</string>
 	<string name="str_open_setting">Open waarden</string>
 	<string name="str_notice_mail_address">Stel e-mail adres in om deze functie in te schakelen</string>
-	<string name="str_notice_going_to_work">Functie niet beschikbaar door gewerkte uren die nog moeten worden ingesteld (%s-%s)</string>
+	<string name="str_notice_going_to_work">Functie niet beschikbaar door gewerkte uren die nog moeten worden ingesteld (%1$s-%2$s)</string>
 	<string name="str_ok">OK</string>
 	<string name="str_cancel">Annuleer</string>
 	<string name="str_change">Bewerken</string>

@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">退社時間を変更する</string>
 	<string name="str_open_setting">設定画面を開く</string>
 	<string name="str_notice_mail_address">この機能を使用するには\nメールアドレスの設定が必要です</string>
-	<string name="str_notice_going_to_work">出勤時間中(出社 %s、退社 %s)のため入力できません</string>
+	<string name="str_notice_going_to_work">出勤時間中(出社 %1$s、退社 %2$s)のため入力できません</string>
 	<string name="str_ok">OK</string>
 	<string name="str_cancel">キャンセル</string>
 	<string name="str_change">変更する</string>

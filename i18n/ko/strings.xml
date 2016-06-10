@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">체크아웃 시각 변경하기</string>
 	<string name="str_open_setting">오픈 설정</string>
 	<string name="str_notice_mail_address">본 기능을 활용하기 위한 이메일 설정</string>
-	<string name="str_notice_going_to_work">(%s-%s) 로 근무시간을 설정해 두었기에 본 기능은 사용이 불가능합니다.</string>
+	<string name="str_notice_going_to_work">(%1$s-%2$s) 로 근무시간을 설정해 두었기에 본 기능은 사용이 불가능합니다.</string>
 	<string name="str_ok">OK</string>
 	<string name="str_cancel">취소</string>
 	<string name="str_change">수정</string>

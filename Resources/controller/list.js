@@ -1,6 +1,10 @@
 // list.js
-Ti.include('utils.js');
-Ti.include('database.js');
+if (typeof utils_js == 'undefined') {
+  Ti.include('utils.js');
+}
+if (typeof database_js == 'undefined') {
+  Ti.include('database.js');
+}
 
 var List = function() {
   this.initialize.apply(this, arguments);
@@ -36,7 +40,8 @@ List.prototype = {
   getCuttOffDate: function() {
     return this.base.getCuttOffDate();
   },
-  dummy: function() {
+  getCurrentPageYearMonth: function() {
+    return this.base.getCurrentPageYearMonth();
   }
 };
 

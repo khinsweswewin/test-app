@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">Изменить время регистрации</string>
 	<string name="str_open_setting">Открыть настройки</string>
 	<string name="str_notice_mail_address">Введите адрес электронной почты чтобы включить эту функцию</string>
-	<string name="str_notice_going_to_work">Функция недоступна из-за введенных часов работы (%s-%s)</string>
+	<string name="str_notice_going_to_work">Функция недоступна из-за введенных часов работы (%1$s-%2$s)</string>
 	<string name="str_ok">ОК</string>
 	<string name="str_cancel">Отмена</string>
 	<string name="str_change">Редактировать</string>
