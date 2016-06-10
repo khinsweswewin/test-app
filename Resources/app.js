@@ -33,7 +33,7 @@ if (Ti.App.VCC.isAndroid) {
   }
   tabGroup.addEventListener('focus', function(e) {
     // 謎のfocusイベントがくる（e.previousIndex=-1,e.index=0）のでその対策
-    //Ti.API.info('tabGroup focus:' + [e.previousIndex, e.index]);
+    Ti.API.info('tabGroup focus:' + [e.previousIndex, e.index]);
     if (e.previousIndex < 0) {
       if (isTabChange || e.index == -1) return;
       isTabChange = true;
@@ -47,6 +47,7 @@ if (Ti.App.VCC.isAndroid) {
   if (tabIndex > 0) {
     tabGroup.setActiveTab(tabIndex);
   }
+  VCC.Utils.setGlobal('tabGroup', tabGroup);
 /*
   // 復帰処理
   var resumeWin = Ti.UI.createWindow({

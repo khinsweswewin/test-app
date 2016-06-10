@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
+    <sdk-version>3.2.0.GA</sdk-version>
     <deployment-targets>
+        <target device="tizen">false</target>
         <target device="mobileweb">true</target>
         <target device="blackberry">false</target>
         <target device="iphone">true</target>
@@ -10,7 +12,7 @@
     <id>net.vccorp.timesheet4sp</id>
     <name>TimeSheet</name>
     <appname>TimeSheet</appname>
-    <version>1.31</version>
+    <version>1.32</version>
     <publisher>Virtual Communications Corporation</publisher>
     <url>http://www.vccorp.net/</url>
     <description>timesheet</description>

@@ -21,9 +21,6 @@ Summary.prototype = {
   getMonthlySummary: function() {
     return this.base.getMonthlySummary();
   },
-  getEndDateTime: function() {
-    return this.base.getEndDateTime();
-  },
   exportProcess: function() {
     return this.base.exportProcess();
   },

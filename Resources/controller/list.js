@@ -34,6 +34,9 @@ List.prototype = {
   getStartDayOfWeek: function() {
     return this.base.getStartDayOfWeek();
   },
+  getDateTime: function(index) {
+    return this.base.getDateTime(index);
+  },
   exportProcess: function() {
     return this.base.exportProcess();
   },

@@ -1,6 +1,13 @@
 var utils_js = true;
 L = function(key, hint, isNoRemoveRetrunCode) {
   var str = hint === undefined ? Ti.Locale.getString(key) : Ti.Locale.getString(key, hint);
+  if (!Ti.App.VCC.isAndroid) {
+    var i = 1;
+    while (str.indexOf('%' + i + '$') >= 0) {
+      str = str.replace('%' + i + '$', '%');
+      i++;
+    }
+  }
   if (isNoRemoveRetrunCode) {
     return str;
   }
@@ -66,6 +73,17 @@ if (typeof VCC.Utils == 'undefined') {
     return count1 == count2;
   };
   
+  VCC.Utils.objectToStr = function (obj) {
+    if (typeof obj != 'object') {
+      return '' + obj;
+    }
+    var strs = [];
+    for (var n in obj) {
+      strs.push(n + ':' + VCC.Utils.objectToStr(obj[n]));
+    }
+    return '{' + strs.join(', ') + '}';
+  };
+  
   VCC.Utils.makeDate = function (time) {
     var date = time ? new Date(time) : new Date();
     return {
@@ -100,6 +118,19 @@ if (typeof VCC.Utils == 'undefined') {
     date.setSeconds(0);
     date.setMilliseconds(0);
     return date;
+  };
+  VCC.Utils.fixSummerDate = function(time) {
+    //info('date in :' + new Date(time));
+    if (typeof time == 'object') {
+      time = time.getTime();
+    }
+    time += 3 * 3600000;
+    //info('date mid:' + new Date(time));
+    //info('date out:' + VCC.Utils.resetTime(time));
+    return VCC.Utils.resetTime(time);
+  };
+  VCC.Utils.fixSummerDateTime = function(dateTime) {
+    return VCC.Utils.fixSummerDate(dateTime * 60000) / 60000;
   };
   VCC.Utils.getDayDateTime = function(dateTime) {
     var date = dateTime ? new Date(dateTime * 60000) : new Date();
@@ -236,7 +267,9 @@ if (typeof VCC.Utils == 'undefined') {
     if (baseDateTime) {
       baseDateTime = VCC.Utils.getDayDateTime(baseDateTime);
       minTime += baseDateTime;
-      if (maxTime !== null) maxTime += baseDateTime;
+      if (maxTime !== null) {
+        maxTime = VCC.Utils.fixSummerDateTime(maxTime + baseDateTime + 1) - 1;
+      }
     }
     if (timeData) {
       if (setTimeType == 'startTime') {
@@ -383,7 +416,6 @@ if (typeof VCC.Utils == 'undefined') {
   };
   VCC.Utils.createWin = function (url, parent, options) {
     var isTabWin = parent == +parent;
-    info('createWin:' + [url, isTabWin, parent]);
     var opt = {  
       backgroundColor: '#fff',
       url: url,
@@ -485,6 +517,15 @@ if (typeof VCC.Utils == 'undefined') {
       newWin.toolBar = toolbar;
     }
     newWin.addEventListener('focus', function (e) {
+      var tabGroup = VCC.Utils.getGlobal('tabGroup');
+      if (tabGroup) {
+        for (var i = 0; i < tabGroup.tabs.length; i++) {
+          if (tabGroup.tabs[i] == tabGroup.activeTab) {
+            Ti.App.Properties.setInt('tabIndex', i);
+            break;
+          }
+        }
+      }
       var win = e.source;
       var winHistory = VCC.Utils.getGlobal('winHistory') || [];
       var tabIndex = +Ti.App.Properties.getInt('tabIndex');
@@ -602,14 +643,15 @@ if (typeof VCC.Utils == 'undefined') {
     var baseTime = VCC.Utils.resetTime(workTimes[0].startTime * 60000).getTime() / 60000;
     var _workTimes = convTime(workTimes);
     var minusTimes = convTime(interruptTimes);
-    var dayLength = Math.ceil(_workTimes[_workTimes.length - 1].endTime / (24 * 60));
+    var dayLength = Math.round((VCC.Utils.resetTime(workTimes[workTimes.length - 1].endTime) - baseTime) / (24 * 60)) + 1;
     if (restTimes && restTimes.length) {
       var _restTimes = [];
       for (var i = 0; i < dayLength; i++) {
+        var dateOffset = (i != 0 ? (VCC.Utils.fixSummerDateTime(baseTime + 24 * 60 * i) - baseTime) : 0);
         for (var j = 0; j < restTimes.length; j++) {
           if (!restTimes[j].enabled) continue;
-          var endTime = restTimes[j].endTime + 24 * 60 * i;
-          var _time = {startTime: restTimes[j].startTime + 24 * 60 * i, endTime: endTime, _endTime: endTime, isRest: true};
+          var endTime = restTimes[j].endTime + dateOffset;
+          var _time = {startTime: restTimes[j].startTime + dateOffset, endTime: endTime, _endTime: endTime, isRest: true};
           if (_time.startTime >= _workTimes[_workTimes.length - 1].endTime) {
             break;
           } else {
@@ -624,7 +666,8 @@ if (typeof VCC.Utils == 'undefined') {
     if (regularTime) {
       for (var i = 0; i < dayLength; i++) {
         if (regularTime.startTime === null || !regularTime.endTime) continue;
-        var _time = {startTime: regularTime.startTime + 24 * 60 * i, endTime: regularTime.endTime + 24 * 60 * i};
+        var dateOffset = (i != 0 ? (VCC.Utils.fixSummerDateTime(baseTime + 24 * 60 * i) - baseTime) : 0);
+        var _time = {startTime: regularTime.startTime + dateOffset, endTime: regularTime.endTime + dateOffset};
         if (_time.startTime >= _workTimes[_workTimes.length - 1].endTime) {
           break;
         } else {
@@ -780,7 +823,15 @@ if (typeof VCC.Utils == 'undefined') {
       opt.left = 9;
     }
     var btn = Ti.UI.createButton(opt);
-    if (clickCallback) btn.addEventListener('click', clickCallback);
+    if (clickCallback) {
+      if (typeof btn.addEventListener == 'function') {
+        btn.addEventListener('click', clickCallback);
+      } else {
+        setTimeout(function() {
+          btn.addEventListener('click', clickCallback);
+        }, 0);
+      }
+    }
     return btn;
   };
   VCC.Utils.setButtonEnabled = function (button, enabled) {
@@ -797,9 +848,7 @@ if (typeof VCC.Utils == 'undefined') {
       textAlign: 'center',
       font: {fontSize: 30}
     });
-    info('buttonStrObj.next:' + buttonStrObj.next);
     child.btnNext = VCC.Utils.createHeaderButton(buttonStrObj.next, 'next', buttonsCallback);
-    info('child.title:' + typeof title);
     var headerView = Ti.UI.createView({
       //backgroundColor: '#eff',
       //selectedBackgroundColor: '#eff',

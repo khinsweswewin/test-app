@@ -1,6 +1,15 @@
 Ti.include('utils.js');
 
 var win = Ti.UI.currentWindow;
+win.focusCallback = function(isChangeWindow, isChangeTab) {
+  Ti.API.info('winPicker:' + [isChangeWindow, isChangeTab, Ti.UI.currentTab.window.tabIndex]);
+  if (isChangeTab && win.isCloseOnChangeTab) {
+    win.onChangeTab = true;
+    win.close();
+  }
+}
+
+
 // get param from app.js
 var isAndroid = Ti.App.VCC.isAndroid;
 var winHeight = win.height || Titanium.Platform.displayCaps.platformHeight;
@@ -43,16 +52,17 @@ if (useMyTimePicker) {
     var picker1 = Ti.UI.createPickerColumn({width: columnWidth});
     var max = 5;
     if (maxDate) {
-      max = Math.ceil((maxDate.getTime() - standardDate.getTime()) / (24 * 60 * 60 * 1000) + 1);
+      max = Math.round((VCC.Utils.fixSummerDate(maxDate).getTime() - standardDate.getTime()) / (24 * 60 * 60000)) + 1;
     }
     for (var i = 0; i < max; i++) {
       var second = win.dateTime + i * 24 * 60;
-      var date = new Date(second * 60000);
+      var date = VCC.Utils.fixSummerDate(second * 60000);
       picker1.addRow(Ti.UI.createPickerRow({title: VCC.Utils.formatDate(null, date.getMonth() + 1, date.getDate()), value: second, type: 'date', font: {fontSize:20}}));
     }
     columns.push(picker1);
   }
   var picker2 = Ti.UI.createPickerColumn({width: columnWidth});
+  //??
   for (var i = 0; i < 24; i++) {
     picker2.addRow(Ti.UI.createPickerRow({title: String.formatDecimal(i, '00'), value: i, type: 'hour', font: {fontSize:20}}));
   }
@@ -124,7 +134,7 @@ function setPickerValue(date) {
     var valueIndex = 0;
     rowIndexes =[];
     if (columns.length == 3) {
-      valueIndex = Math.floor((date.getTime() - standardDate.getTime()) / (24 * 60 * 60 * 1000));
+      valueIndex = (VCC.Utils.resetTime(date).getTime() - standardDate.getTime()) / (24 * 60 * 60 * 1000);
       if (columns[0].rows.length <= valueIndex) valueIndex = 0;
       picker.setSelectedRow(rowIndexes.length, valueIndex, false);
       rowIndexes.push(valueIndex);

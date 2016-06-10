@@ -239,7 +239,7 @@ VCC.DB.prototype = {
     } else {
       startDateTime = new Date(year + '/' + month + '/' + day).getTime() / 60000;
     }
-    var endDateTime = startDateTime + 24 * 60;
+    var endDateTime = VCC.Utils.fixSummerDateTime(startDateTime + 24 * 60);
     var prevRows = this.execute('SELECT * FROM timestate WHERE userId = ? AND type = ? AND startTime < ? AND endTime > 0 AND enabled=1 ORDER BY endTime DESC LIMIT 1',
       this.userId, this.TIMECARD_RECORD_TYPE_WORK, startDateTime);
     if (prevRows.isValidRow()) {
@@ -319,7 +319,7 @@ VCC.DB.prototype = {
       var state = this.getStateData(stateRows);
       switch (state.type) {
       case this.TIMECARD_RECORD_TYPE_WORK:
-        var dataIndex = Math.floor((state.startTime - startDateTime) / (24 * 60));
+        var dataIndex = this._getDataIndex(state.startTime, startDateTime);
         data = checkData(datas[dataIndex]);
         data.workStates.push(state);
         break;
@@ -336,7 +336,7 @@ VCC.DB.prototype = {
     while (memoRows.isValidRow()) {
       var string = memoRows.fieldByName('string');
       var dateTime = memoRows.fieldByName('dateTime');
-      var dataIndex = Math.floor((dateTime - startDateTime) / (24 * 60));
+      var dataIndex = this._getDataIndex(dateTime, startDateTime);
       var data = checkData(datas[dataIndex]);
       data.memo = string;
       data.memoId = +memoRows.fieldByName('id');
@@ -350,6 +350,9 @@ VCC.DB.prototype = {
     }
     this.closeDB();
     return datas;
+  },
+  _getDataIndex: function(dateTime, startDateTime) {
+    return Math.round((VCC.Utils.resetTime(dateTime * 60000) / 60000 - startDateTime) / (24 * 60));
   },
   getStateData: function(stateRows) {
     var type = +stateRows.fieldByName('type');

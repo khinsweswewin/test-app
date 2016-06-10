@@ -9,7 +9,7 @@
 	<string name="str_change_leave_time">Cambia tempo di check-out</string>
 	<string name="str_open_setting">Apri impostazioni</string>
 	<string name="str_notice_mail_address">Imposta l\'indirizzo email per abilitare questa funzione</string>
-	<string name="str_notice_going_to_work">Funzione non disponibile</string>
+	<string name="str_notice_going_to_work">Funzione non disponibile a causa di orario di lavoro (%1$s-%2$s)</string>
 	<string name="str_ok">OK</string>
 	<string name="str_cancel">Cancella</string>
 	<string name="str_change">Modifica</string>

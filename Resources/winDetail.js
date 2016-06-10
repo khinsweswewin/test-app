@@ -87,7 +87,7 @@ function openDateTime(dateTime) {
 }
 
 function changeData(direction, callback) {
-  win.dateTime += 24 * 60 * direction;
+  win.dateTime = VCC.Utils.fixSummerDateTime(win.dateTime + 24 * 60 * direction);
   isAnimate = true;
   changePage(direction, callback);
 }
@@ -156,7 +156,7 @@ function onTableViewClick(e) {
     if (!limit.maxTime && dbDatas.nextStartTime) {
       limit.maxTime = dbDatas.nextStartTime;
     }
-    //Ti.API.info('data:' + data + ', limit.minTime:' + limit.minTime + ', limit.maxTime:' + limit.maxTime);
+    Ti.API.info('data:' + data + ', limit.minTime:' + limit.minTime + ', limit.maxTime:' + limit.maxTime);
     if (limit.maxTime && limit.minTime > limit.maxTime) {
       VCC.Utils.createDialog(String.format(L('str_notice_going_to_work'), VCC.Utils.getTimeStr(dbDatas.prevStartTime, win.dateTime), VCC.Utils.getTimeStr(dbDatas.prevEndTime, win.dateTime)), [L('str_ok')]);
       return;
@@ -166,7 +166,8 @@ function onTableViewClick(e) {
       data: data,
       minTime: limit.minTime,
       maxTime: limit.maxTime,
-      dateTime: win.dateTime
+      dateTime: win.dateTime,
+      isCloseOnChangeTab: true
     });
     winPicker.addEventListener('close', function(e) {
       if (e.source.returnData) {
@@ -183,6 +184,8 @@ function onTableViewClick(e) {
             VCC.Utils.setTableViewRowEnabled(tableData.suspend[0], true);
           }
         }
+      } else if (e.source.onChangeTab) {
+         setView();
       }
     });
     VCC.Utils.openWin(winPicker, tab);

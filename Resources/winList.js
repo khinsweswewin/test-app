@@ -91,9 +91,11 @@ function onSwipe(e) {
     var direction = e.direction == 'right' ? -1 : 1;
     if (direction == 1 && !btnNextEnabled) return;
     changeData(direction);
-    if (direction == 1 && !btnNextEnabled) {
-      VCC.Utils.setButtonEnabled(headerView.child.btnNext, btnNextEnabled);
-    }
+    setTimeout(function() {
+      if (direction == 1 && !btnNextEnabled) {
+        VCC.Utils.setButtonEnabled(headerView.child.btnNext, btnNextEnabled);
+      }
+    }, 0);
   }
 }
 
@@ -155,10 +157,6 @@ function headerButtonClick(e) {
 function setTitle() {
   headerView.child.title.text = VCC.Utils.formatDate(pageYear, pageMonth);
 }
-var startDayOfWeek;
-var startDateTime;
-var endDateTime;
-var todayDateTime;
 
 function setView(offsetLeft) {
   if (offsetLeft) {
@@ -241,27 +239,7 @@ function _setView(view, offsetLeft) {
         rows.push(row);
         //section.add(row);
       }
-      var dateTime = startDateTime + 24 * 60 * index;
-      workTotalTime += 
-      setRowData(
-        row,
-        dbDatas[index],
-        (k == 0 ? (cuttOffDate + index) : (index - dayLnegths[0])) + 1,
-        (startDayOfWeek + index) % 7,
-        dateTime,
-        dateTime <= todayDateTime
-        );
-      index++;
-      continue;
-      if (section.rowCount > i) {
-        row = rows[i];
-      } else {
-        row = createDayRow();
-        info('createDayRow');
-        rows.push(row);
-        //section.add(row);
-      }
-      var dateTime = startDateTime + 24 * 60 * index;
+      var dateTime = controller.getDateTime(index);
       workTotalTime += 
       setRowData(
         row,

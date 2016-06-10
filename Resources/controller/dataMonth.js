@@ -33,6 +33,7 @@ DataMonth.prototype = {
     }
     this.startDate = new Date(this.startYear + '/' + this.startMonth + '/' + (this.cuttOffDate + 1));
     this.lastDay = VCC.Utils.getLastDay(this.startYear, this.startMonth);
+    this.endDate = VCC.Utils.fixSummerDate(this.startDate.getTime() + (this.lastDay - 1) * 24 * 60 * 60000);
     this.restTimeData = this.setting.getRestTimeData();
     this.regularTimeData = this.setting.getRegularTimeData();
   },
@@ -43,7 +44,7 @@ DataMonth.prototype = {
     return this.startDate / 60000;
   },
   getEndDateTime: function() {
-    return this.getStartDateTime() + 24 * 60 * (this.getMonthLastDay() - 1);
+    return this.endDate / 60000;
   },
   getStartDayOfWeek: function() {
     return this.startDate.getDay();
@@ -55,6 +56,12 @@ DataMonth.prototype = {
       datas.push(this.makeDayData(dbDatas[i]));
     }
     return datas;
+  },
+  getDate: function(index) {
+    return new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate() + index);
+  },
+  getDateTime: function(index) {
+    return this.getDate(index).getTime() / 60000;
   },
   makeDayData: function(dbData) {
     var data = {startTime:0, endTime:0, workTime:0, interruptTime:0, overTime: 0, isMemo:false};
@@ -98,7 +105,7 @@ DataMonth.prototype = {
     var datas = this.getMonthlyData();
     var summary = this.getMonthlySummary(datas);
     var salaryTotal = typeof summary.salaryTotal == 'undefined' ? '' : summary.salaryTotal;
-    var endDate = new Date(this.startDate.getTime() + (this.lastDay - 1) * 24 * 60 * 60000);
+    var endDate = this.endDate;
     var text = String.format(L('str_mail_header'), VCC.Utils.formatDate(this.year, this.month).replace(/,/, ' ')) + '\n' +
       L('str_period') + ',' + 
         VCC.Utils.formatDate(this.startDate.getFullYear(), this.startDate.getMonth() + 1, this.startDate.getDate()).replace(/,/, ' ') +
@@ -117,7 +124,7 @@ DataMonth.prototype = {
     var startDayOfWeek = this.getStartDayOfWeek();
     for (var i = 0; i < datas.length; i++) {
       var data = datas[i];
-      var _date = new Date(this.startDate.getTime() + i * 24 * 60 * 60000);
+      var _date = this.getDate(i);
       Ti.API.info('_date:' + _date);
       var timeStr = VCC.Utils.createStartEndTimeStr(data, null, true);
       var cols = [];
