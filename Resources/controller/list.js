@@ -1,9 +1,10 @@
 // list.js
+var path = Ti.App.VCC.isAndroid ? '../' : '';
 if (typeof utils_js == 'undefined') {
-  Ti.include('utils.js');
+  Ti.include(path + 'utils.js');
 }
 if (typeof database_js == 'undefined') {
-  Ti.include('database.js');
+  Ti.include(path + 'database.js');
 }
 
 var List = function() {

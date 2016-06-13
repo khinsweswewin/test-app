@@ -15,7 +15,7 @@ toolBar.btnRight.addEventListener('click', function(e) {
     if (data[i].type == 'setWage') {
       var textField = data[i].child.value;
       winData.value = getTextFieldValue(textField);
-      Ti.API.info('setWage value:' + winData.value);
+      //info('setWage value:' + winData.value);
       break;
     }
   }
@@ -40,7 +40,9 @@ var datas = [
     selectionStyle: 'NONE',
     type: 'setWage',
     value: typeof winData.value == 'undefined' ? '' : winData.value,
-    left: 100
+    left: 100,
+    keyboardType: Ti.UI.KEYBOARD_NUMBERS_PUNCTUATION,
+    returnKeyType: Ti.UI.RETURNKEY_DONE
   }
 ];
 var data = [];
@@ -92,7 +94,7 @@ tableView.addEventListener('click', function(e) {
         }
       }
     })
-    VCC.Utils.openWin(winPicker, Ti.UI.currentTab);
+    VCC.Utils.openWin(winPicker, getCurrentTab());
   }
 });
 
@@ -111,8 +113,8 @@ function swichChange(e) {
 
 function onEventTextField(e) {
   var textField = e.source;
-  Ti.API.info('textField.type:' + textField.type);
-  Ti.API.info('textField.value:' + [textField.value, /^([0-9.]*)$/.test(textField.value)]);
+  //info('textField.type:' + textField.type);
+  //info('textField.value:' + [textField.value, /^([0-9.]*)$/.test(textField.value)]);
   textField.value = getTextFieldValue(textField);
 }
 

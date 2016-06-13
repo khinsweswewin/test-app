@@ -1,6 +1,7 @@
 // home.js
-Ti.include('utils.js');
-Ti.include('database.js');
+var path = Ti.App.VCC.isAndroid ? '../' : '';
+Ti.include(path + 'utils.js');
+Ti.include(path + 'database.js');
 
 var Home = function() {
 	this.initialize.apply(this, arguments);
@@ -19,8 +20,9 @@ Home.prototype = {
     } else {
       var index = 1;
       Ti.App.Properties.setInt('tabIndex', index);
-      var tab = Ti.UI.currentTabGroup.tabs[index];
-      Ti.UI.currentTabGroup.setActiveTab(tab);
+      var tabGroup = VCC.Utils.getGlobal('tabGroup');
+      var tab = tabGroup.tabs[index];
+      tabGroup.setActiveTab(tab);
       win = tab.window;
     }
     if (win) {

@@ -35,6 +35,7 @@ for (var i = 0; i < datas.length; i++) {
   var row = Ti.UI.createTableViewRow({
     className: 'datarow',
     hasChild: true,
+    height: 44,
     data: dataItem.data,
     type: dataItem.type,
     action: dataItem.action
@@ -139,6 +140,6 @@ tableView.addEventListener('click', function(e) {
         }
       }
     });
-    VCC.Utils.openWin(winPicker, Ti.UI.currentTab);
+    VCC.Utils.openWin(winPicker, getCurrentTab());
   }
 });

@@ -39,7 +39,6 @@ if (!isAndroid) {
 }
 var tableView = Ti.UI.createTableView(tableViewOptions);
 tableView.addEventListener('click', onTableViewClick);
-win.add(tableView);
 var workTime = 0;
 var dataWorks = [];
 var dataInterrupts = [];
@@ -53,14 +52,15 @@ var btnNextEnabled = false;
 
 win.addEventListener('swipe', onSwipe);
 win.focusCallback = function(isChangeWindow, isChangeTab) {
-//  Ti.API.info('winDetail:' + [isChangeWindow, isChangeTab, Ti.UI.currentTab.window.tabIndex]);
-  if (isChangeTab || Ti.UI.currentTab.window.tabIndex != Ti.App.Properties.getInt('tabIndex')) {
+  //info('winDetail:' + [isChangeWindow, isChangeTab, Ti.UI.currentTab.window.tabIndex]);
+  if (isChangeTab || getCurrentTab().window.tabIndex != Ti.App.Properties.getInt('tabIndex')) {
     setView();
   }
 }
 
 setView();
 setTitle();
+win.add(tableView);
 
 function onSwipe(e) {
   if (!isAnimate) {
@@ -127,7 +127,7 @@ function onTableViewClick(e) {
   var section = e.section;
   var row = e.row;
   var rowdata = e.rowData;
-  var tab = Ti.UI.currentTab;
+  var tab = getCurrentTab();
   
   switch (row.action) {
   case 'picker':
@@ -156,7 +156,7 @@ function onTableViewClick(e) {
     if (!limit.maxTime && dbDatas.nextStartTime) {
       limit.maxTime = dbDatas.nextStartTime;
     }
-    Ti.API.info('data:' + data + ', limit.minTime:' + limit.minTime + ', limit.maxTime:' + limit.maxTime);
+    //info('data:' + data + ', limit.minTime:' + limit.minTime + ', limit.maxTime:' + limit.maxTime);
     if (limit.maxTime && limit.minTime > limit.maxTime) {
       VCC.Utils.createDialog(String.format(L('str_notice_going_to_work'), VCC.Utils.getTimeStr(dbDatas.prevStartTime, win.dateTime), VCC.Utils.getTimeStr(dbDatas.prevEndTime, win.dateTime)), [L('str_ok')]);
       return;
@@ -304,12 +304,12 @@ function initView() {
 }
 
 function setView() {
-  Ti.API.info('setView()');
+  //info('setView()');
   if (!tableData) {
     initView();
   }
   todayDateTime = VCC.Utils.getDayDateTime();
-  Ti.API.info('todayDateTime:' + todayDateTime);
+  info('todayDateTime:' + todayDateTime);
   var _btnNextEnabled = btnNextEnabled;
   btnNextEnabled = todayDateTime > win.dateTime;
   if (!isAnimate || !_btnNextEnabled) {
@@ -317,7 +317,7 @@ function setView() {
   }
   controller.setDateTime(win.dateTime);
   dbDatas = controller.getDateData();
-  Ti.API.info('dbDatas:' + [dbDatas.workStates.length, dbDatas.interruptStates.length, dbDatas.memo]);
+  info('dbDatas:' + [dbDatas.workStates.length, dbDatas.interruptStates.length, dbDatas.memo]);
   toolBar.btnRight.enabled = !!(dbDatas.workStates.length || dbDatas.interruptStates.length || dbDatas.memo != '');
   dataWorks = dbDatas.workStates;
   dataInterrupts = dbDatas.interruptStates;
@@ -335,7 +335,7 @@ function setView() {
   if (!dataInterruptsLength || (interruptEndTime && (!workEndTime || interruptEndTime < (workEndTime - 1)))) {
     dataInterruptsLength++;
   }
-  Ti.API.info('tableData.startTime.length, dataWorks.length:' + [tableData.startTime.length, dataWorks.length]);
+  info('tableData.startTime.length, dataWorks.length:' + [tableData.startTime.length, dataWorks.length]);
   if (tableData.startTime.length != (dataWorks.length || 1)) {
     isRowCountChange = true;
     var section = tableData.startTime[0].parent;
@@ -373,7 +373,7 @@ function setView() {
       tableData.endTime = tableData.endTime.slice(0, dataWorks.length || 1);
     }
   }
-  Ti.API.info('tableData.suspend.length, dataInterruptsLength:' + [tableData.suspend.length, dataInterruptsLength]);
+  info('tableData.suspend.length, dataInterruptsLength:' + [tableData.suspend.length, dataInterruptsLength]);
   if (tableData.suspend.length != dataInterruptsLength) {
     isRowCountChange = true;
     var section = tableData.suspend[0].parent;
@@ -396,7 +396,7 @@ function setView() {
   if (isRowCountChange) {
     tableView.data = tableView.data;
   }
-  Ti.API.info('dataWorks.length:' + dataWorks.length);
+  info('dataWorks.length:' + dataWorks.length);
   for (var i = 0; i < 1 || i < dataWorks.length; i++) {
     var data = dataWorks[i] || {};
     var startData = data.startTime > 0 ? VCC.Utils.getTimeStr(data.startTime, win.dateTime) : '';
@@ -405,9 +405,9 @@ function setView() {
     VCC.Utils.setTableViewRowValues(tableData.endTime[i], {value: endData, data: data.endTime, dataIndex: i})
     VCC.Utils.setTableViewRowEnabled(tableData.endTime[i], startData != '');
   }
-  Ti.API.info('setTableViewRowValues:' + tableData.rest);
+  //info('setTableViewRowValues:' + tableData.rest);
   VCC.Utils.setTableViewRowValues(tableData.rest, {value: restStr});
-  Ti.API.info('dataInterrupts.length, tableData.suspend.length:' + [dataInterrupts.length, tableData.suspend.length]);
+  info('dataInterrupts.length, tableData.suspend.length:' + [dataInterrupts.length, tableData.suspend.length]);
   for (var i = 0; i <= dataInterrupts.length; i++) {
     var data = dataInterrupts[i] || {};
     var interruptStr = getInterruptStr(data.startTime, data.endTime);

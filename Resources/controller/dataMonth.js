@@ -1,9 +1,10 @@
 // dataMonth.js
+var path = Ti.App.VCC.isAndroid ? '../' : '';
 if (typeof utils_js == 'undefined') {
-  Ti.include('utils.js');
+  Ti.include(path + 'utils.js');
 }
 if (typeof database_js == 'undefined') {
-  Ti.include('database.js');
+  Ti.include(path + 'database.js');
 }
 
 var DataMonth = function() {
@@ -153,9 +154,10 @@ DataMonth.prototype = {
       var win = VCC.Utils.createWin(Ti.App.VCC.Windows[tabIndex].winjs, tabIndex);
       win.open({animated: true});
     } else {
-      var currentUrl = Ti.UI.currentTab.window.url;
-      var tab = Ti.UI.currentTabGroup.tabs[tabIndex];
-      Ti.UI.currentTabGroup.setActiveTab(tab);
+      var tabGroup = VCC.Utils.getGlobal('tabGroup');
+      var currentUrl = (Ti.UI.currentTab || tabGroup.activeTab).window.url;
+      var tab = tabGroup.tabs[tabIndex];
+      tabGroup.setActiveTab(tab);
       var currentWindow;
       var cb = function(e) {
         if (currentWindow) currentWindow.removeEventListener('close', cb);

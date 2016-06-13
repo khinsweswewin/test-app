@@ -1,6 +1,7 @@
 // summary.js
-Ti.include('utils.js');
-Ti.include('database.js');
+var path = Ti.App.VCC.isAndroid ? '../' : '';
+Ti.include(path + 'utils.js');
+Ti.include(path + 'database.js');
 
 var Summary = function() {
   this.initialize.apply(this, arguments);

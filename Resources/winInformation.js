@@ -71,7 +71,7 @@ var button = Ti.UI.createButton({
 button.addEventListener('click', function(e) {
   //クレジット画面を開く
   var winCredit = VCC.Utils.createWin('winCredit.js');
-  VCC.Utils.openWin(winCredit, Ti.UI.currentTab);
+  VCC.Utils.openWin(winCredit, getCurrentTab());
 });
 
 win.add(imgLogo);

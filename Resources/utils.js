@@ -21,11 +21,19 @@ function info(message) {
 function setGlobal(key, value) {
   var golbal = Ti.App.Global || {};
   golbal[key] = value;
-  info('Ti.App.Global:' + Ti.App.Global);
   Ti.App.Global = golbal;
 }
 function getGlobal(key) {
   return Ti.App.Global ? Ti.App.Global[key] : undefined;
+}
+function getCurrentTab() {
+  if (Ti.UI.currentTab) {
+    return Ti.UI.currentTab;
+  }
+  var tabGroup = VCC.Utils.getGlobal('tabGroup');
+  if (tabGroup) {
+    return tabGroup.activeTab;
+  }
 }
 var VCC;
 if (typeof VCC == 'undefined') {
@@ -354,6 +362,8 @@ if (typeof VCC.Utils == 'undefined') {
         font:{fontSize:20}
       });
       flexSpace = Ti.UI.createButton({systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE});
+    } else {
+      lblBlank = {};
     }
     var lblTitle;
     if (isTabWin || Ti.App.VCC.isAndroid) {
@@ -403,11 +413,11 @@ if (typeof VCC.Utils == 'undefined') {
       }
     } else {
       if (isTabWin) {
-        toolbar = Ti.UI.createToolbar({
+        toolbar = Ti.UI.iOS.createToolbar({
           items: [partsLeft, flexSpace, lblTitle, flexSpace, partsRight],
           top: 0,
           borderTop: true,
-          borderBottom: true,
+          borderBottom: false,
           translucent: true,
           barColor: '#000'
         });
@@ -415,16 +425,19 @@ if (typeof VCC.Utils == 'undefined') {
     }
     return {toolbar:toolbar, btnLeft:partsLeft, title:lblTitle, btnRight:partsRight};
   };
-  VCC.Utils.createWin = function (url, parent, options) {
+  VCC.Utils.createWin = function (url, parent, options, isUnsetUrl) {
     var isTabWin = parent == +parent;
     var opt = {  
       backgroundColor: '#fff',
-      url: url,
+      //url: url,
       orientationModes: Ti.App.VCC.OrientationModes,
       navBarHidden: isTabWin,
       tabBarHidden: Ti.App.VCC.isAndroid
       //exitOnClose: exitOnClose
     };
+    if (!isUnsetUrl) {
+      opt.url = url;
+    }
     if (isTabWin) {
       opt.tabIndex = parent;
     } else if (parent) {
@@ -554,24 +567,31 @@ if (typeof VCC.Utils == 'undefined') {
       }    
     });
     if (Ti.App.VCC.isAndroid) {
-      newWin.addEventListener('open', function() {
-        var activity = Ti.Android.currentActivity;
-        activity.onCreateOptionsMenu = function(e) {
-          var menu = e.menu;
-          for (var i = 0; i < Ti.App.VCC.Windows.length; i++) {
-            var menuItem = menu.add({title: L(Ti.App.VCC.Windows[i].titleid)});
-            menuItem.setIcon(Ti.App.VCC.Windows[i].icon);
-            if (!isTabWin || i != parent) {
-              addEvent(menuItem, i);
-            }
+      var activity = newWin.activity;
+      activity.onCreateOptionsMenu = function(e) {
+        var menu = e.menu;
+        for (var i = 0; i < Ti.App.VCC.Windows.length; i++) {
+          var menuItem = menu.add({title: L(Ti.App.VCC.Windows[i].titleid)});
+          menuItem.setIcon(Ti.App.VCC.Windows[i].icon);
+          if (!isTabWin || i != parent) {
+            addEvent(menuItem, i);
           }
-        };
-      });
+        }
+      };
       function addEvent(menuItem, index) {
         menuItem.onclick = function() {
-          var win = VCC.Utils.createWin(Ti.App.VCC.Windows[index].winjs, index);
+          var wins = VCC.Utils.getGlobal('wins');
+          var win = wins[index];
+          if (!win) {
+            win = VCC.Utils.createWin(Ti.App.VCC.Windows[index].winjs, index);
+            Ti.include(Ti.App.VCC.Windows[index].winjs);
+            initialize(win);
+            wins[index] = win;
+            VCC.Utils.setGlobal('wins', wins);
+          }
           win.open({animated: true});
           Ti.App.Properties.setInt('tabIndex', index);
+          newWin.close();
         };
         menuItem.addEventListener('click', menuItem.onclick);
       }
@@ -584,6 +604,21 @@ if (typeof VCC.Utils == 'undefined') {
     } else {
       win.open({animated: true});
     }
+  };
+  VCC.Utils.setToolbarButton = function (toolBar) {
+    var toolbar = toolBar.toolbar;
+    if (!toolbar) return;
+    var items = toolbar.items;
+    var setItems = false;
+    if (toolBar.btnLeft.enabled !== undefined) {
+      items[0] = toolBar.btnLeft;
+      setItems = true;
+    }
+    if (toolBar.btnRight.enabled !== undefined) {
+      items[4] = toolBar.btnRight;
+      setItems = true;
+    }
+    if (setItems) toolbar.setItems(items);
   };
   VCC.Utils.slideView = function (win, newView, oldView, direction, callback, isRemove) {
     var winWidth = Titanium.Platform.displayCaps.platformWidth;
@@ -745,6 +780,7 @@ if (typeof VCC.Utils == 'undefined') {
         rowWorkingTimes.push({startTime: workStartTime, endTime: workTime.endTime});
       }
     }
+//    info('totalTime, interruptTime, restTime:' + [totalTime, interruptTime, restTime]);
     totalTime -= interruptTime + restTime;
     var regularTimeTotal = 0;
     if (regularTimes.length) {
@@ -774,7 +810,7 @@ if (typeof VCC.Utils == 'undefined') {
     } else {
       regularTimeTotal = totalTime;
     }
-    //Ti.API.info('calculateTime:' + [totalTime, totalTime - regularTimeTotal, interruptTime, restTime]);
+    //info('calculateTime:' + [totalTime, totalTime - regularTimeTotal, interruptTime, restTime]);
     return {totalTime: totalTime, overTime: totalTime - regularTimeTotal, interruptTime: interruptTime, restTime: restTime};
     function convTime(times) {
       var _times = [];
@@ -788,13 +824,14 @@ if (typeof VCC.Utils == 'undefined') {
     if (Ti.Platform.osname != 'android') {
       var isIpad = Ti.Platform.osname == 'ipad';
       Titanium.Admob = require('ti.admob');
-      var width = isIpad ? 748 : 320;
+      var width = isIpad ? 728 : 320;
       var margin = (Titanium.Platform.displayCaps.platformWidth - width) / 2;
       var adview = Titanium.Admob.createView({
         bottom: 0,
         left: margin,
         right: margin,
-        height: isIpad ? 110 : 48,
+        height: isIpad ? 90 : 50,
+        width: width,
         zIndex: 5,
         //testing: true,
         adBackgroundColor: 'black',
@@ -803,20 +840,17 @@ if (typeof VCC.Utils == 'undefined') {
         publisherId: isIpad ? Ti.App.VCC.ADMOB_PUBLISHER_ID_IPAD : Ti.App.VCC.ADMOB_PUBLISHER_ID_IPHONE
       });
       win.add(adview);
-      if (!isIpad) {
-        adview.addEventListener('change',function(e) {
-          switch (e.state) {
-    //      case 'willPresentFullScreenModal':
-          case 'didPresentFullScreenModal':
-            Ti.UI.iPhone.hideStatusBar();
-            break;
-          case 'willDismissFullScreenModal':
-    //      case 'didDismissFullScreenModal':
-            Ti.UI.iPhone.showStatusBar();
-            break;
-          }
-        });
+/*
+      function adCb(e) {
+        info('[ti.admob]' + e.type);
       }
+      adview.addEventListener('didReceiveAd', adCb);
+      adview.addEventListener('didFailToReceiveAd', adCb);
+      adview.addEventListener('willPresentScreen', adCb);
+      adview.addEventListener('willDismissScreen', adCb);
+      adview.addEventListener('didDismissScreen', adCb);
+      adview.addEventListener('willLeaveApplication', adCb);
+*/
     }
   };
   VCC.Utils.createHeaderButton = function (title, action, clickCallback) {
@@ -876,7 +910,8 @@ if (typeof VCC.Utils == 'undefined') {
   }
   VCC.Utils.createTableViewRow = function(dataItem) {
     var opt = {
-      className: 'datarow'
+      className: 'datarow',
+      height: 44
     };
     for (var n in dataItem) {
       switch (n) {

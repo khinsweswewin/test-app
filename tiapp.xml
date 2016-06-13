@@ -3,7 +3,7 @@
     <sdk-version>3.2.0.GA</sdk-version>
     <deployment-targets>
         <target device="tizen">false</target>
-        <target device="mobileweb">true</target>
+        <target device="mobileweb">false</target>
         <target device="blackberry">false</target>
         <target device="iphone">true</target>
         <target device="ipad">true</target>
@@ -12,11 +12,11 @@
     <id>net.vccorp.timesheet4sp</id>
     <name>TimeSheet</name>
     <appname>TimeSheet</appname>
-    <version>1.34</version>
+    <version>1.35</version>
     <publisher>Virtual Communications Corporation</publisher>
     <url>http://www.vccorp.net/</url>
     <description>timesheet</description>
-    <copyright>2011 by vccorp.net</copyright>
+    <copyright>2013 by vccorp.net</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>true</prerendered-icon>
@@ -24,8 +24,11 @@
     <statusbar-hidden>false</statusbar-hidden>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
+    <analytics>false</analytics>
     <guid>6cedeae6-56d1-44a8-bb1c-056e512562e8</guid>
+    <ios>
+        <min-ios-ver>4.3</min-ios-ver>
+    </ios>
     <iphone>
         <orientations device="iphone">
             <orientation>Ti.UI.PORTRAIT</orientation>
@@ -43,6 +46,6 @@
         </manifest>
     </android>
     <modules>
-        <module version="1.0a">ti.admob</module>
+        <module platform="iphone" version="1.5.0">ti.admob</module>
     </modules>
 </ti:app>

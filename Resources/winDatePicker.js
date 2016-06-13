@@ -18,7 +18,12 @@ toolBar.btnRight.addEventListener('click', function(e) {
 
 var winData = win.data;
 var picker;
-var columnWidth = Math.max(Titanium.Platform.displayCaps.platformWidth / 2, 220);
+var columnWidth = Titanium.Platform.displayCaps.platformWidth / 2;
+if (columnWidth < 220) {
+  columnWidth = 220;
+} else if (columnWidth > 300) {
+  columnWidth = 300;
+}
 var rows = [];
 var columns = [];
 
@@ -68,8 +73,8 @@ setTimeout(function() {
 
 function getPickerValue() {
   var row = picker.getSelectedRow(0);
-  Ti.API.info('getPickerValue:' + row);
-  Ti.API.info('picker.value:' + row.value);
+  //info('getPickerValue:' + row);
+  //info('picker.value:' + row.value);
   return row ? row.value: null;
 }
 

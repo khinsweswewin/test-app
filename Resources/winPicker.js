@@ -2,7 +2,7 @@ Ti.include('utils.js');
 
 var win = Ti.UI.currentWindow;
 win.focusCallback = function(isChangeWindow, isChangeTab) {
-  Ti.API.info('winPicker:' + [isChangeWindow, isChangeTab, Ti.UI.currentTab.window.tabIndex]);
+  //info('winPicker:' + [isChangeWindow, isChangeTab, Ti.UI.currentTab.window.tabIndex]);
   if (isChangeTab && win.isCloseOnChangeTab) {
     win.onChangeTab = true;
     win.close();
@@ -36,14 +36,14 @@ if (win.maxTime !== undefined) {
   maxDate = createDate(win.maxTime);
 }
 var dataDate = createDate(win.data) || new Date(VCC.Utils.getDateTime() * 60000);
-//Ti.API.info('dateDate:' + dataDate);
+//info('dateDate:' + dataDate);
 dataDate = VCC.Utils.checkDateRange(dataDate, minDate, maxDate);
 var picker;
 var standardDate = null;
 var columns = [];
 var rowIndexes = [];
 var useMyTimePicker = isAndroid;
-Ti.API.info('createPicker:' + [dataDate, minDate, maxDate]);
+//info('createPicker:' + [dataDate, minDate, maxDate]);
 if (useMyTimePicker) {
 //if (true) {
   var columnWidth = (Titanium.Platform.displayCaps.platformWidth - 30) / 3;
@@ -87,11 +87,18 @@ if (useMyTimePicker) {
     value: dataDate,
     minDate: minDate,
     maxDate: maxDate,
-    useSpinner: isAndroid,
-    top: (isAndroid ? 94 : 50)
+    useSpinner: isAndroid//,
+    //top: (isAndroid ? 94 : 50)
   });
 }
-picker.top = Math.min(winHeight / 2, winHeight - picker.height);
+
+if (picker.height) {
+  picker.top = Math.min(winHeight / 2, winHeight - picker.height);
+} else if (winHeight < 600) {
+  picker.bottom = 0;
+} else {
+  picker.top = winHeight / 2;
+}
 picker.selectionIndicator = true;
 picker.addEventListener('change', function(e) {
   rowIndexes[e.columnIndex] = e.rowIndex;
@@ -111,7 +118,7 @@ var btnNow = Ti.UI.createButton({
   backgroundLeftCap: 30.0,
   height: 66,
   width: 215,
-  top: picker.top - 108
+  top: winHeight / 3 - 110
 });
 
 btnNow.addEventListener('click', function(e){
@@ -119,7 +126,7 @@ btnNow.addEventListener('click', function(e){
   var now = new Date();
   date.setHours(now.getHours());
   date.setMinutes(now.getMinutes());
-  Ti.API.info('btnNow:' + [date, minDate, maxDate]);
+  //info('btnNow:' + [date, minDate, maxDate]);
   if (date.getTime() < minDate.getTime()) {
     date = minDate;
   } else if (date.getTime() > maxDate.getTime()) {
