@@ -90,4 +90,17 @@
 	<string name="str_end_of_the_month">maand eind</string>
 	<string name="str_period">periode</string>
 	<string name="str_month"></string>
+	<string name="str_setting_addon">Meer functies</string>
+	<string name="str_purchase_addon">Koop Add-On</string>
+	<string name="str_purchase_buy">Kopen</string>
+	<string name="str_remove_ads">Reclame verwijderen</string>
+	<string name="str_past_purchases">Eerdere aankopen</string>
+	<string name="str_restore_purchase">Herstel uw aankoopinformatie</string>
+	<string name="err_failed_talk_to_apple">De gegevens konden niet worden verkregen</string>
+	<string name="err_request_invalid_product">FOUT: ongeldig product</string>
+	<string name="err_purchse_canceled">Uw aankoop werd geannuleerd</string>
+	<string name="err_buying_failed">Er deed zich een fout voor bij uw aankoop</string>
+	<string name="err_no_purchase_to_store">Er is geen aankoopinformatie</string>
+	<string name="str_thanks_purchase">Dank u voor uw aankoop</string>
+	<string name="str_notification_remove_ads_info">We hebben een functie toegevoegd aan het verwijderen van reclame.\nKoop het aub met de "Koop Add-on"-optie op het "Instellingen"-scherm.</string>
 </resources>

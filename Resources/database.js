@@ -543,7 +543,7 @@ VCC.DB.prototype = {
   },
   dummy: function() {
   }
-}
+};
 
 /*
 var db = new VCC.DB();

@@ -1,4 +1,5 @@
 //initialize(Ti.UI.currentWindow);
+var offsetTop = isOldiOS ? 0 : 20;
 
 function initialize(win) {
 //Ti.include('utils.js');
@@ -53,7 +54,7 @@ function initialize(win) {
       controller.exportProcess();
     });
 
-    headerView = VCC.Utils.createHeaderView('', 44, {prev: L('str_month_prev'), next: L('str_month_next')}, headerButtonClick);
+    headerView = VCC.Utils.createHeaderView('', offsetTop + 44, {prev: L('str_month_prev'), next: L('str_month_next')}, headerButtonClick);
     win.add(headerView);
     headerView.child.title.addEventListener('dblclick', onTitleClick);
     headerView.child.title.addEventListener('swipe', onSwipe);
@@ -66,7 +67,7 @@ function initialize(win) {
       } else if (isChangeWindow) {
         win.winDetail = null;
       }
-    }
+    };
     setTitle();
     setView();
     // add admob
@@ -171,11 +172,20 @@ function initialize(win) {
   }
   function _setView(view, offsetLeft) {
     //info('setView(), winList:' + view.tableData);
+    var isUpdate = false;
+    var todayDateTime = VCC.Utils.getDayDateTime();
     controller.setYaerMonth(pageYear, pageMonth);
+    var startDateTime = controller.getStartDateTime();
+    if (todayDateTime < startDateTime) {
+      var date = new Date(todayDateTime * 60000);
+      pageYear = date.getFullYear();
+      pageMonth = date.getMonth() + 1;
+      setTitle();
+      controller.setYaerMonth(pageYear, pageMonth);
+      startDateTime = controller.getStartDateTime();
+    }
     var startDayOfWeek = controller.getStartDayOfWeek();
     //info('startDayOfWeek:' + startDayOfWeek);
-    var todayDateTime = VCC.Utils.getDayDateTime();
-    var startDateTime = controller.getStartDateTime();
     var endDateTime = controller.getEndDateTime();
     var dbDatas = controller.getMonthlyData();
     var lastDay = dbDatas.length;
@@ -209,8 +219,14 @@ function initialize(win) {
       }
   //    sections[0].headerView.show();
   //    sections[1].headerView.show();
-      sections[0].headerTitle = L('str_month_' + month) + L('str_month');
-      sections[1].headerTitle = L('str_month_' + pageMonth) + L('str_month');
+      var monthStr1 = L('str_month_' + month) + L('str_month');
+      var monthStr2 = L('str_month_' + pageMonth) + L('str_month');
+      if (data[1].headerTitle != monthStr1) {
+        data[1].headerTitle = sections[0].headerTitle = monthStr1;        
+      }
+      if (data[2].headerTitle != monthStr2) {
+        data[2].headerTitle = sections[1].headerTitle = monthStr2;        
+      }
     }
     var dayLnegths = [lastDay - cuttOffDate, cuttOffDate];
     //info('data[1].rows.length:' + (data[1].rows ? data[1].rows.length : 0));
@@ -234,6 +250,7 @@ function initialize(win) {
           //info('createDayRow');
           rows.push(row);
           //section.add(row);
+          isUpdate = true;
         }
         var dateTime = controller.getDateTime(index);
         workTotalTime += 
@@ -255,6 +272,7 @@ function initialize(win) {
           //section.remove(row);
           //view.tableView.remove(row);
         }
+        isUpdate = true;
       }
       view.tableData.sectionRows[k] = rows;
       section.rows = rows;
@@ -268,10 +286,22 @@ function initialize(win) {
     info('tableView.data[1]:' + [data[1].rows.length, data[1].rowCount]);
     //info('view.tableView.data[1].headerTitle:' + view.tableView.data[1]);
     //view.tableView.data = view.tableView.data;
-    view.tableView.setData(data);
-    view.tableData.total.text = createWorkTotalStr(workTotalTime);
+    //view.tableView.setData(data);
+    info(data[1]);
+    info(data[2]);
+    if (isUpdate) {
+      view.tableView.updateSection(data[1], 1, {animated: false});
+      view.tableView.updateSection(data[2], 2, {animated: false});
+    }
+    //view.tableData.total.text = createWorkTotalStr(workTotalTime);
+    var totalText = createWorkTotalStr(workTotalTime);
+    if (view.tableData.totalRows[0].children[0].text != totalText) {
+      view.tableData.totalRows[0].children[0].text = view.tableData.totalRows[1].children[0].text = totalText;
+    }
     VCC.Utils.setGlobal('updateList', false);
-    view.tableView.show();
+    if (isUpdate) {
+      view.tableView.show();
+    }
   }
   function initView(offsetLeft) {
     var view = views[viewIndex];
@@ -284,15 +314,10 @@ function initialize(win) {
       color: '#000',
       textAlign: 'center'
     });
-    var totalRow = Ti.UI.createTableViewRow({
-      backgroundColor: '#fff',
-      selectedBackgroundColor: '#fff',
-      className: 'total',
-      height: 44
-    });
+    var totalRow = createTotalRow();
     //info('totalRow:' + totalRow);
-    totalRow.add(lblTotal);
-    view.tableData.total = lblTotal;
+    //totalRow.add(lblTotal);
+    //view.tableData.total = lblTotal;
     rowData.push(totalRow);
     view.tableData.totalRows.push(totalRow);
     
@@ -308,12 +333,13 @@ function initialize(win) {
     */
     rowData.push(Ti.UI.createTableViewSection());
     rowData.push(Ti.UI.createTableViewSection());
-    rowData.push(totalRow);
-    view.tableData.totalRows.push(totalRow);
+    var totalRow2 = createTotalRow();
+    rowData.push(totalRow2);
+    view.tableData.totalRows.push(totalRow2);
     var tableViewOptions = {
       data: rowData,
-      top: 89,
-      footerView: Ti.UI.createView({height: 48}),
+      top: offsetTop + 89,
+      footerView: Ti.UI.createView({height: isTablet ? 90 : 48}),
       visible: false
     };
     if (offsetLeft) {
@@ -327,10 +353,10 @@ function initialize(win) {
       var index = e.index;
       var section = e.section;
       var row = e.row;
-      if (row.hasChild && row.dateTime) {
-        var rowdata = e.rowData;
-        openWinDetail(row.dateTime);
-      }
+ //     if (row.hasChild && row.dateTime) {
+ //       var rowdata = e.rowData;
+ //       openWinDetail(row.dateTime);
+ //     }
     });
   }
   
@@ -400,6 +426,13 @@ function initialize(win) {
     row.add(total);
     child.total = total;
     row.child = child;
+    row.addEventListener('click', function(e) {
+      var row = e.row;
+      if (row.hasChild && row.dateTime) {
+        var rowdata = e.rowData;
+        openWinDetail(row.dateTime);
+      }
+    });
     return row;
   }
   function createWorkTotalStr(workTotalTime) {
@@ -434,4 +467,20 @@ function initialize(win) {
     }
     return workTime;
   }
+}
+
+function createTotalRow() {
+  var lblTotal = Ti.UI.createLabel({
+    text: '', //L('str_total_worktime'),
+    color: '#000',
+    textAlign: 'center'
+  });
+  var totalRow = Ti.UI.createTableViewRow({
+    backgroundColor: '#fff',
+    selectedBackgroundColor: '#fff',
+    className: 'total',
+    height: 44
+  });
+  totalRow.add(lblTotal);
+  return totalRow;
 }

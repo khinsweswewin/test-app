@@ -35,8 +35,7 @@
 	<string name="str_set_wage_hint">请输入计时工资</string>
 	<string name="str_set_wage_message">设定计时工资默认值</string>
 	<string name="str_suspend_edit">编辑中断时间</string>
-	<string name="str_support">支持
-</string>
+	<string name="str_support">支持</string>
 	<string name="str_about">关于这个程序</string>
 	<string name="str_worktime">上班时间</string>
 	<string name="str_total_worktime">上班总时间</string>
@@ -91,4 +90,17 @@
 	<string name="str_end_of_the_month">月底</string>
 	<string name="str_period">时段</string>
 	<string name="str_month">月</string>
+	<string name="str_setting_addon">更多功能</string>
+	<string name="str_purchase_addon">购买附加组件</string>
+	<string name="str_purchase_buy">购买</string>
+	<string name="str_remove_ads">移除广告</string>
+	<string name="str_past_purchases">过往购买信息</string>
+	<string name="str_restore_purchase">还原你的购买信息</string>
+	<string name="err_failed_talk_to_apple">无法获取数据</string>
+	<string name="err_request_invalid_product">ERROR: Invalid product</string>
+	<string name="err_purchse_canceled">你的购买已被取消</string>
+	<string name="err_buying_failed">你的购买发生错误</string>
+	<string name="err_no_purchase_to_store">没有购买信息</string>
+	<string name="str_thanks_purchase">感谢您的购买</string>
+	<string name="str_notification_remove_ads_info">我们已添加移除广告的功能\n请在“设置”界面从“购买附加组件”选项中购买此功能。\n</string>
 </resources>

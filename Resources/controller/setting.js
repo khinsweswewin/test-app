@@ -71,6 +71,40 @@ Setting.prototype = {
       this.cuttOffDate = cuttOffDate;
     }
   },
+  getPurchased: function(identifier) {
+    if (!this.purchased) {
+      this.purchased = {};
+    }
+    if (this.purchased[identifier] === undefined) {
+      var data = this.db.getProperty('Pcd-' + identifier);
+      if (Ti.Utils === undefined) {
+        return;
+      }
+      this.purchased[identifier] = data == Ti.Utils.sha1(identifier + ':' + true);
+    }
+    return this.purchased[identifier];
+  },
+  setPurchased: function(identifier, value) {
+    if (!this.purchased) {
+      this.purchased = {};
+    }
+    this.db.setProperty('Pcd-' + identifier, Ti.Utils.sha1(identifier + ':' + value));
+    this.purchased[identifier] = value;
+    return;
+  },
+  isNotification: function(flag) {
+    if (this.notification === undefined) {
+      this.notification = this.db.getProperty('notification') || 0;
+    }
+    return (this.notification & flag) != 0;
+  },
+  setNotification: function(flag) {
+    if (this.notification === undefined) {
+      this.notification = this.db.getProperty('notification') || 0;
+    }
+    this.notification |= flag;
+    this.db.setProperty('notification', this.notification);
+  },
   dummy: function() {
   }
 };

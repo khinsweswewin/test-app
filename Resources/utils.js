@@ -1,7 +1,12 @@
 var utils_js = true;
+var isOldiOS = Ti.App.VCC.versionInt < 7;
+var isTablet = Titanium.Platform.displayCaps.platformWidth > 728;
 L = function(key, hint, isNoRemoveRetrunCode) {
   var str = hint === undefined ? Ti.Locale.getString(key) : Ti.Locale.getString(key, hint);
-  if (!Ti.App.VCC.isAndroid) {
+  if (str === null) {
+    str = '';
+  }
+  if (!Ti.App.VCC.isAndroid && 0) {
     var i = 1;
     while (str.indexOf('%' + i + '$') >= 0) {
       str = str.replace('%' + i + '$', '%');
@@ -144,7 +149,7 @@ if (typeof VCC.Utils == 'undefined') {
   VCC.Utils.getDayDateTime = function(dateTime) {
     var date = dateTime ? new Date(dateTime * 60000) : new Date();
     return VCC.Utils.resetTime(date).getTime() / 60000;
-  }
+  };
   VCC.Utils.getDateTime = function (dateTime) {
     var date = new Date();
     if (dateTime) {
@@ -152,7 +157,7 @@ if (typeof VCC.Utils == 'undefined') {
     } else {
       return Math.floor(date.getTime() / 60000);
     }
-  }
+  };
   VCC.Utils.replaceDayStr = function (day) {
     switch (day) {
       case 0: return L('str_sunday'); case 1: return L('str_monday'); case 2: return L('str_tuesday');
@@ -200,7 +205,7 @@ if (typeof VCC.Utils == 'undefined') {
       str += (str != '' ? ':' : '') + String.formatDecimal(minute, '00');
     }
     return str;
-  }
+  };
   VCC.Utils.formatDate_en = function (year, month, day, dayOfWeek, hour, minute) {
     var str = '';
     if (typeof dayOfWeek == 'number') {
@@ -222,7 +227,7 @@ if (typeof VCC.Utils == 'undefined') {
       str += (str != '' ? ':' : '') + String.formatDecimal(minute, '00');
     }
     return str;
-  }
+  };
   VCC.Utils.getTimeStr = function(minutes, todayTime) {
     if (!minutes) {
       return '';
@@ -235,7 +240,7 @@ if (typeof VCC.Utils == 'undefined') {
     } else {
       return VCC.Utils.formatHourMinute(date.getHours(), date.getMinutes());
     }
-  }
+  };
   VCC.Utils.formatHourMinute = function(hours, minutes, isNoTopPadding) {
     if (minutes != +minutes) {
       minutes = hours % 60;
@@ -243,7 +248,7 @@ if (typeof VCC.Utils == 'undefined') {
     }
     var hourStr = isNoTopPadding ? ('' + hours) : String.formatDecimal(hours, '00');
     return String.format('%s:%s', hourStr, String.formatDecimal(minutes, '00'));
-  }
+  };
   VCC.Utils.createStartEndTimeStr = function (startTime, endTime, isDiffDayLast) {
     if (typeof startTime == 'object' && !endTime) {
       endTime = startTime.endTime;
@@ -270,7 +275,7 @@ if (typeof VCC.Utils == 'undefined') {
       data.endTime = endTime;
     }
     return data;
-  }
+  };
   VCC.Utils.createMinMaxTime = function (timeData, setTimeType, baseDateTime, offsetDate) {
     var minTime = 0, maxTime = offsetDate != -1 ? ((24 * 60) * (1 + (offsetDate || 0)) - 1) : null;
     if (baseDateTime) {
@@ -293,14 +298,14 @@ if (typeof VCC.Utils == 'undefined') {
       }
     }
     return {minTime: minTime, maxTime: maxTime};
-  }
+  };
   VCC.Utils.createTimeRangeStr = function (timeData) {
-    return VCC.Utils.formatHourMinute(timeData.startTime) + ' - ' + VCC.Utils.formatHourMinute(timeData.endTime)
-  }
+    return VCC.Utils.formatHourMinute(timeData.startTime) + ' - ' + VCC.Utils.formatHourMinute(timeData.endTime);
+  };
   VCC.Utils.getMonthDateStr = function (dateTime) {
     var date = new Date(dateTime * 60000);
     return VCC.Utils.formatDate(null, date.getMonth() + 1, date.getDate());
-  }
+  };
   VCC.Utils.openEmail = function (to, subject, body, cc, bcc, atachment) {
     var dialog = Ti.UI.createEmailDialog({
       toRecipients: to,
@@ -329,7 +334,7 @@ if (typeof VCC.Utils == 'undefined') {
     var opts = {
         title: '',
         options: buttons
-    }
+    };
     if (title) {
       opts.title = title;
     }
@@ -369,7 +374,7 @@ if (typeof VCC.Utils == 'undefined') {
     if (isTabWin || Ti.App.VCC.isAndroid) {
       lblTitle = Ti.UI.createLabel({
         text: title,
-        color:'#fff',
+        color: isOldiOS ? '#fff' : null,
         font: {fontSize:20, fontWeight: 'bold'},
         textAlign: 'center'
       });
@@ -415,11 +420,11 @@ if (typeof VCC.Utils == 'undefined') {
       if (isTabWin) {
         toolbar = Ti.UI.iOS.createToolbar({
           items: [partsLeft, flexSpace, lblTitle, flexSpace, partsRight],
-          top: 0,
+          top: isOldiOS ? 0 : 20,
           borderTop: true,
           borderBottom: false,
           translucent: true,
-          barColor: '#000'
+          barColor: isOldiOS ? '#000' : null
         });
       }
     }
@@ -443,7 +448,7 @@ if (typeof VCC.Utils == 'undefined') {
     } else if (parent) {
       opt.parentWin = parent;
     }
-    if (!isTabWin) {
+    if (!isTabWin && isOldiOS) {
       opt.barColor = '#000';
     }
     if (options) {
@@ -696,7 +701,7 @@ if (typeof VCC.Utils == 'undefined') {
         }
       }
       minusTimes = minusTimes.concat(_restTimes);
-      minusTimes.sort(function(a, b) {return a.startTime - b.startTime});
+      minusTimes.sort(function(a, b) {return a.startTime - b.startTime;});
     }
     var regularTimes = [];
     if (regularTime) {
@@ -822,34 +827,54 @@ if (typeof VCC.Utils == 'undefined') {
   };
   VCC.Utils.addAdmob = function (win) {
     if (Ti.Platform.osname != 'android') {
-      var isIpad = Ti.Platform.osname == 'ipad';
-      Titanium.Admob = require('ti.admob');
-      var width = isIpad ? 728 : 320;
-      var margin = (Titanium.Platform.displayCaps.platformWidth - width) / 2;
-      var adview = Titanium.Admob.createView({
-        bottom: 0,
-        left: margin,
-        right: margin,
-        height: isIpad ? 90 : 50,
-        width: width,
-        zIndex: 5,
-        //testing: true,
-        adBackgroundColor: 'black',
-        primaryTextColor: 'blue',
-        secondaryTextColor: 'green',
-        publisherId: isIpad ? Ti.App.VCC.ADMOB_PUBLISHER_ID_IPAD : Ti.App.VCC.ADMOB_PUBLISHER_ID_IPHONE
-      });
-      win.add(adview);
-/*
-      function adCb(e) {
-        info('[ti.admob]' + e.type);
+      if (!VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
+	      Titanium.Admob = require('ti.admob');
+	      var width = isTablet ? 728 : 320;
+	      var margin = (Titanium.Platform.displayCaps.platformWidth - width) / 2;
+	      var adview = Titanium.Admob.createView({
+	        bottom: 0,
+	        left: margin,
+	        right: margin,
+	        height: isTablet ? 90 : 50,
+	        width: width,
+	        zIndex: 5,
+	        visible: false,
+	        //testing: true,
+	        adBackgroundColor: 'black',
+	        primaryTextColor: 'blue',
+	        secondaryTextColor: 'green',
+	        publisherId: isTablet ? Ti.App.VCC.ADMOB_PUBLISHER_ID_IPAD : Ti.App.VCC.ADMOB_PUBLISHER_ID_IPHONE
+	      });
+	      win.add(adview);
+	      function adCb(e) {
+	        //info('[ti.admob]' + e.type);
+	        if (VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
+            adview.removeEventListener('didReceiveAd', adCb);
+            adview.removeEventListener('didFailToReceiveAd', adCb);
+            adview.removeEventListener('willPresentScreen', adCb);
+            adview.removeEventListener('willDismissScreen', adCb);
+            adview.removeEventListener('didDismissScreen', adCb);
+            adview.removeEventListener('willLeaveApplication', adCb);
+            adview.hide();
+	          return;
+	        }
+	        switch (e.type) {
+	        case 'didFailToReceiveAd':
+	          adview.hide();
+	          break;
+	        case 'didReceiveAd':
+	          adview.show();
+	          break;
+	        }
+	      }
+	      adview.addEventListener('didReceiveAd', adCb);
+	      adview.addEventListener('didFailToReceiveAd', adCb);
+	      adview.addEventListener('willPresentScreen', adCb);
+	      adview.addEventListener('willDismissScreen', adCb);
+	      adview.addEventListener('didDismissScreen', adCb);
+	      adview.addEventListener('willLeaveApplication', adCb);
       }
-      adview.addEventListener('didReceiveAd', adCb);
-      adview.addEventListener('didFailToReceiveAd', adCb);
-      adview.addEventListener('willPresentScreen', adCb);
-      adview.addEventListener('willDismissScreen', adCb);
-      adview.addEventListener('didDismissScreen', adCb);
-      adview.addEventListener('willLeaveApplication', adCb);
+/*
 */
     }
   };
@@ -882,7 +907,7 @@ if (typeof VCC.Utils == 'undefined') {
   VCC.Utils.setButtonEnabled = function (button, enabled) {
     button.enabled = enabled;
     button.color = enabled ? '#000' : '#888';
-  }
+  };
   
   VCC.Utils.createHeaderView = function (title, top, buttonStrObj, buttonsCallback) {
     var child = {};
@@ -907,7 +932,7 @@ if (typeof VCC.Utils == 'undefined') {
     headerView.add(child.btnNext);
     headerView.child = child;
     return headerView;
-  }
+  };
   VCC.Utils.createTableViewRow = function(dataItem) {
     var opt = {
       className: 'datarow',
@@ -987,7 +1012,7 @@ if (typeof VCC.Utils == 'undefined') {
     }
     row.child = child;
     return row;
-  }
+  };
   
   VCC.Utils.setTableViewRowValues = function (tableViewRow, values) {
     if (!tableViewRow) {
@@ -996,27 +1021,31 @@ if (typeof VCC.Utils == 'undefined') {
     for (var n in values) {
       switch (n) {
       case 'value':
-        if (tableViewRow.child.value) {
+        if (tableViewRow.child.value && tableViewRow.child.value.text != values[n]) {
           tableViewRow.child.value.text = values[n];
         }
         break;
       case 'selectionStyle':
         if (!Ti.App.VCC.isAndroid) {
           if (values.selectionStyle == 'NONE') {
-            tableViewRow.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
+            if (tableViewRow.selectionStyle != Ti.UI.iPhone.TableViewCellSelectionStyle.NONE) {
+              tableViewRow.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
+            }
           } else {
-            if (typeof tableViewRow.selectionStyle != 'undefined') {
+            if (typeof tableViewRow.selectionStyle != 'undefined' && tableViewRow.selectionStyle != Ti.UI.iPhone.TableViewCellSelectionStyle.BLUE) {
               tableViewRow.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.BLUE;
             }
           }
         }
         break;
       default:
-        tableViewRow[n] = values[n];
+        if (tableViewRow[n] != values[n]) {
+          tableViewRow[n] = values[n];
+        }
         break;
       }
     }
-  }
+  };
   VCC.Utils.setTableViewRowEnabled = function (tableViewRow, enabled) {
     VCC.Utils.setTableViewRowValues(tableViewRow, {
       hasChild: enabled,
@@ -1030,7 +1059,7 @@ if (typeof VCC.Utils == 'undefined') {
       target[n] = obj[n];
     }
     return target;
-  }
+  };
   VCC.Utils.getStringBytesLength = function (str) {
     var tbl = [ 0, 1, 1, 1, 2, 3, 2, 3, 4, 3 ];
     var len = 0;
@@ -1038,14 +1067,66 @@ if (typeof VCC.Utils == 'undefined') {
       len += tbl [encodeURIComponent(str.charAt(i)).length];
     }
     return len;
-  }
+  };
   VCC.Utils.removeReturnCodeInIpad = function (str) {
-    var isIpad = Ti.Platform.osname == 'ipad';
-    if (isIpad) {
+    if (isTablet) {
       str = str.replace(/\n/g, '');
     }
     return str;
-  }
+  };
+
+  VCC.Utils.isPurchased = function (identifier) {
+    var purchasedStore = VCC.Utils.getGlobal('purchasedStore') || {};
+    if (purchasedStore[identifier] === undefined) {
+      var controller = VCC.Utils.getSettingController();
+      var isPurchased = controller.getPurchased(identifier);
+      if (isPurchased !== undefined) {
+        purchasedStore[identifier] = isPurchased;
+        VCC.Utils.setGlobal('purchasedStore', purchasedStore);
+      }
+    }
+    return purchasedStore[identifier];
+  };
+
+  VCC.Utils.setPurchased = function (identifier, value) {
+    var purchasedStore = VCC.Utils.getGlobal('purchasedStore') || {};
+    purchasedStore[identifier] = value;
+    VCC.Utils.setGlobal('purchasedStore', purchasedStore);
+    var controller = VCC.Utils.getSettingController();
+    controller.setPurchased(identifier, value);
+  };
+
+  VCC.Utils.getSettingController = function () {
+    var controller = VCC.Utils.getGlobal('settingController');
+    if (controller == null) {
+      controller = require("controller/setting");
+      controller = controller.create();
+      VCC.Utils.setGlobal('settingController', controller);
+    }
+    return controller;
+  };
+
+  VCC.Utils.getStoreKit = function () {
+  	var storeKit = VCC.Utils.getGlobal('storeKit');
+  	if (storeKit == null) {
+  		Ti.include('storeManager.js');
+  		initStorekit();
+  		storeKit = Storekit;
+  		VCC.Utils.setGlobal('storeKit', storeKit);
+  	}
+  	return storeKit;
+  };
+  
+  VCC.Utils.storeKit = VCC.Utils.getStoreKit();
+
+  VCC.Utils.alert = function (msg, title) {
+    var dialog = Ti.UI.createAlertDialog();
+    if (title !== undefined) {
+      dialog.setTitle(title);
+    }
+    dialog.setMessage(msg); 
+    dialog.show();
+  };
 
   setGlobal('_VCC_Utils', VCC.Utils);
 }

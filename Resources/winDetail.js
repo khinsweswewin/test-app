@@ -37,6 +37,9 @@ var tableViewOptions = {
 if (!isAndroid) {
   tableViewOptions.style = Ti.UI.iPhone.TableViewStyle.GROUPED;
 }
+if (!isOldiOS) {
+  tableViewOptions.headerView = Ti.UI.createView({height: 1});
+}
 var tableView = Ti.UI.createTableView(tableViewOptions);
 tableView.addEventListener('click', onTableViewClick);
 var workTime = 0;
@@ -56,7 +59,7 @@ win.focusCallback = function(isChangeWindow, isChangeTab) {
   if (isChangeTab || getCurrentTab().window.tabIndex != Ti.App.Properties.getInt('tabIndex')) {
     setView();
   }
-}
+};
 
 setView();
 setTitle();
@@ -302,7 +305,7 @@ function initView() {
   }
   tableView.data = data;
 }
-
+var init = false;
 function setView() {
   //info('setView()');
   if (!tableData) {
@@ -402,9 +405,10 @@ function setView() {
     var startData = data.startTime > 0 ? VCC.Utils.getTimeStr(data.startTime, win.dateTime) : '';
     var endData = data.endTime > 0 ? VCC.Utils.getTimeStr(data.endTime, win.dateTime) : '';
     VCC.Utils.setTableViewRowValues(tableData.startTime[i], {value: startData, data: data.startTime, dataIndex: i});
-    VCC.Utils.setTableViewRowValues(tableData.endTime[i], {value: endData, data: data.endTime, dataIndex: i})
+    VCC.Utils.setTableViewRowValues(tableData.endTime[i], {value: endData, data: data.endTime, dataIndex: i});
     VCC.Utils.setTableViewRowEnabled(tableData.endTime[i], startData != '');
   }
+//  if (init) return;
   //info('setTableViewRowValues:' + tableData.rest);
   VCC.Utils.setTableViewRowValues(tableData.rest, {value: restStr});
   info('dataInterrupts.length, tableData.suspend.length:' + [dataInterrupts.length, tableData.suspend.length]);
@@ -418,6 +422,7 @@ function setView() {
   info([tableData.memo, typeof tableData.memo]);
   var memo = dbDatas.memo.replace(/\n/g, ' ');
   VCC.Utils.setTableViewRowValues(tableData.memo, {value: memo, data: dbDatas.memo, dbId: dbDatas.memoId});
+  init = true;
 }
 
 // get time from seconds

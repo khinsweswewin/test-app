@@ -90,4 +90,17 @@
 	<string name="str_end_of_the_month">月末</string>
 	<string name="str_period">期間</string>
 	<string name="str_month">月</string>
+	<string name="str_setting_addon">拡張機能</string>
+	<string name="str_purchase_addon">アドオンを購入</string>
+	<string name="str_purchase_buy">購入</string>
+	<string name="str_remove_ads">広告を表示しない</string>
+	<string name="str_past_purchases">購入済み</string>
+	<string name="str_restore_purchase">購入情報を復元</string>
+	<string name="err_failed_talk_to_apple">データの取得に失敗しました</string>
+	<string name="err_request_invalid_product">ERROR: Invalid product</string>
+	<string name="err_purchse_canceled">購入がキャンセルされました</string>
+	<string name="err_buying_failed">購入に失敗しました</string>
+	<string name="err_no_purchase_to_store">購入情報はありませんでした</string>
+	<string name="str_thanks_purchase">購入ありがとうございました</string>
+	<string name="str_notification_remove_ads_info">「広告を表示しない」機能を追加しました。\n「設定」画面内、「アドオンを購入」からご購入ください。</string>
 </resources>

@@ -89,3 +89,10 @@ if (isAndroid) {
   });
   */
 }
+if (!VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
+  var controller = VCC.Utils.getSettingController();
+  if (!controller.isNotification(Ti.App.VCC.NOTIFICATION_REMOVE_ADS_INFO)) {
+    VCC.Utils.alert("\n" + L('str_notification_remove_ads_info') + "\n\n");
+    controller.setNotification(Ti.App.VCC.NOTIFICATION_REMOVE_ADS_INFO);
+  }
+}

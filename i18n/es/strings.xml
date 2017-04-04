@@ -90,4 +90,17 @@
 	<string name="str_end_of_the_month">fin de mes</string>
 	<string name="str_period">periodo</string>
 	<string name="str_month"></string>
+	<string name="str_setting_addon">Más funciones</string>
+	<string name="str_purchase_addon">Comprar complemento</string>
+	<string name="str_purchase_buy">Comprar</string>
+	<string name="str_remove_ads">Eliminar anuncios</string>
+	<string name="str_past_purchases">Compras anteriores</string>
+	<string name="str_restore_purchase">Restaurar la información de compras</string>
+	<string name="err_failed_talk_to_apple">Error al obtener los datos</string>
+	<string name="err_request_invalid_product">ERROR: Invalid product</string>
+	<string name="err_purchse_canceled">Su compra ha sido cancelada</string>
+	<string name="err_buying_failed">Ha habido un error al realizar su compra</string>
+	<string name="err_no_purchase_to_store">No hay información de compras</string>
+	<string name="str_thanks_purchase">Gracias por su compra</string>
+	<string name="str_notification_remove_ads_info">Hemos añadido una función para eliminar los anuncios.\nCómprela desde la opción "Comprar complemento" en la pantalla de "Ajustes".</string>
 </resources>

@@ -1,4 +1,6 @@
 
+var offsetTop = isOldiOS ? 0 : 20;
+
 function initialize(win) {
   //Ti.include('utils.js');
   
@@ -41,7 +43,7 @@ function initialize(win) {
     });
     
     // header
-    headerView = VCC.Utils.createHeaderView('', 44, {prev: L('str_month_prev'), next: L('str_month_next')}, headerButtonClick);
+    headerView = VCC.Utils.createHeaderView('', offsetTop + 44, {prev: L('str_month_prev'), next: L('str_month_next')}, headerButtonClick);
     win.add(headerView);
     headerView.child.title.addEventListener('dblclick', onTitleClick);
     
@@ -50,7 +52,7 @@ function initialize(win) {
       if (isChangeTab) {
         setView();
       }
-    }
+    };
     
     setTitle();
     setView();
@@ -189,10 +191,13 @@ function initialize(win) {
         data:data,
         backgroundColor:'transparent',
         rowBackgroundColor:'white',
-        top: 90,
+        top: offsetTop + 90,
         allowsSelection: false,
         footerView: Ti.UI.createView({height: 48})
       };
+      if (!isOldiOS) {
+        tableViewOptions.headerView = Ti.UI.createView({height: 1});
+      }
       if (offsetLeft) {
         tableViewOptions.left = offsetLeft;
         tableViewOptions.right = -offsetLeft;
@@ -208,7 +213,9 @@ function initialize(win) {
         var dataItem = datas[i];
         if (!dataItem.name) continue;
         var row = tableData[dataItem.name];
-        row.child.time.text = dataItem.data;
+        if (row.child.time.text != dataItem.data) {
+          row.child.time.text = dataItem.data;
+        }
       }
     }
   }

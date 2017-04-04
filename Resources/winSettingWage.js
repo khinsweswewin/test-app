@@ -93,7 +93,7 @@ tableView.addEventListener('click', function(e) {
           row.child.value.text = VCC.Utils.formatHourMinute(row.data);
         }
       }
-    })
+    });
     VCC.Utils.openWin(winPicker, getCurrentTab());
   }
 });

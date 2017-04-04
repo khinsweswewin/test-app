@@ -7,7 +7,7 @@ win.focusCallback = function(isChangeWindow, isChangeTab) {
     win.onChangeTab = true;
     win.close();
   }
-}
+};
 
 
 // get param from app.js
@@ -95,7 +95,11 @@ if (useMyTimePicker) {
 if (picker.height) {
   picker.top = Math.min(winHeight / 2, winHeight - picker.height);
 } else if (winHeight < 600) {
-  picker.bottom = 0;
+  if (!isOldiOS && winHeight > 500) {
+    picker.top = winHeight / 3;
+  } else {
+    picker.bottom = 0;
+  }
 } else {
   picker.top = winHeight / 2;
 }

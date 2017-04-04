@@ -90,4 +90,17 @@
 	<string name="str_end_of_the_month">fin du mois</string>
 	<string name="str_period">période</string>
 	<string name="str_month"></string>
+	<string name="str_setting_addon">Plus de fonctions</string>
+	<string name="str_purchase_addon">Acheter un module complémentaire</string>
+	<string name="str_purchase_buy">Acheter</string>
+	<string name="str_remove_ads">Supprimer les publicités </string>
+	<string name="str_past_purchases">Anciennes commandes</string>
+	<string name="str_restore_purchase">Restorer les informations de votre commande</string>
+	<string name="err_failed_talk_to_apple">Echec à obtenir les données</string>
+	<string name="err_request_invalid_product">ERROR: Invalid product</string>
+	<string name="err_purchse_canceled">Votre commande a été annulée</string>
+	<string name="err_buying_failed">Une erreur s'est produite dans votre commande</string>
+	<string name="err_no_purchase_to_store">Aucune  info de commande</string>
+	<string name="str_thanks_purchase">Nous vous remercions pour votre achat</string>
+	<string name="str_notification_remove_ads_info">Nous avons ajouté une fonction pour supprimer les publicités.\nVeuillez l'acquérir à partir de l'option "Acheter un module complémentaire" de la fenêtre "Paramètres".</string>
 </resources>
