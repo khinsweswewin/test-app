@@ -290,8 +290,8 @@ function initialize(win) {
     info(data[1]);
     info(data[2]);
     if (isUpdate) {
-      view.tableView.updateSection(data[1], 1, {animated: false});
-      view.tableView.updateSection(data[2], 2, {animated: false});
+      view.tableView.updateSection(1, data[1], {animated: false});
+      view.tableView.updateSection(2, data[2], {animated: false});
     }
     //view.tableData.total.text = createWorkTotalStr(workTotalTime);
     var totalText = createWorkTotalStr(workTotalTime);

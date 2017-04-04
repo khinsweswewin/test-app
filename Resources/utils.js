@@ -843,7 +843,7 @@ if (typeof VCC.Utils == 'undefined') {
 	        adBackgroundColor: 'black',
 	        primaryTextColor: 'blue',
 	        secondaryTextColor: 'green',
-	        publisherId: isTablet ? Ti.App.VCC.ADMOB_PUBLISHER_ID_IPAD : Ti.App.VCC.ADMOB_PUBLISHER_ID_IPHONE
+	        adUnitId: isTablet ? Ti.App.VCC.ADMOB_PUBLISHER_ID_IPAD : Ti.App.VCC.ADMOB_PUBLISHER_ID_IPHONE
 	      });
 	      win.add(adview);
 	      function adCb(e) {
