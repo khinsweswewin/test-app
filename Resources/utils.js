@@ -828,27 +828,27 @@ if (typeof VCC.Utils == 'undefined') {
   VCC.Utils.addAdmob = function (win) {
     if (Ti.Platform.osname != 'android') {
       if (!VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
-	      Titanium.Admob = require('ti.admob');
-	      var width = isTablet ? 728 : 320;
-	      var margin = (Titanium.Platform.displayCaps.platformWidth - width) / 2;
-	      var adview = Titanium.Admob.createView({
-	        bottom: 0,
-	        left: margin,
-	        right: margin,
-	        height: isTablet ? 90 : 50,
-	        width: width,
-	        zIndex: 5,
-	        visible: false,
-	        //testing: true,
-	        adBackgroundColor: 'black',
-	        primaryTextColor: 'blue',
-	        secondaryTextColor: 'green',
-	        adUnitId: isTablet ? Ti.App.VCC.ADMOB_PUBLISHER_ID_IPAD : Ti.App.VCC.ADMOB_PUBLISHER_ID_IPHONE
-	      });
-	      win.add(adview);
-	      function adCb(e) {
-	        //info('[ti.admob]' + e.type);
-	        if (VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
+        Titanium.Admob = require('ti.admob');
+        var width = isTablet ? 728 : 320;
+        var margin = (Titanium.Platform.displayCaps.platformWidth - width) / 2;
+        var adview = Titanium.Admob.createView({
+          bottom: 0,
+          left: margin,
+          right: margin,
+          height: isTablet ? 90 : 50,
+          width: width,
+          zIndex: 5,
+          visible: false,
+          //testing: true,
+          adBackgroundColor: 'black',
+          primaryTextColor: 'blue',
+          secondaryTextColor: 'green',
+          adUnitId: isTablet ? Ti.App.VCC.ADMOB_PUBLISHER_ID_IPAD : Ti.App.VCC.ADMOB_PUBLISHER_ID_IPHONE
+        });
+        win.add(adview);
+        function adCb(e) {
+          //info('[ti.admob]' + e.type);
+          if (VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
             adview.removeEventListener('didReceiveAd', adCb);
             adview.removeEventListener('didFailToReceiveAd', adCb);
             adview.removeEventListener('willPresentScreen', adCb);
@@ -856,23 +856,23 @@ if (typeof VCC.Utils == 'undefined') {
             adview.removeEventListener('didDismissScreen', adCb);
             adview.removeEventListener('willLeaveApplication', adCb);
             adview.hide();
-	          return;
-	        }
-	        switch (e.type) {
-	        case 'didFailToReceiveAd':
-	          adview.hide();
-	          break;
-	        case 'didReceiveAd':
-	          adview.show();
-	          break;
-	        }
-	      }
-	      adview.addEventListener('didReceiveAd', adCb);
-	      adview.addEventListener('didFailToReceiveAd', adCb);
-	      adview.addEventListener('willPresentScreen', adCb);
-	      adview.addEventListener('willDismissScreen', adCb);
-	      adview.addEventListener('didDismissScreen', adCb);
-	      adview.addEventListener('willLeaveApplication', adCb);
+            return;
+          }
+          switch (e.type) {
+          case 'didFailToReceiveAd':
+            adview.hide();
+            break;
+          case 'didReceiveAd':
+            adview.show();
+            break;
+          }
+        }
+        adview.addEventListener('didReceiveAd', adCb);
+        adview.addEventListener('didFailToReceiveAd', adCb);
+        adview.addEventListener('willPresentScreen', adCb);
+        adview.addEventListener('willDismissScreen', adCb);
+        adview.addEventListener('didDismissScreen', adCb);
+        adview.addEventListener('willLeaveApplication', adCb);
       }
 /*
 */
@@ -1107,14 +1107,14 @@ if (typeof VCC.Utils == 'undefined') {
   };
 
   VCC.Utils.getStoreKit = function () {
-  	var storeKit = VCC.Utils.getGlobal('storeKit');
-  	if (storeKit == null) {
-  		Ti.include('storeManager.js');
-  		initStorekit();
-  		storeKit = Storekit;
-  		VCC.Utils.setGlobal('storeKit', storeKit);
-  	}
-  	return storeKit;
+    var storeKit = VCC.Utils.getGlobal('storeKit');
+    if (storeKit == null) {
+      Ti.include('storeManager.js');
+      initStorekit();
+      storeKit = Storekit;
+      VCC.Utils.setGlobal('storeKit', storeKit);
+    }
+    return storeKit;
   };
   
   VCC.Utils.storeKit = VCC.Utils.getStoreKit();

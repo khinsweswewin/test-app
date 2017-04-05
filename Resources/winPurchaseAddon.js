@@ -16,12 +16,12 @@ var storeKit = VCC.Utils.storeKit;
 var productIdentifier = Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS;
 
 var loading = Ti.UI.createActivityIndicator({
-	height: 50,
-	width: 50,
-	backgroundColor: 'black',
-	opacity: 0.7,
-	borderRadius: 10,
-	style: Ti.UI.iPhone.ActivityIndicatorStyle.BIG
+  height: 50,
+  width: 50,
+  backgroundColor: 'black',
+  opacity: 0.7,
+  borderRadius: 10,
+  style: Ti.UI.iPhone.ActivityIndicatorStyle.BIG
 });
 
 var loadingMask = Ti.UI.createView({
@@ -31,29 +31,29 @@ var loadingMask = Ti.UI.createView({
 });
 
 function showLoading() {
-	loadingCount += 1;
-	if (loadingCount == 1) {
-		loading.show();
-		loadingMask.show();
-	}
+  loadingCount += 1;
+  if (loadingCount == 1) {
+    loading.show();
+    loadingMask.show();
+  }
 //  info('showLoading:' + loadingCount);
 }
 
 function hideLoading() {
 //  info('hideLoading:' + loadingCount);
-	if (loadingCount > 0) {
-		loadingCount -= 1;
-		if (loadingCount == 0) {
-		  loadingMask.hide();
-			loading.hide();
-		}
-	}
+  if (loadingCount > 0) {
+    loadingCount -= 1;
+    if (loadingCount == 0) {
+      loadingMask.hide();
+      loading.hide();
+    }
+  }
 }
 
 initWin();
 
 function initWin() {
-	initTableViewInfo();
+  initTableViewInfo();
   win.add(loadingMask);
   win.add(loading);
   storeKit.addEventListener('restoredCompletedTransactions', function(evt) {
@@ -73,42 +73,42 @@ function initWin() {
     }
   });
   storeKit._purchseChanged = setTableViewInfo;
-	initTableView();
-	//generateTableviewDatas();
-	//showLoading();
+  initTableView();
+  //generateTableviewDatas();
+  //showLoading();
 }
 
 function initTableView() {
-	showLoading();
-	configTableviews();
+  showLoading();
+  configTableviews();
 }
 
 function configTableviews() {
-	var isPurchsed = VCC.Utils.isPurchased(productIdentifier);
-	if (isPurchsed) {
-		//productPrice = L('str_past_purchases');
-		setTableViewInfo(isPurchsed);
-		hideLoading();
-	} else {
-		storeKit.requestProducts([productIdentifier], function(evt) {
-			if (!evt.success) {
-				VCC.Utils.alert(L('err_failed_talk_to_apple'));
-			} else if (evt.invalid) {
-				VCC.Utils.alert(L('err_request_invalid_product'));
-			} else {
-				var p = evt.products[0];
-				if (p != null) {
-					productPrice = p.formattedPrice;
-					product = p;
-				} else {
-					productPrice = "--";
-				}
-				setTableViewInfo();
-			}
+  var isPurchsed = VCC.Utils.isPurchased(productIdentifier);
+  if (isPurchsed) {
+    //productPrice = L('str_past_purchases');
+    setTableViewInfo(isPurchsed);
+    hideLoading();
+  } else {
+    storeKit.requestProducts([productIdentifier], function(evt) {
+      if (!evt.success) {
+        VCC.Utils.alert(L('err_failed_talk_to_apple'));
+      } else if (evt.invalid) {
+        VCC.Utils.alert(L('err_request_invalid_product'));
+      } else {
+        var p = evt.products[0];
+        if (p != null) {
+          productPrice = p.formattedPrice;
+          product = p;
+        } else {
+          productPrice = "--";
+        }
+        setTableViewInfo();
+      }
       hideLoading();
-		});
-		//hideLoading();
-	}
+    });
+    //hideLoading();
+  }
 }
 
 function initTableViewInfo() {
@@ -209,11 +209,11 @@ function setTableViewInfo(isPurchsed) {
 }
 
 function generateTableviewDatas() {
-	tableDatas = [];
-	for (var i = 0; i < datas.length; i++) {
-		var row = VCC.Utils.createTableViewRow(datas[i]);
-		tableDatas.push(row);
-	}
+  tableDatas = [];
+  for (var i = 0; i < datas.length; i++) {
+    var row = VCC.Utils.createTableViewRow(datas[i]);
+    tableDatas.push(row);
+  }
 }
 
 

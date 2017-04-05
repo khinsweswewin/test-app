@@ -23,7 +23,7 @@ toolBar.btnRight.addEventListener('click', function(e) {
 });
 var ta1 = Ti.UI.createTextArea({
   value: value,
-  height: 200,	
+  height: 200,  
   width: Math.min(Titanium.Platform.displayCaps.platformWidth - 20, 600),
   top: (isAndroid ? 54 : 10),
   font: {fontSize: 20},

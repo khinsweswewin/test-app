@@ -1,35 +1,35 @@
 var offsetTop = isOldiOS ? 0 : 20;
 
 function initialize(win) {
-	//Ti.include('utils.js');
-	var controller = null;
+  //Ti.include('utils.js');
+  var controller = null;
 
-	var defaultRegularTime = {
-		startTime : 9 * 60,
-		endTime : 17 * 60
-	};
-	var defaultRestTime = {
-		startTime : 12 * 60,
-		endTime : 13 * 60
-	};
+  var defaultRegularTime = {
+    startTime : 9 * 60,
+    endTime : 17 * 60
+  };
+  var defaultRestTime = {
+    startTime : 12 * 60,
+    endTime : 13 * 60
+  };
 
-	var regularTimeData = null;
-	var restTimeData = null;
-	var wageData = null;
-	var cuttOffDate = null;
-	var enabledStartTime = null;
+  var regularTimeData = null;
+  var restTimeData = null;
+  var wageData = null;
+  var cuttOffDate = null;
+  var enabledStartTime = null;
 
-	var tableDatas = [];
-	var optValues = ['type', 'hasChild', 'header', 'data'];
+  var tableDatas = [];
+  var optValues = ['type', 'hasChild', 'header', 'data'];
 
-	var tableView = null;
+  var tableView = null;
 
-	win.focusCallback = function(isChangeWindow, isChangeTab) {
-		setTimeout(setup, 0);
-	};
+  win.focusCallback = function(isChangeWindow, isChangeTab) {
+    setTimeout(setup, 0);
+  };
 
-	function setup() {
-		win.focusCallback = null;
+  function setup() {
+    win.focusCallback = null;
 
     controller = require("controller/setting");
     controller = controller.create();
@@ -103,36 +103,36 @@ function initialize(win) {
       }
     ];
     
-    // アプリ内課金を追加	2014/02/17	start
-		if (!Ti.App.VCC.isAndroid) {
-			datas.push({
-				header : L('str_setting_addon'),
-				title : L('str_purchase_addon'),
-				velueAlign : 'right',
-				data : '',
-				hasChild : true,
-				action : 'purchaseAddon',
-				type : ''
-			});
-		}
-		// support
-		datas.push({
-			header : L('str_setting_others'),
-			title : L('str_support'),
-			velueAlign : 'right',
-			data : 'http://vccorp.net/intersuite/timesheet/',
-			hasChild : true,
-			action : 'gotoSupportURL',
-			type : ''
-		});
-		// about
-		datas.push({
-			title : L('str_about'),
-			hasChild : true,
-			action : 'information',
-			type : ''
-		});
-		// アプリ内課金を追加	2014/02/17	end
+    // アプリ内課金を追加  2014/02/17  start
+    if (!Ti.App.VCC.isAndroid) {
+      datas.push({
+        header : L('str_setting_addon'),
+        title : L('str_purchase_addon'),
+        velueAlign : 'right',
+        data : '',
+        hasChild : true,
+        action : 'purchaseAddon',
+        type : ''
+      });
+    }
+    // support
+    datas.push({
+      header : L('str_setting_others'),
+      title : L('str_support'),
+      velueAlign : 'right',
+      data : 'http://vccorp.net/intersuite/timesheet/',
+      hasChild : true,
+      action : 'gotoSupportURL',
+      type : ''
+    });
+    // about
+    datas.push({
+      title : L('str_about'),
+      hasChild : true,
+      action : 'information',
+      type : ''
+    });
+    // アプリ内課金を追加  2014/02/17  end
     
     for (var i = 0; i < datas.length; i++) {
       var row = VCC.Utils.createTableViewRow(datas[i]);
@@ -141,10 +141,10 @@ function initialize(win) {
     
     // create table view
     var tableViewOptions = {
-    	data: tableDatas,
-    	backgroundColor: 'transparent',
-    	rowBackgroundColor: 'white',
-    	top: offsetTop + 44
+      data: tableDatas,
+      backgroundColor: 'transparent',
+      rowBackgroundColor: 'white',
+      top: offsetTop + 44
     };
     if (!isAndroid) {
       tableViewOptions.style = Ti.UI.iPhone.TableViewStyle.GROUPED;
@@ -269,11 +269,11 @@ function initialize(win) {
       case 'gotoSupportURL':
         Ti.Platform.openURL(row.data + '?locale=' + Ti.Platform.locale);
         break;
-        // アプリ内課金を追加	2014/02/17	start
-				case 'purchaseAddon':
-					var winPurchaseAddon = VCC.Utils.createWin('winPurchaseAddon.js');
-					VCC.Utils.openWin(winPurchaseAddon, tab);
-					break;
+        // アプリ内課金を追加  2014/02/17  start
+        case 'purchaseAddon':
+          var winPurchaseAddon = VCC.Utils.createWin('winPurchaseAddon.js');
+          VCC.Utils.openWin(winPurchaseAddon, tab);
+          break;
       }
     });
   }

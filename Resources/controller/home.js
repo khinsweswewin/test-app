@@ -4,14 +4,14 @@ Ti.include(path + 'utils.js');
 Ti.include(path + 'database.js');
 
 var Home = function() {
-	this.initialize.apply(this, arguments);
+  this.initialize.apply(this, arguments);
 };
 
 Home.prototype = {
-	initialize: function(options) {
-		this.options = options || {};
-		this.db = getDB();
-	},
+  initialize: function(options) {
+    this.options = options || {};
+    this.db = getDB();
+  },
   openDetail: function(time) {
     var dateTime = VCC.Utils.getDayDateTime(time);
     var tab, win;
@@ -34,32 +34,32 @@ Home.prototype = {
     }
   },
   clickAction: function(action) {
-		var state = null;
-		switch(action) {
-			case 'on_work': // 出社が押された
-				state = this.setState(Ti.App.VCC.STATE_COME);
-				break;
-			case 'suspend': // 中断が押された
-				state = this.setState(Ti.App.VCC.STATE_INTERRUPT);
-				break;
-			case 'leave': // 退社が押された
-				state = this.setState(Ti.App.VCC.STATE_LEFT);
-				break;
-			case 'return': // 復帰が押された
-				state = this.setState(Ti.App.VCC.STATE_COME);
-				state.state = Ti.App.VCC.STATE_RETURN;
-				break;
-		}
-		if (state != null) {
-			this.db.setTimeState(state);
-			return true;
-		}
-		return false;
-	},
-	setState: function(state) {
-		var ss = VCC.Utils.createState(state);
-		this.saveStateProperties(ss);
-		return ss;
+    var state = null;
+    switch(action) {
+      case 'on_work': // 出社が押された
+        state = this.setState(Ti.App.VCC.STATE_COME);
+        break;
+      case 'suspend': // 中断が押された
+        state = this.setState(Ti.App.VCC.STATE_INTERRUPT);
+        break;
+      case 'leave': // 退社が押された
+        state = this.setState(Ti.App.VCC.STATE_LEFT);
+        break;
+      case 'return': // 復帰が押された
+        state = this.setState(Ti.App.VCC.STATE_COME);
+        state.state = Ti.App.VCC.STATE_RETURN;
+        break;
+    }
+    if (state != null) {
+      this.db.setTimeState(state);
+      return true;
+    }
+    return false;
+  },
+  setState: function(state) {
+    var ss = VCC.Utils.createState(state);
+    this.saveStateProperties(ss);
+    return ss;
   },
   saveStateProperties: function(stateData) {
     if (!stateData.state) {
@@ -103,10 +103,10 @@ Home.prototype = {
     return state;
   },
   dummy: function() {
-		;
-	}
+    ;
+  }
 };
 
 exports.create = function(options) {
-	return new Home(options);
+  return new Home(options);
 };
