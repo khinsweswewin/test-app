@@ -1,3 +1,6 @@
+var utils = require('utils.js');
+var VCC = utils.VCC;
+var isOldiOS = Ti.App.VCC.isOldiOS;
 var offsetTop = isOldiOS ? 0 : 20;
 
 function initialize(win) {
@@ -98,7 +101,7 @@ function initialize(win) {
         left: 10,
         selectionStyle: 'NONE',
         type: 'mailAddress',
-        keyboardType: Ti.UI.KEYBOARD_EMAIL,
+        keyboardType: Ti.UI.KEYBOARD_TYPE_EMAIL,
         returnKeyType: Ti.UI.RETURNKEY_DONE
       }
     ];
@@ -146,12 +149,12 @@ function initialize(win) {
       rowBackgroundColor: 'white',
       top: offsetTop + 44
     };
-    if (!isAndroid) {
-      tableViewOptions.style = Ti.UI.iPhone.TableViewStyle.GROUPED;
+    if (!Ti.App.VCC.isAndroid) {
+      tableViewOptions.style = Ti.UI.iOS.TableViewStyle.GROUPED;
     }
     if (!isOldiOS) {
       tableViewOptions.headerView = Ti.UI.createView({height: 1});
-    } else if (isTablet) {
+    } else if (Ti.App.VCC.isTablet) {
       tableViewOptions.headerView = Ti.UI.createView({height: 20});
     }
     
@@ -163,7 +166,7 @@ function initialize(win) {
       var section = e.section;
       var row = e.row;
       var rowdata = e.rowData;
-      var tab = getCurrentTab();
+      var tab = utils.getCurrentTab();
       var data = VCC.Utils.copyObject(row.data);
     
       switch (row.action) {
@@ -302,7 +305,9 @@ function initialize(win) {
   function onEventTextField(e) {
     var textField = e.source;
     if (textField.type == 'mailAddress') {
+      Ti.API.info(textField.value);
       controller.setMailAddress(textField.value);
     }
   }
 }
+exports.initialize = initialize;

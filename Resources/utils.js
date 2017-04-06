@@ -1,6 +1,5 @@
-var utils_js = true;
-var isOldiOS = Ti.App.VCC.versionInt < 7;
-var isTablet = Titanium.Platform.displayCaps.platformWidth > 728;
+var isOldiOS = Ti.App.VCC.isOldiOS;
+var isTablet = Ti.App.VCC.isTablet;
 L = function(key, hint, isNoRemoveRetrunCode) {
   var str = hint === undefined ? Ti.Locale.getString(key) : Ti.Locale.getString(key, hint);
   if (str === null) {
@@ -332,7 +331,6 @@ if (typeof VCC.Utils == 'undefined') {
   };
   VCC.Utils.createDialog = function (title, buttons, callbacks, cancelIndex, selectedIndex) {
     var opts = {
-        title: '',
         options: buttons
     };
     if (title) {
@@ -366,7 +364,7 @@ if (typeof VCC.Utils == 'undefined') {
         color:'#fff',
         font:{fontSize:20}
       });
-      flexSpace = Ti.UI.createButton({systemButton: Ti.UI.iPhone.SystemButton.FLEXIBLE_SPACE});
+      flexSpace = Ti.UI.createButton({systemButton: Ti.UI.iOS.SystemButton.FLEXIBLE_SPACE});
     } else {
       lblBlank = {};
     }
@@ -383,7 +381,7 @@ if (typeof VCC.Utils == 'undefined') {
     var partsRight;
     if (leftOpt) {
       if (!Ti.App.VCC.isAndroid) {
-        leftOpt.style = Ti.UI.iPhone.SystemButtonStyle.BORDERED;
+        leftOpt.style = Ti.UI.iOS.SystemButtonStyle.BORDERED;
       }
       partsLeft = Ti.UI.createButton(leftOpt);
       //partsLeft.addEventListener('click', leftObj.callback);
@@ -392,7 +390,7 @@ if (typeof VCC.Utils == 'undefined') {
     }
     if (rightOpt) {
       if (!Ti.App.VCC.isAndroid) {
-        rightOpt.style = Ti.UI.iPhone.SystemButtonStyle.BORDERED;
+        rightOpt.style = Ti.UI.iOS.SystemButtonStyle.BORDERED;
       }
       partsRight = Ti.UI.createButton(rightOpt);
     } else {
@@ -440,9 +438,6 @@ if (typeof VCC.Utils == 'undefined') {
       tabBarHidden: Ti.App.VCC.isAndroid
       //exitOnClose: exitOnClose
     };
-    if (!isUnsetUrl) {
-      opt.url = url;
-    }
     if (isTabWin) {
       opt.tabIndex = parent;
     } else if (parent) {
@@ -459,7 +454,7 @@ if (typeof VCC.Utils == 'undefined') {
     var title = null;
     var backButtonTitle = null;
     var toolbar = null;
-    var deleteButton = Ti.App.VCC.isAndroid ? {titleid: 'str_delete'} : {systemButton: Ti.UI.iPhone.SystemButton.TRASH, enabled: false};
+    var deleteButton = Ti.App.VCC.isAndroid ? {titleid: 'str_delete'} : {systemButton: Ti.UI.iOS.SystemButton.TRASH, enabled: false};
     switch (url) {
     case 'winHome.js':
       title = L('appname', Ti.App.name);
@@ -550,7 +545,8 @@ if (typeof VCC.Utils == 'undefined') {
       var tabIndex = +Ti.App.Properties.getInt('tabIndex');
       var isChangeWindow = false;
       var isChangeTab = false;
-      var curWin = win.url + '_' + tabIndex;
+      var winUrl = VCC.Utils.getWinURL(win);
+      var curWin = winUrl + '_' + tabIndex;
       var prevWin = winHistory[0];
       winHistory.unshift(curWin);
       if (winHistory.length > 5) {
@@ -560,7 +556,7 @@ if (typeof VCC.Utils == 'undefined') {
       VCC.Utils.setGlobal('currentWindow', win);
       if (prevWin && prevWin != curWin) {
         var parts = prevWin.split('_');
-        if (parts[0] != win.url) {
+        if (parts[0] != winUrl) {
           isChangeWindow = true;
         }
         if (+parts[1] != tabIndex) {
@@ -589,8 +585,8 @@ if (typeof VCC.Utils == 'undefined') {
           var win = wins[index];
           if (!win) {
             win = VCC.Utils.createWin(Ti.App.VCC.Windows[index].winjs, index);
-            Ti.include(Ti.App.VCC.Windows[index].winjs);
-            initialize(win);
+            var winjs = require(Ti.App.VCC.Windows[index].winjs);
+            winjs.initialize(win);
             wins[index] = win;
             VCC.Utils.setGlobal('wins', wins);
           }
@@ -601,6 +597,11 @@ if (typeof VCC.Utils == 'undefined') {
         menuItem.addEventListener('click', menuItem.onclick);
       }
     }
+    if (!isUnsetUrl) {
+      var winjs = require(url);
+      winjs.initialize(newWin);
+    }
+    VCC.Utils.setWinURL(newWin, url);
     return newWin;
   };
   VCC.Utils.openWin = function (win, tab) {
@@ -625,7 +626,8 @@ if (typeof VCC.Utils == 'undefined') {
     }
     if (setItems) toolbar.setItems(items);
   };
-  VCC.Utils.slideView = function (win, newView, oldView, direction, callback, isRemove) {
+  // view.animateが動作しない(旧実装)
+  VCC.Utils.slideViewOld = function (win, newView, oldView, direction, callback, isRemove) {
     var winWidth = Titanium.Platform.displayCaps.platformWidth;
     var a1complete = false;
     if (oldView) {
@@ -633,7 +635,7 @@ if (typeof VCC.Utils == 'undefined') {
       a1.left = -winWidth * direction;
       a1.right = winWidth * direction;
       a1.duration = 300;
-      a1.addEventListener('complete', function() {
+      a1.addEventListener('complete', function(e) {
         if (isRemove) win.remove(oldView);
         a1complete = true;
         if (a2complete) {
@@ -648,7 +650,7 @@ if (typeof VCC.Utils == 'undefined') {
     a2.right = 0;
     a2.duration = 300;
     var a2complete = false;
-    a2.addEventListener('complete', function() {
+    a2.addEventListener('complete', function(e) {
       a2complete = true;
       if (a1complete) {
         callback();
@@ -656,6 +658,50 @@ if (typeof VCC.Utils == 'undefined') {
     });
     if (oldView) oldView.animate(a1);
     newView.animate(a2);
+  };
+  // view.animateが動作しない(仮実装)
+  VCC.Utils.slideView = function (win, newView, oldView, direction, callback, isRemove) {
+    var winWidth = Titanium.Platform.displayCaps.platformWidth;
+    var duration = 300;
+    var num = 20;
+    if (oldView) {
+      var oldLeftTo = -winWidth * direction;
+      var oldRightTo = winWidth * direction;
+      var oldLeftFrom = oldView.left || 0;
+      var oldRightFrom = oldView.right || 0;
+    }
+    var newLeftTo = 0;
+    var newRightTo = 0;
+    var newLeftFrom = newView.left || 0;
+    var newRightFrom = newView.right || 0;
+    var timerStart = new Date().getTime();
+    _timer_cb();
+    function _timer_cb() {
+      var diff = new Date().getTime() - timerStart;
+      if (diff < duration) {
+        if (diff > 0) {
+          var newLeft = (newLeftTo - newLeftFrom) * (diff / duration) + newLeftFrom;
+          var newRight = (newRightTo - newRightFrom) * (diff / duration) + newRightFrom;
+          newView.left = newLeft;
+          newView.right = newRight;
+          if (oldView) {
+            var oldLeft = (oldLeftTo - oldLeftFrom) * (diff / duration) + oldLeftFrom;
+            var oldRight = (oldRightTo - oldRightFrom) * (diff / duration) + oldRightFrom;
+            oldView.left = oldLeft;
+            oldView.right = oldRight;
+          }
+        }
+        setTimeout(_timer_cb, duration / num);
+      } else {
+        newView.left = newLeftTo;
+        newView.right = newRightTo;
+        if (oldView) {
+          oldView.left = oldLeftTo;
+          oldView.right = oldRightTo;
+        }
+        callback();
+      }
+    }
   };
   // create state in current time
   VCC.Utils.createState = function (state, time) {
@@ -829,14 +875,9 @@ if (typeof VCC.Utils == 'undefined') {
     if (Ti.Platform.osname != 'android') {
       if (!VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
         Titanium.Admob = require('ti.admob');
-        var width = isTablet ? 728 : 320;
-        var margin = (Titanium.Platform.displayCaps.platformWidth - width) / 2;
         var adview = Titanium.Admob.createView({
           bottom: 0,
-          left: margin,
-          right: margin,
           height: isTablet ? 90 : 50,
-          width: width,
           zIndex: 5,
           visible: false,
           //testing: true,
@@ -946,9 +987,9 @@ if (typeof VCC.Utils == 'undefined') {
       case 'selectionStyle':
         if (!Ti.App.VCC.isAndroid) {
           if (dataItem.selectionStyle == 'NONE') {
-            opt.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
+            opt.selectionStyle = Ti.UI.iOS.TableViewCellSelectionStyle.NONE;
           } else {
-            opt.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.BLUE;
+            opt.selectionStyle = Ti.UI.iOS.TableViewCellSelectionStyle.BLUE;
           }
         }
         break;
@@ -1028,12 +1069,12 @@ if (typeof VCC.Utils == 'undefined') {
       case 'selectionStyle':
         if (!Ti.App.VCC.isAndroid) {
           if (values.selectionStyle == 'NONE') {
-            if (tableViewRow.selectionStyle != Ti.UI.iPhone.TableViewCellSelectionStyle.NONE) {
-              tableViewRow.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.NONE;
+            if (tableViewRow.selectionStyle != Ti.UI.iOS.TableViewCellSelectionStyle.NONE) {
+              tableViewRow.selectionStyle = Ti.UI.iOS.TableViewCellSelectionStyle.NONE;
             }
           } else {
-            if (typeof tableViewRow.selectionStyle != 'undefined' && tableViewRow.selectionStyle != Ti.UI.iPhone.TableViewCellSelectionStyle.BLUE) {
-              tableViewRow.selectionStyle = Ti.UI.iPhone.TableViewCellSelectionStyle.BLUE;
+            if (typeof tableViewRow.selectionStyle != 'undefined' && tableViewRow.selectionStyle != Ti.UI.iOS.TableViewCellSelectionStyle.BLUE) {
+              tableViewRow.selectionStyle = Ti.UI.iOS.TableViewCellSelectionStyle.BLUE;
             }
           }
         }
@@ -1109,9 +1150,9 @@ if (typeof VCC.Utils == 'undefined') {
   VCC.Utils.getStoreKit = function () {
     var storeKit = VCC.Utils.getGlobal('storeKit');
     if (storeKit == null) {
-      Ti.include('storeManager.js');
-      initStorekit();
-      storeKit = Storekit;
+      var storeManager = require('storeManager.js');
+      storeManager.initStorekit({VCC: VCC, info: info});
+      storeKit = storeManager.Storekit;
       VCC.Utils.setGlobal('storeKit', storeKit);
     }
     return storeKit;
@@ -1128,5 +1169,29 @@ if (typeof VCC.Utils == 'undefined') {
     dialog.show();
   };
 
+  VCC.Utils.getWinURL = function (win) {
+    var winURL = VCC.Utils.getGlobal('winURL') || {};
+    for (url in winURL) {
+      for (var i = 0; i < winURL[url].length; i++) {
+        if (winURL[url][i] === win) {
+          return url;
+        }
+      }
+    }
+  };
+
+  VCC.Utils.setWinURL = function (win, url) {
+    var winURL = VCC.Utils.getGlobal('winURL') || {};
+    if (!winURL[url]) {
+      winURL[url] = [];
+    }
+    winURL[url].push(win);
+    VCC.Utils.setGlobal('winURL', winURL);
+  };
+
   setGlobal('_VCC_Utils', VCC.Utils);
 }
+
+exports.VCC = VCC;
+exports.info = info;
+exports.getCurrentTab = getCurrentTab;

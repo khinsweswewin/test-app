@@ -1,3 +1,5 @@
+var utils = require('utils.js');
+var VCC = utils.VCC;
 
 function initialize(win) {
   //Ti.include('utils.js');
@@ -39,7 +41,7 @@ function initialize(win) {
       var winMemo = VCC.Utils.createWin('winMemo.js', null, {  
         dateTime: dateTime
       });
-      VCC.Utils.openWin(winMemo, getCurrentTab());
+      VCC.Utils.openWin(winMemo, utils.getCurrentTab());
     });
     timeLabel = Ti.UI.createLabel({
       text: '',
@@ -267,3 +269,4 @@ function initialize(win) {
     }
   }
 }
+exports.initialize = initialize;

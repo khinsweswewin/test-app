@@ -1,7 +1,8 @@
 // summary.js
 var path = Ti.App.VCC.isAndroid ? '../' : '';
-Ti.include(path + 'utils.js');
-Ti.include(path + 'database.js');
+if (typeof database == 'undefined') {
+  var database = require(path + 'database.js');
+}
 
 var Summary = function() {
   this.initialize.apply(this, arguments);
@@ -10,7 +11,7 @@ var Summary = function() {
 Summary.prototype = {
   initialize: function(options) {
     this.options = options || {};
-    this.db = getDB();
+    this.db = database.getDB();
     var base = require("controller/dataMonth");
     this.base = base.create();
     var setting = require("controller/setting");

@@ -1,4 +1,5 @@
 
+var isOldiOS = Ti.App.VCC.isOldiOS;
 var offsetTop = isOldiOS ? 0 : 20;
 
 function initialize(win) {
@@ -203,7 +204,7 @@ function initialize(win) {
         tableViewOptions.right = -offsetLeft;
       }
       if (!isAndroid) {
-        tableViewOptions.style = Ti.UI.iPhone.TableViewStyle.GROUPED;
+        tableViewOptions.style = Ti.UI.iOS.TableViewStyle.GROUPED;
       }
       tableView = Ti.UI.createTableView(tableViewOptions);
       // create table view event listener
@@ -219,4 +220,7 @@ function initialize(win) {
       }
     }
   }
+
 }
+
+exports.initialize = initialize;

@@ -1,8 +1,12 @@
+var utils = require('utils.js');
+var VCC = utils.VCC;
+var info = utils.info;
+
 //initialize(Ti.UI.currentWindow);
+var isOldiOS = Ti.App.VCC.isOldiOS;
 var offsetTop = isOldiOS ? 0 : 20;
 
 function initialize(win) {
-//Ti.include('utils.js');
 
 // get param from app.js
 //var isAndroid = Ti.App.VCC.isAndroid;
@@ -46,7 +50,7 @@ function initialize(win) {
 
     var rightOpt = {image: 'images/ico_write.png'};
     if (!isAndroid) {
-      rightOpt.style = Ti.UI.iPhone.SystemButtonStyle.BORDERED;
+      rightOpt.style = Ti.UI.iOS.SystemButtonStyle.BORDERED;
     }
     toolBar = win.toolBar;
     VCC.Utils.setToolbarButton(toolBar);
@@ -196,7 +200,7 @@ function initialize(win) {
       VCC.Utils.setButtonEnabled(headerView.child.btnNext, btnNextEnabled);
     }
     workTotalTime = 0;
-  
+
     //info('tableView.data:' + view.tableView.data);
     var data = view.tableView.data;
     //var sections = [data[1], data[2]];
@@ -222,10 +226,10 @@ function initialize(win) {
       var monthStr1 = L('str_month_' + month) + L('str_month');
       var monthStr2 = L('str_month_' + pageMonth) + L('str_month');
       if (data[1].headerTitle != monthStr1) {
-        data[1].headerTitle = sections[0].headerTitle = monthStr1;        
+        data[1].headerTitle = sections[0].headerTitle = monthStr1;
       }
       if (data[2].headerTitle != monthStr2) {
-        data[2].headerTitle = sections[1].headerTitle = monthStr2;        
+        data[2].headerTitle = sections[1].headerTitle = monthStr2;
       }
     }
     var dayLnegths = [lastDay - cuttOffDate, cuttOffDate];
@@ -287,8 +291,8 @@ function initialize(win) {
     //info('view.tableView.data[1].headerTitle:' + view.tableView.data[1]);
     //view.tableView.data = view.tableView.data;
     //view.tableView.setData(data);
-    info(data[1]);
-    info(data[2]);
+    //info(data[1]);
+    //info(data[2]);
     if (isUpdate) {
       view.tableView.updateSection(1, data[1], {animated: false});
       view.tableView.updateSection(2, data[2], {animated: false});
@@ -339,7 +343,7 @@ function initialize(win) {
     var tableViewOptions = {
       data: rowData,
       top: offsetTop + 89,
-      footerView: Ti.UI.createView({height: isTablet ? 90 : 48}),
+      footerView: Ti.UI.createView({height: Ti.App.VCC.isTablet ? 90 : 48}),
       visible: false
     };
     if (offsetLeft) {
@@ -359,9 +363,9 @@ function initialize(win) {
  //     }
     });
   }
-  
+
   win.openWinDetail = openWinDetail;
-  
+
   function openWinDetail(dateTime) {
     if (win.winDetail) {
       win.winDetail.openDateTime(dateTime);
@@ -375,7 +379,7 @@ function initialize(win) {
         }
         win.winDetail = null;
       });
-      VCC.Utils.openWin(win.winDetail, getCurrentTab());
+      VCC.Utils.openWin(win.winDetail, utils.getCurrentTab());
     }
   }
   
@@ -484,3 +488,4 @@ function createTotalRow() {
   totalRow.add(lblTotal);
   return totalRow;
 }
+exports.initialize = initialize;

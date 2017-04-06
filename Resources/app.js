@@ -1,5 +1,6 @@
-Ti.include('constant.js');
-Ti.include('utils.js');
+require('constant.js');
+var utils = require('utils.js');
+var VCC = utils.VCC;
 var isAndroid = Ti.App.VCC.isAndroid;
 // init param
 VCC.Utils.setGlobal('winHistory', []);
@@ -16,8 +17,8 @@ if (tabIndex < 0 || tabIndex >= Ti.App.VCC.Windows.length) {
 if (isAndroid) {
   // open home window, not use tabgroup(for hide tabbar)
   var win = VCC.Utils.createWin(Ti.App.VCC.Windows[tabIndex].winjs, tabIndex, {exitOnClose: true});
-  Ti.include(Ti.App.VCC.Windows[tabIndex].winjs);
-  initialize(win);
+  var winjs = require(Ti.App.VCC.Windows[tabIndex].winjs);
+  winjs.initialize(win);
   win.open({animated: true});
   var wins = [];
   wins[tabIndex] = win;
@@ -29,8 +30,8 @@ if (isAndroid) {
   for (var i = 0; i < Ti.App.VCC.Windows.length; i++) {
     i = i || 0;
     var win = VCC.Utils.createWin(Ti.App.VCC.Windows[i].winjs, i, null, true);
-    Ti.include(Ti.App.VCC.Windows[i].winjs);
-    initialize(win);
+    var winjs = require(Ti.App.VCC.Windows[i].winjs);
+    winjs.initialize(win);
     var createTab = Ti.UI.createTab({
       icon: Ti.App.VCC.Windows[i].icon,
       titleid: Ti.App.VCC.Windows[i].titleid,

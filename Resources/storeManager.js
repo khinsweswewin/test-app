@@ -1,13 +1,16 @@
 // storeManager.js
-// Ti.include('utils.js');
 var Storekit = require('ti.storekit');
+var VCC;
+var info;
 
-info('Ti.Platform.id:' + Ti.Platform.id);
-var IOS7 = !isOldiOS;
+//info('Ti.Platform.id:' + Ti.Platform.id);
+var IOS7 = !Ti.App.VCC.isOldiOS;
 //レシートの処理はコメントアウト
 //var verifyingReceipts = false;
 
-function initStorekit() {
+function initStorekit(utils) {
+  VCC = utils.VCC;
+  info = utils.info;
   Storekit.autoFinishTransactions = false;
   Storekit.bundleVersion = "1.0";
   Storekit.bundleIdentifier = Ti.App.id;
@@ -52,7 +55,7 @@ function initStorekit() {
           }
         } else {
 */
-          VCC.Utils.alert(L('str_thanks_purchase'));
+          //VCC.Utils.alert(L('str_thanks_purchase'));
           markProductAsPurchased(evt.productIdentifier, true);
 /*
         }
@@ -84,6 +87,9 @@ function initStorekit() {
 
         evt.transaction && evt.transaction.finish();
         // info('Restored');
+        break;
+      default:
+        info('Unknown: ' + evt.productIdentifier);
         break;
     }
   });
@@ -193,7 +199,7 @@ function initStorekit() {
  * @param identifier The identifier of the Ti.Storekit.Product that was purchased.
  */
 function markProductAsPurchased(identifier, isPurchased) {
-  info('Marking as purchased: ' + identifier);
+  info('Marking as purchased: ' + [identifier, isPurchased]);
   // And in to Ti.App.Properties for persistent storage.
   VCC.Utils.setPurchased(identifier, isPurchased);
   if (Storekit._purchseChanged != null) {
@@ -201,4 +207,7 @@ function markProductAsPurchased(identifier, isPurchased) {
   }
 }
 
+exports.Storekit = Storekit;
+exports.initStorekit = initStorekit;
+exports.markProductAsPurchased = markProductAsPurchased;
 

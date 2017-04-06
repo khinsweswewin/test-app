@@ -1,5 +1,6 @@
 // constant.js
 
+var versionInt = parseInt(Ti.Platform.version);
 // namespace
 Ti.App.VCC = {
   // TITLE_TO_WORK: '出社でよろしいですか？',
@@ -15,7 +16,9 @@ Ti.App.VCC = {
   STATE_RETURN: 'state_return',
   appname: 'timevcard4smartphone',
   isAndroid: Ti.Platform.osname == 'android',
-  versionInt: parseInt(Ti.Platform.version),
+  isTablet: Ti.Platform.displayCaps.platformWidth > 728,
+  versionInt: versionInt,
+  isOldiOS: versionInt < 7,
   ADMOB_PUBLISHER_ID_IPHONE:  'ca-app-pub-9149619195536237/3326519708',
   ADMOB_PUBLISHER_ID_IPAD:    'ca-app-pub-9149619195536237/3326519708',
   ADMOB_PUBLISHER_ID_ANDROID: 'a14dd6a8b32eea4',

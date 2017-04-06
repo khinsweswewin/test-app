@@ -1,10 +1,11 @@
 // setting.js
 var path = Ti.App.VCC.isAndroid ? '../' : '';
-if (typeof utils_js == 'undefined') {
-  Ti.include(path + 'utils.js');
+if (typeof VCC == 'undefined') {
+  var utils = require(path + 'utils.js');
+  var VCC = utils.VCC;
 }
-if (typeof database_js == 'undefined') {
-  Ti.include(path + 'database.js');
+if (typeof database == 'undefined') {
+  var database = require(path + 'database.js');
 }
 
 var Setting = function() {
@@ -14,7 +15,7 @@ var Setting = function() {
 Setting.prototype = {
   initialize: function(options) {
     this.options = options || {};
-    this.db = getDB();
+    this.db = database.getDB();
   },
   getRegularTimeData: function() {
     var datas = this.db.getWorkingTimeData();

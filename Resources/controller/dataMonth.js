@@ -1,10 +1,11 @@
 // dataMonth.js
 var path = Ti.App.VCC.isAndroid ? '../' : '';
-if (typeof utils_js == 'undefined') {
-  Ti.include(path + 'utils.js');
+if (typeof VCC == 'undefined') {
+  var utils = require(path + 'utils.js');
+  var VCC = utils.VCC;
 }
-if (typeof database_js == 'undefined') {
-  Ti.include(path + 'database.js');
+if (typeof database == 'undefined') {
+  var database = require(path + 'database.js');
 }
 
 var DataMonth = function() {
@@ -14,7 +15,7 @@ var DataMonth = function() {
 DataMonth.prototype = {
   initialize: function(options) {
     this.options = options || {};
-    this.db = getDB();
+    this.db = database.getDB();
     var setting = require("controller/setting");
     this.setting = setting.create();
   },
@@ -155,15 +156,14 @@ DataMonth.prototype = {
       win.open({animated: true});
     } else {
       var tabGroup = VCC.Utils.getGlobal('tabGroup');
-      var currentUrl = (Ti.UI.currentTab || tabGroup.activeTab).window.url;
+      var currentWin = (Ti.UI.currentTab || tabGroup.activeTab).window;
       var tab = tabGroup.tabs[tabIndex];
       tabGroup.setActiveTab(tab);
       var currentWindow;
       var cb = function(e) {
         if (currentWindow) currentWindow.removeEventListener('close', cb);
         currentWindow = VCC.Utils.getGlobal('currentWindow');
-        var windowURL = currentWindow ? currentWindow.url : '';
-        if (currentWindow && tab.window.url != windowURL && currentUrl != windowURL) {
+        if (currentWindow && tab.window !== currentWindow && currentWin !== currentWindow) {
           currentWindow.addEventListener('close', cb);
           currentWindow.close();
         }

@@ -1,8 +1,6 @@
 // database.js
-var database_js = true;
-if (typeof utils_js == 'undefined') {
-  Ti.include('utils.js');
-}
+var utils = require('utils.js');
+var VCC = utils.VCC;
 
 function getDB() {
   var db = VCC.Utils.getGlobal('db');
@@ -549,3 +547,5 @@ VCC.DB.prototype = {
 var db = new VCC.DB();
 db.test();
 */
+exports.getDB = getDB;
+

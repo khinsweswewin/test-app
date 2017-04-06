@@ -1,7 +1,12 @@
 // detail.js
 var path = Ti.App.VCC.isAndroid ? '../' : '';
-Ti.include(path + 'utils.js');
-Ti.include(path + 'database.js');
+if (typeof VCC == 'undefined') {
+  var utils = require(path + 'utils.js');
+  var VCC = utils.VCC;
+}
+if (typeof database == 'undefined') {
+  var database = require(path + 'database.js');
+}
 
 var Detail = function() {
   this.initialize.apply(this, arguments);
@@ -10,7 +15,7 @@ var Detail = function() {
 Detail.prototype = {
   initialize: function(options) {
     this.options = options || {};
-    this.db = getDB();
+    this.db = database.getDB();
     var setting = require("controller/setting");
     this.setting = setting.create();
   },
