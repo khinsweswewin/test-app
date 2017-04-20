@@ -1,0 +1,34 @@
+#状態を表示
+ti info -t ios
+
+#iOS simulator
+ti build -p ios
+ti build -p ios --device-id <device-id>
+
+#実機
+ti build -T device -p ios --pp-uuid <test-provisioning-profile-uuid> --developer-name "Kenji Shimada (LYGXZY7M2K)"
+
+#Release Build
+ti build -T dist-appstore -p ios --pp-uuid <distribution-provisioning-profile-uuid> --distribution-name "Virtual Communications Corporation (VF826BVVD5)"
+
+
+#Upload to App Store by iOS 6 icon, Splash Screen error.
+
+$ diff Application\ Support/Titanium/mobilesdk/osx/6.0.4.GA/iphone/cli/commands/_build.js Application\ Support/Titanium/mobilesdk/osx/6.0.4.GA/iphone/cli/commands/_build.js.bak 
+3842c3844
+< 		'subtype': 'retina4',
+---
+> 		'subtype': '568h',
+4902,4905d4903
+< 					'':             { height: 57, width: 57, scale: 1, idioms: [ 'iphone' ], minXcodeVer: '7.2' },
+< 					'@2x':          { height: 57, width: 57, scale: 2, idioms: [ 'iphone' ], minXcodeVer: '7.2' },
+< 					'-72':          { height: 72, width: 72, scale: 1, idioms: [ 'ipad' ], minXcodeVer: '7.2' },
+< 					'-72@2x':       { height: 72, width: 72, scale: 2, idioms: [ 'ipad' ], minXcodeVer: '7.2' },
+5429c5427
+< 					'Default@2x.png':                { idiom: 'iphone', extent: 'full-screen', orientation: 'portrait', width: 640, height: 960, scale: 2 },
+---
+> 					'Default@2x.png':                { idiom: 'iphone', extent: 'full-screen', minSysVer: '7.0', orientation: 'portrait', width: 640, height: 960, scale: 2 },
+5431c5429
+< 					'Default-568h@2x.png':           { idiom: 'iphone', extent: 'full-screen', orientation: 'portrait', width: 640, height: 1136, scale: 2, subtype: 'retina4' },
+---
+> 					'Default-568h@2x.png':           { idiom: 'iphone', extent: 'full-screen', minSysVer: '7.0', orientation: 'portrait', width: 640, height: 1136, scale: 2, subtype: 'retina4' },
