@@ -73,7 +73,7 @@ function initialize(win) {
     initTableViewInfo();
     win.add(loadingMask);
     win.add(loading);
-    storeKit.addEventListener('restoredCompletedTransactions', function(evt) {
+    storeKit._restoredCompletedTransactions = function(evt) {
       info('restoredCompletedTransactions:' + evt);
       evt.transaction && evt.transaction.finish();
       hideLoading();
@@ -83,8 +83,8 @@ function initialize(win) {
           restoreHandler();
         };
       }
-    });
-    storeKit.addEventListener('transactionState', function(evt) {
+    };
+    storeKit._transactionState = function(evt) {
       info('transactionState:' + evt);
       if (evt.state != storeKit.TRANSACTION_STATE_PURCHASING) {
         hideLoading();
@@ -92,11 +92,12 @@ function initialize(win) {
       if (evt.state == storeKit.TRANSACTION_STATE_PURCHASED) {
         VCC.Utils.alert(L('str_thanks_purchase'));
       }
-    });
-    storeKit.addEventListener('updatedDownloads', function(evt) {
+    };
+    storeKit._updatedDownloads = function(evt) {
       info('updatedDownloads:' + evt);
-    });
+    };
     storeKit._purchseChanged = setTableViewInfo;
+    storeKit.addTransactionObserver();
     initTableView();
     //generateTableviewDatas();
     //showLoading();
@@ -193,7 +194,6 @@ function initialize(win) {
               purchaseProduct(p);
               //hideLoading();
             });
-        storeKit.addTransactionObserver();
           }
   // テスト用コード・リリース時には無効にする
   /*

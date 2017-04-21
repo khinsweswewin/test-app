@@ -62,7 +62,7 @@ function initStorekit(utils) {
 */
         // If the transaction has hosted content, the downloads property will exist
         // Downloads that exist in a PURCHASED state should be downloaded immediately, because they were just purchased.
-        if (evt.downloads) {
+        if (evt.downloads && evt.downloads.length) {
           Storekit.startDownloads({
             downloads : evt.downloads
           });
@@ -81,7 +81,7 @@ function initStorekit(utils) {
         // The complete list of restored products is sent with the `restoredCompletedTransactions` event
         info('Restored ' + evt.productIdentifier);
         // Downloads that exist in a RESTORED state should not necessarily be downloaded immediately. Leave it up to the user.
-        if (evt.downloads) {
+        if (evt.downloads && evt.downloads.length) {
           info('Downloads available for restored product');
         }
 
@@ -91,6 +91,9 @@ function initStorekit(utils) {
       default:
         info('Unknown: ' + evt.productIdentifier);
         break;
+    }
+    if (Storekit._transactionState) {
+      Storekit._transactionState(evt);
     }
   });
 
@@ -142,6 +145,9 @@ function initStorekit(utils) {
           break;
       }
     }
+    if (Storekit._updatedDownloads) {
+      Storekit._updatedDownloads(evt);
+    }
   });
   Storekit.addEventListener('restoredCompletedTransactions', function(evt) {
     // hideLoading();
@@ -188,9 +194,12 @@ function initStorekit(utils) {
         markProductAsPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS, false);
       }
     }
+    if (Storekit._restoredCompletedTransactions) {
+      Storekit._restoredCompletedTransactions(evt);
+    }
   });
 
-  Storekit.addTransactionObserver();
+  //Storekit.addTransactionObserver();
 }
 
 

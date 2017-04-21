@@ -12,7 +12,7 @@
     <id>net.vccorp.timesheet4sp</id>
     <name>TimeSheet</name>
     <appname>TimeSheet</appname>
-    <version>1.44</version>
+    <version>1.44.01</version>
     <publisher>Virtual Communications Corporation</publisher>
     <url>http://www.vccorp.net/</url>
     <description>timesheet</description>
@@ -48,6 +48,6 @@
     </android>
     <modules>
         <module platform="iphone" version="2.1.1">ti.admob</module>
-        <module platform="iphone" version="3.1.2">ti.storekit</module>
+        <module platform="iphone" version="4.0.1a">ti.storekit</module>
     </modules>
 </ti:app>

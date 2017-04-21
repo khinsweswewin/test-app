@@ -13,7 +13,7 @@ function initialize(win) {
   });
   var version = Ti.App.version;
   var parts = version.split('.');
-  if (parts.length == 2) {
+  if (parts.length == 2 || (parts.length == 3 && parts[2].substr(0, 1) == '0')) {
     if (parts[1].length >= 2) {
       parts[2] = parts[1].substr(1);
       parts[1] = parts[1].substr(0, 1);
