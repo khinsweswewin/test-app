@@ -12,39 +12,11 @@ ti build -T device -p ios --pp-uuid <test-provisioning-profile-uuid> --developer
 ti build -T dist-appstore -p ios --pp-uuid <distribution-provisioning-profile-uuid> --distribution-name "Virtual Communications Corporation (VF826BVVD5)"
 
 
-#Upload to App Store by iOS 6 icon, Splash Screen error.
+#iOS 7.1.2 Script Error -[__NSCFString containsString:]
+https://jira.appcelerator.org/browse/AC-4794
 
-$ diff Application\ Support/Titanium/mobilesdk/osx/6.0.4.GA/iphone/cli/commands/_build.js Application\ Support/Titanium/mobilesdk/osx/6.0.4.GA/iphone/cli/commands/_build.js.bak 
-3834a3835
-> 		'minimum-system-version': '7.0',
-3840a3842
-> 		'minimum-system-version': '7.0',
-4902,4905d4903
-< 					'':             { height: 57, width: 57, scale: 1, idioms: [ 'iphone' ], minXcodeVer: '7.2' },
-< 					'@2x':          { height: 57, width: 57, scale: 2, idioms: [ 'iphone' ], minXcodeVer: '7.2' },
-< 					'-72':          { height: 72, width: 72, scale: 1, idioms: [ 'ipad' ], minXcodeVer: '7.2' },
-< 					'-72@2x':       { height: 72, width: 72, scale: 2, idioms: [ 'ipad' ], minXcodeVer: '7.2' },
-5428c5426
-< 					// iPhone Portrait - iOS 6-9 - 2x (640x960)
+6.0.4.GA/iphone/Classes/KrollBridge.m
+
+< if (![path containsString:@"/"]) {
 ---
-> 					// iPhone Portrait - iOS 7-9 - 2x (640x960)
-5430c5428
-< 					// iPhone Portrait - iOS 6-9 - Retina 4 (640x1136)
----
-> 					// iPhone Portrait - iOS 7-9 - Retina 4 (640x1136)
-5433a5432
-> 
-5488,5498c5487
-< 					if (this.tiapp.ios['min-ios-ver'] <= 6.0 && meta.minSysVer == '7.0') {
-< 						var img2 = {
-< 							'extent': img.extent,
-< 							'idiom': img.idiom,
-< 							'filename': img.filename,
-< 							'orientation': img.orientation,
-< 							'scale': img.scale
-< 						};
-< 						img.subtype && (img2.subtype = img.subtype);
-< 						launchImageSet.images.push(img2);
-< 					}
----
-> 
+> if ([path rangeOfString:@"/"].location == NSNotFound) {

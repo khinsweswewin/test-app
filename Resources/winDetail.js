@@ -34,14 +34,16 @@ function initialize(win) {
     data: null,
     backgroundColor: 'transparent',
     rowBackgroundColor: 'white',
-    top: topChange + 50,
-    footerView: Ti.UI.createView({height: 48})
+    top: topChange + 50
   };
   if (!isAndroid) {
     tableViewOptions.style = Ti.UI.iOS.TableViewStyle.GROUPED;
   }
-  if (!isOldiOS) {
-    tableViewOptions.headerView = Ti.UI.createView({height: 1});
+  if (Ti.App.VCC.versionInt != 7) {
+    if (!isOldiOS) {
+      tableViewOptions.headerView = Ti.UI.createView({height: 1});
+    }
+    tableViewOptions.footerView = Ti.UI.createView({height: 48});
   }
   var tableView = Ti.UI.createTableView(tableViewOptions);
   tableView.addEventListener('click', onTableViewClick);

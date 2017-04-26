@@ -193,11 +193,13 @@ function initialize(win) {
         backgroundColor:'transparent',
         rowBackgroundColor:'white',
         top: offsetTop + 90,
-        allowsSelection: false,
-        footerView: Ti.UI.createView({height: 48})
+        allowsSelection: false
       };
-      if (!isOldiOS) {
-        tableViewOptions.headerView = Ti.UI.createView({height: 1});
+      if (Ti.App.VCC.versionInt != 7) {
+        if (!isOldiOS) {
+          tableViewOptions.headerView = Ti.UI.createView({height: 1});
+        }
+        tableViewOptions.footerView = Ti.UI.createView({height: 48});
       }
       if (offsetLeft) {
         tableViewOptions.left = offsetLeft;

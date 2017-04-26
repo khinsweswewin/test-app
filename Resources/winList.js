@@ -343,9 +343,11 @@ function initialize(win) {
     var tableViewOptions = {
       data: rowData,
       top: offsetTop + 89,
-      footerView: Ti.UI.createView({height: Ti.App.VCC.isTablet ? 90 : 48}),
       visible: false
     };
+    if (Ti.App.VCC.versionInt != 7) {
+      tableViewOptions.footerView = Ti.UI.createView({height: Ti.App.VCC.isTablet ? 90 : 48});
+    }
     if (offsetLeft) {
       tableViewOptions.left = offsetLeft;
       tableViewOptions.right = -offsetLeft;
@@ -474,11 +476,15 @@ function initialize(win) {
 }
 
 function createTotalRow() {
-  var lblTotal = Ti.UI.createLabel({
+  var labelOptions = {
     text: '', //L('str_total_worktime'),
     color: '#000',
     textAlign: 'center'
-  });
+  };
+  if (Ti.App.VCC.versionInt == 7) {
+    labelOptions.width = Ti.Platform.displayCaps.platformWidth;
+  }
+  var lblTotal = Ti.UI.createLabel(labelOptions);
   var totalRow = Ti.UI.createTableViewRow({
     backgroundColor: '#fff',
     selectedBackgroundColor: '#fff',

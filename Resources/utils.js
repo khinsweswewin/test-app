@@ -872,6 +872,9 @@ if (typeof VCC.Utils == 'undefined') {
     }
   };
   VCC.Utils.addAdmob = function (win) {
+    var pageIndex = VCC.Utils._admobPages || 0;
+    VCC.Utils._admobPages = pageIndex + 1;
+    var admobReceive = false;
     if (Ti.Platform.osname != 'android') {
       if (!VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
         Titanium.Admob = require('ti.admob');
@@ -888,7 +891,6 @@ if (typeof VCC.Utils == 'undefined') {
         });
         win.add(adview);
         function adCb(e) {
-          //info('[ti.admob]' + e.type);
           if (VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
             adview.removeEventListener('didReceiveAd', adCb);
             adview.removeEventListener('didFailToReceiveAd', adCb);
@@ -905,6 +907,8 @@ if (typeof VCC.Utils == 'undefined') {
             break;
           case 'didReceiveAd':
             adview.show();
+            VCC.Utils._admobReceive = true;
+            admobReceive = true;
             break;
           }
         }
@@ -914,6 +918,16 @@ if (typeof VCC.Utils == 'undefined') {
         adview.addEventListener('willDismissScreen', adCb);
         adview.addEventListener('didDismissScreen', adCb);
         adview.addEventListener('willLeaveApplication', adCb);
+        function focusCB(e) {
+          if (VCC.Utils._admobReceive) {
+            if (!admobReceive) {
+              win.remove(adview);
+              VCC.Utils.addAdmob(win);
+            }
+            win.removeEventListener('focus', focusCB);
+          }
+        }
+        win.addEventListener('focus', focusCB);
       }
 /*
 */

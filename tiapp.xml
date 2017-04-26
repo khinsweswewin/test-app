@@ -12,7 +12,7 @@
     <id>net.vccorp.timesheet4sp</id>
     <name>TimeSheet</name>
     <appname>TimeSheet</appname>
-    <version>1.44.01</version>
+    <version>1.45.00</version>
     <publisher>Virtual Communications Corporation</publisher>
     <url>http://www.vccorp.net/</url>
     <description>timesheet</description>
@@ -27,7 +27,7 @@
     <analytics>false</analytics>
     <guid>6cedeae6-56d1-44a8-bb1c-056e512562e8</guid>
     <ios>
-        <min-ios-ver>6.0</min-ios-ver>
+        <min-ios-ver>7.1</min-ios-ver>
         <use-autolayout>true</use-autolayout>
     </ios>
     <iphone>

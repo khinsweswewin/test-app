@@ -168,10 +168,12 @@ function initialize(win) {
     if (!isAndroid) {
       tableViewOptions.style = Ti.UI.iOS.TableViewStyle.GROUPED;
     }
-    if (!isOldiOS) {
-      tableViewOptions.headerView = Ti.UI.createView({height: 1});
-    } else if (Ti.App.VCC.isTablet) {
-      tableViewOptions.headerView = Ti.UI.createView({height: 20});
+    if (Ti.App.VCC.versionInt != 7) {
+      if (!isOldiOS) {
+        tableViewOptions.headerView = Ti.UI.createView({height: 1});
+      } else if (Ti.App.VCC.isTablet) {
+        tableViewOptions.headerView = Ti.UI.createView({height: 20});
+      }
     }
 
     //if (tableView) {
