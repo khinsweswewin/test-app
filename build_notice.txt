@@ -20,3 +20,14 @@ https://jira.appcelerator.org/browse/AC-4794
 < if (![path containsString:@"/"]) {
 ---
 > if ([path rangeOfString:@"/"].location == NSNotFound) {
+
+
+6.0.4.GA/iphone/cli/commands/_build.js
+		if (legacySwift) {
+			delete conf.buildSettings.ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES;
+> 			if (conf.buildSettings.EMBEDDED_CONTENT_CONTAINS_SWIFT) {
+> 				conf.buildSettings.EMBEDDED_CONTENT_CONTAINS_SWIFT = 'NO';
+> 			}
+		} else {
+			delete conf.buildSettings.EMBEDDED_CONTENT_CONTAINS_SWIFT;
+		}
