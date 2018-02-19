@@ -153,8 +153,6 @@ function initStorekit(utils) {
     // hideLoading();
     if (evt.error) {
       VCC.Utils.alert(evt.error);
-    } else if (evt.transactions == null || evt.transactions.length == 0) {
-      VCC.Utils.alert(L('err_no_purchase_to_store'));
     } else {
 //レシートの処理はコメントアウト
 /*
@@ -167,27 +165,31 @@ function initStorekit(utils) {
       }
 */
       var tempPurchasedStore = {};
-      for (var i = 0; i < evt.transactions.length; i++) {
+      if (evt.transactions == null || evt.transactions.length == 0) {
+        VCC.Utils.alert(L('err_no_purchase_to_store'));
+      } else {
+        for (var i = 0; i < evt.transactions.length; i++) {
 //レシートの処理はコメントアウト
 /*
-        if (!IOS7 && verifyingReceipts) {
-          Storekit.verifyReceipt(evt.transactions[i], function(e) {
-            if (e.valid) {
-              markProductAsPurchased(e.productIdentifier, true);
-              tempPurchasedStore[e.productIdentifier] = true;
-            } else {
-              Ti.API.error("Restored transaction is not valid");
-              markProductAsPurchased(e.productIdentifier, false);
-              tempPurchasedStore[e.productIdentifier] = false;
-            }
-          });
-        } else {
+          if (!IOS7 && verifyingReceipts) {
+            Storekit.verifyReceipt(evt.transactions[i], function(e) {
+              if (e.valid) {
+                markProductAsPurchased(e.productIdentifier, true);
+                tempPurchasedStore[e.productIdentifier] = true;
+              } else {
+                Ti.API.error("Restored transaction is not valid");
+                markProductAsPurchased(e.productIdentifier, false);
+                tempPurchasedStore[e.productIdentifier] = false;
+              }
+            });
+          } else {
 */
-          markProductAsPurchased(evt.transactions[i].productIdentifier, true);
-          tempPurchasedStore[evt.transactions[i].productIdentifier] = true;
+            markProductAsPurchased(evt.transactions[i].productIdentifier, true);
+            tempPurchasedStore[evt.transactions[i].productIdentifier] = true;
 /*
-        }
+          }
 */
+        }
       }
       //無効になっていた場合は未購入に戻す
       if (tempPurchasedStore[Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS] === undefined) {
