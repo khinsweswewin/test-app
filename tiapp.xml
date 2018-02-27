@@ -16,7 +16,7 @@
     <publisher>Virtual Communications Corporation</publisher>
     <url>http://www.vccorp.net/</url>
     <description>timesheet</description>
-    <copyright>2017 by vccorp.net</copyright>
+    <copyright>2018 by vccorp.net</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>true</prerendered-icon>
@@ -27,7 +27,7 @@
     <analytics>false</analytics>
     <guid>6cedeae6-56d1-44a8-bb1c-056e512562e8</guid>
     <ios>
-        <min-ios-ver>8.0</min-ios-ver>
+        <min-ios-ver>8.1</min-ios-ver>
         <use-autolayout>false</use-autolayout>
         <plist>
             <dict>
