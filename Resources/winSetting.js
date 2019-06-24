@@ -1,7 +1,7 @@
 var utils = require('utils.js');
 var VCC = utils.VCC;
 var isOldiOS = Ti.App.VCC.isOldiOS;
-var offsetTop = isOldiOS ? 0 : 20;
+var offsetTop = VCC.Utils.statusBarHeight();
 
 function initialize(win) {
   //Ti.include('utils.js');

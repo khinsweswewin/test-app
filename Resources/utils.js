@@ -416,9 +416,9 @@ if (typeof VCC.Utils == 'undefined') {
       }
     } else {
       if (isTabWin) {
-        toolbar = Ti.UI.iOS.createToolbar({
+        toolbar = Ti.UI.createToolbar({
           items: [partsLeft, flexSpace, lblTitle, flexSpace, partsRight],
-          top: isOldiOS ? 0 : 20,
+          top: VCC.Utils.statusBarHeight(),
           borderTop: true,
           borderBottom: false,
           translucent: true,
@@ -1201,6 +1201,10 @@ if (typeof VCC.Utils == 'undefined') {
     }
     winURL[url].push(win);
     VCC.Utils.setGlobal('winURL', winURL);
+  };
+
+  VCC.Utils.statusBarHeight = function () {
+    return Ti.Platform.displayCaps.platformWidth == 375 && Ti.Platform.displayCaps.platformHeight == 812 ? 44 : 20;
   };
 
   setGlobal('_VCC_Utils', VCC.Utils);

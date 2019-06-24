@@ -4,7 +4,7 @@ var info = utils.info;
 
 //initialize(Ti.UI.currentWindow);
 var isOldiOS = Ti.App.VCC.isOldiOS;
-var offsetTop = isOldiOS ? 0 : 20;
+var offsetTop = VCC.Utils.statusBarHeight();
 
 function initialize(win) {
 
