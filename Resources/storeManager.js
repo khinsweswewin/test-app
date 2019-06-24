@@ -4,7 +4,6 @@ var VCC;
 var info;
 
 //info('Ti.Platform.id:' + Ti.Platform.id);
-var IOS7 = !Ti.App.VCC.isOldiOS;
 //レシートの処理はコメントアウト
 //var verifyingReceipts = false;
 
@@ -34,25 +33,9 @@ function initStorekit(utils) {
 //レシートの処理はコメントアウト
 /*
         if (verifyingReceipts) {
-          if (IOS7) {
-            // iOS 7 Plus receipt validation is just as secure as pre iOS 7 receipt verification, but is done entirely on the device.
-            var msg = Storekit.validateReceipt() ? 'Receipt is Valid!' : 'Receipt is Invalid.';
-            VCC.Utils.alert(msg);
-          } else {
-            // Pre iOS 7 receipt verification
-            Storekit.verifyReceipt(evt, function(e) {
-              if (e.success) {
-                if (e.valid) {
-                  alert('Thanks! Receipt Verified');
-                  markProductAsPurchased(evt.productIdentifier, true);
-                } else {
-                  alert('Sorry. Receipt is invalid');
-                }
-              } else {
-                alert(e.message);
-              }
-            });
-          }
+          // iOS 7 Plus receipt validation is just as secure as pre iOS 7 receipt verification, but is done entirely on the device.
+          var msg = Storekit.validateReceipt() ? 'Receipt is Valid!' : 'Receipt is Invalid.';
+          VCC.Utils.alert(msg);
         } else {
 */
           //VCC.Utils.alert(L('str_thanks_purchase'));
@@ -156,7 +139,7 @@ function initStorekit(utils) {
     } else {
 //レシートの処理はコメントアウト
 /*
-      if (IOS7 && verifyingReceipts) {
+      if (verifyingReceipts) {
         if (Storekit.validateReceipt()) {
           info('Restored Receipt is Valid!');
         } else {
@@ -169,26 +152,8 @@ function initStorekit(utils) {
         VCC.Utils.alert(L('err_no_purchase_to_store'));
       } else {
         for (var i = 0; i < evt.transactions.length; i++) {
-//レシートの処理はコメントアウト
-/*
-          if (!IOS7 && verifyingReceipts) {
-            Storekit.verifyReceipt(evt.transactions[i], function(e) {
-              if (e.valid) {
-                markProductAsPurchased(e.productIdentifier, true);
-                tempPurchasedStore[e.productIdentifier] = true;
-              } else {
-                Ti.API.error("Restored transaction is not valid");
-                markProductAsPurchased(e.productIdentifier, false);
-                tempPurchasedStore[e.productIdentifier] = false;
-              }
-            });
-          } else {
-*/
-            markProductAsPurchased(evt.transactions[i].productIdentifier, true);
-            tempPurchasedStore[evt.transactions[i].productIdentifier] = true;
-/*
-          }
-*/
+          markProductAsPurchased(evt.transactions[i].productIdentifier, true);
+          tempPurchasedStore[evt.transactions[i].productIdentifier] = true;
         }
       }
       //無効になっていた場合は未購入に戻す

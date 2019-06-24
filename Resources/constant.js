@@ -18,7 +18,6 @@ Ti.App.VCC = {
   isAndroid: Ti.Platform.osname == 'android',
   isTablet: Ti.Platform.displayCaps.platformWidth > 728,
   versionInt: versionInt,
-  isOldiOS: versionInt < 7,
   ADMOB_PUBLISHER_ID_IPHONE:  'ca-app-pub-9149619195536237/3326519708',
   ADMOB_PUBLISHER_ID_IPAD:    'ca-app-pub-9149619195536237/3326519708',
   ADMOB_PUBLISHER_ID_ANDROID: 'a14dd6a8b32eea4',

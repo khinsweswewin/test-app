@@ -3,7 +3,6 @@ var VCC = utils.VCC;
 var info = utils.info;
 
 //initialize(Ti.UI.currentWindow);
-var isOldiOS = Ti.App.VCC.isOldiOS;
 var offsetTop = VCC.Utils.statusBarHeight();
 
 function initialize(win) {
@@ -345,9 +344,7 @@ function initialize(win) {
       top: offsetTop + 89,
       visible: false
     };
-    if (Ti.App.VCC.versionInt != 7) {
-      tableViewOptions.footerView = Ti.UI.createView({height: Ti.App.VCC.isTablet ? 90 : 48});
-    }
+    tableViewOptions.footerView = Ti.UI.createView({height: Ti.App.VCC.isTablet ? 90 : 48});
     if (offsetLeft) {
       tableViewOptions.left = offsetLeft;
       tableViewOptions.right = -offsetLeft;
@@ -481,9 +478,6 @@ function createTotalRow() {
     color: '#000',
     textAlign: 'center'
   };
-  if (Ti.App.VCC.versionInt == 7) {
-    labelOptions.width = Ti.Platform.displayCaps.platformWidth;
-  }
   var lblTotal = Ti.UI.createLabel(labelOptions);
   var totalRow = Ti.UI.createTableViewRow({
     backgroundColor: '#fff',

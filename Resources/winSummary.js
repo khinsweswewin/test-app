@@ -1,5 +1,4 @@
 
-var isOldiOS = Ti.App.VCC.isOldiOS;
 var offsetTop = VCC.Utils.statusBarHeight();
 
 function initialize(win) {
@@ -195,12 +194,8 @@ function initialize(win) {
         top: offsetTop + 90,
         allowsSelection: false
       };
-      if (Ti.App.VCC.versionInt != 7) {
-        if (!isOldiOS) {
-          tableViewOptions.headerView = Ti.UI.createView({height: 1});
-        }
-        tableViewOptions.footerView = Ti.UI.createView({height: 48});
-      }
+      tableViewOptions.headerView = Ti.UI.createView({height: 1});
+      tableViewOptions.footerView = Ti.UI.createView({height: 48});
       if (offsetLeft) {
         tableViewOptions.left = offsetLeft;
         tableViewOptions.right = -offsetLeft;

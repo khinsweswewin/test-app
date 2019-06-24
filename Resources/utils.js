@@ -1,4 +1,3 @@
-var isOldiOS = Ti.App.VCC.isOldiOS;
 var isTablet = Ti.App.VCC.isTablet;
 L = function(key, hint, isNoRemoveRetrunCode) {
   var str = hint === undefined ? Ti.Locale.getString(key) : Ti.Locale.getString(key, hint);
@@ -372,7 +371,7 @@ if (typeof VCC.Utils == 'undefined') {
     if (isTabWin || Ti.App.VCC.isAndroid) {
       lblTitle = Ti.UI.createLabel({
         text: title,
-        color: isOldiOS ? '#fff' : null,
+        color: null,
         font: {fontSize:20, fontWeight: 'bold'},
         textAlign: 'center'
       });
@@ -422,7 +421,7 @@ if (typeof VCC.Utils == 'undefined') {
           borderTop: true,
           borderBottom: false,
           translucent: true,
-          barColor: isOldiOS ? '#000' : null
+          barColor: null
         });
       }
     }
@@ -442,9 +441,6 @@ if (typeof VCC.Utils == 'undefined') {
       opt.tabIndex = parent;
     } else if (parent) {
       opt.parentWin = parent;
-    }
-    if (!isTabWin && isOldiOS) {
-      opt.barColor = '#000';
     }
     if (options) {
       for (var n in options) {

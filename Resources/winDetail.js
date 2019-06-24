@@ -1,6 +1,5 @@
 var utils = require('utils.js');
 var VCC = utils.VCC;
-var isOldiOS = Ti.App.VCC.isOldiOS;
 var info = utils.info;
 
 function initialize(win) {
@@ -39,12 +38,8 @@ function initialize(win) {
   if (!isAndroid) {
     tableViewOptions.style = Ti.UI.iOS.TableViewStyle.GROUPED;
   }
-  if (Ti.App.VCC.versionInt != 7) {
-    if (!isOldiOS) {
-      tableViewOptions.headerView = Ti.UI.createView({height: 1});
-    }
-    tableViewOptions.footerView = Ti.UI.createView({height: 48});
-  }
+  tableViewOptions.headerView = Ti.UI.createView({height: 1});
+  tableViewOptions.footerView = Ti.UI.createView({height: 48});
   var tableView = Ti.UI.createTableView(tableViewOptions);
   tableView.addEventListener('click', onTableViewClick);
   var workTime = 0;

@@ -1,6 +1,5 @@
 var utils = require('utils.js');
 var VCC = utils.VCC;
-var isOldiOS = Ti.App.VCC.isOldiOS;
 
 function initialize(win) {
   win.focusCallback = function(isChangeWindow, isChangeTab) {
@@ -98,7 +97,7 @@ Ti.API.info(VCC.Utils.getDateTime());
   if (picker.height) {
     picker.top = Math.min(winHeight / 2, winHeight - picker.height);
   } else if (winHeight < 600) {
-    if (!isOldiOS && winHeight > 500) {
+    if (winHeight > 500) {
       picker.top = winHeight / 3;
     } else {
       picker.bottom = 0;
