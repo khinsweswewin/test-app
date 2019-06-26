@@ -92,11 +92,27 @@ function initialize(win) {
       },
       {
         header: L('str_setting_mail_address'),
-        //title: L('str_mail_address'),
+        title: 'to',
+        titleColor: '#889',
         valueType: 'textField',
+        textFieldId: 'to',
         callback: onEventTextField,
         hintText: L('str_setting_mail_address_hint'),
         value: controller.getMailAddress(),
+        left: 10,
+        selectionStyle: 'NONE',
+        type: 'mailAddress',
+        keyboardType: Ti.UI.KEYBOARD_TYPE_EMAIL,
+        returnKeyType: Ti.UI.RETURNKEY_DONE
+      },
+      {
+        title: 'cc',
+        titleColor: '#889',
+        valueType: 'textField',
+        textFieldId: 'cc',
+        callback: onEventTextField,
+        hintText: L('str_setting_mail_address_hint'),
+        value: controller.getMailAddressCC(),
         left: 10,
         selectionStyle: 'NONE',
         type: 'mailAddress',
@@ -299,8 +315,12 @@ function initialize(win) {
   function onEventTextField(e) {
     var textField = e.source;
     if (textField.type == 'mailAddress') {
-      Ti.API.info(textField.value);
-      controller.setMailAddress(textField.value);
+      Ti.API.info(textField.textFieldId + ':' + textField.value);
+      if (textField.textFieldId == 'cc') {
+        controller.setMailAddressCC(textField.value);
+      } else {
+        controller.setMailAddress(textField.value);
+      }
     }
   }
 }

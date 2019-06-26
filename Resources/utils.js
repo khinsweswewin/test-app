@@ -321,10 +321,10 @@ if (typeof VCC.Utils == 'undefined') {
     }
     dialog.open();
   };
-  VCC.Utils.exportProcess = function (to, subject, body) {
+  VCC.Utils.exportProcess = function (to, subject, body, cc) {
     var buttons = [L('str_send_mail'), L('str_cancel')];
     var callbacks = [function() {
-      VCC.Utils.openEmail(to, subject, body);
+      VCC.Utils.openEmail(to, subject, body, cc);
     }];
     VCC.Utils.createDialog(null, buttons, callbacks, 1, 1);
   };
@@ -1012,7 +1012,7 @@ if (typeof VCC.Utils == 'undefined') {
     var child = {};
     if (dataItem.title) {
       var title = Ti.UI.createLabel({
-        color: '#000',
+        color: dataItem.titleColor || '#000',
         textAlign: 'left',
         left: 10,
         text: dataItem.title
@@ -1038,6 +1038,9 @@ if (typeof VCC.Utils == 'undefined') {
         }
         if (dataItem.borderStyle) {
           opt2.borderStyle = dataItem.borderStyle;
+        }
+        if (dataItem.textFieldId) {
+          opt2.textFieldId = dataItem.textFieldId;
         }
         var value = Ti.UI.createTextField(opt2);
         value.addEventListener('return', dataItem.callback);

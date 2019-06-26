@@ -100,7 +100,12 @@ DataMonth.prototype = {
     var to = [email];
     var subject = String.format(L('str_mail_subject'), VCC.Utils.formatDate(this.year, this.month));
     var body = this.createExportBody();
-    VCC.Utils.exportProcess(to, subject, body);
+    var emailCC = this.setting.getMailAddressCC();
+    var cc;
+    if (emailCC) {
+      cc = [emailCC];
+    }
+    VCC.Utils.exportProcess(to, subject, body, cc);
     return true;
   },
   createExportBody: function() {

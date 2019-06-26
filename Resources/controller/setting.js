@@ -58,6 +58,16 @@ Setting.prototype = {
       this.email = email;
     }
   },
+  getMailAddressCC: function() {
+    this.emailCC = this.db.getProperty('mailAddressCC');
+    return this.emailCC;
+  },
+  setMailAddressCC: function(email) {
+    if (this.emailCC != email) {
+      this.db.setProperty('mailAddressCC', email);
+      this.emailCC = email;
+    }
+  },
   getCuttOffDate: function() {
     this.cuttOffDate = this.db.getProperty('cuttOffDate') || 0;
     if (this.cuttOffDate == + this.cuttOffDate) {

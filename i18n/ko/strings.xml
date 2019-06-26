@@ -22,7 +22,7 @@
 	<string name="str_on_work">체크인</string>
 	<string name="str_suspend">정지</string>
 	<string name="str_return">다시 시작하기</string>
-	<string name="str_leave">퇴사</string>
+	<string name="str_leave">퇴근</string>
 	<string name="str_rest">휴식</string>
 	<string name="str_home">홈</string>
 	<string name="str_list">보기</string>
