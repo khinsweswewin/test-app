@@ -122,7 +122,7 @@ function initialize(win) {
       header : L('str_setting_others'),
       title : L('str_support'),
       velueAlign : 'right',
-      data : 'http://vccorp.net/intersuite/timesheet/',
+      data : 'https://www.digitalstacks.net/timesheet',
       hasChild : true,
       action : 'gotoSupportURL',
       type : ''

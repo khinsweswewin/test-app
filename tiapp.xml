@@ -13,10 +13,10 @@
     <name>TimeSheet</name>
     <appname>TimeSheet</appname>
     <version>1.47.00</version>
-    <publisher>Virtual Communications Corporation</publisher>
-    <url>http://www.vccorp.net/</url>
+    <publisher>Digital Stacks Corporation</publisher>
+    <url>https://www.digitalstacks.net/</url>
     <description>timesheet</description>
-    <copyright>2018 by vccorp.net</copyright>
+    <copyright>2019 by digitalstacks.net</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>true</prerendered-icon>
