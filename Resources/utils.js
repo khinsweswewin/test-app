@@ -1176,9 +1176,9 @@ if (typeof VCC.Utils == 'undefined') {
   VCC.Utils.alert = function (msg, title) {
     var dialog = Ti.UI.createAlertDialog();
     if (title !== undefined) {
-      dialog.setTitle(title);
+      dialog.title = title;
     }
-    dialog.setMessage(msg); 
+    dialog.message = msg; 
     dialog.show();
   };
 
@@ -1203,7 +1203,8 @@ if (typeof VCC.Utils == 'undefined') {
   };
 
   VCC.Utils.statusBarHeight = function () {
-    return Ti.Platform.displayCaps.platformWidth == 375 && Ti.Platform.displayCaps.platformHeight == 812 ? 44 : 20;
+    //info('Ti.Platform.displayCaps.platformWidth, platformHeight:' + Ti.Platform.displayCaps.platformWidth + ',' + Ti.Platform.displayCaps.platformHeight);
+    return (Ti.Platform.displayCaps.platformWidth / Ti.Platform.displayCaps.platformHeight) < 0.5 ? 44 : 20;
   };
 
   setGlobal('_VCC_Utils', VCC.Utils);
