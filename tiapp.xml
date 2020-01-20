@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <sdk-version>8.0.1.GA</sdk-version>
+    <sdk-version>8.3.0.GA</sdk-version>
     <deployment-targets>
         <target device="tizen">false</target>
         <target device="mobileweb">false</target>
@@ -12,11 +12,11 @@
     <id>net.vccorp.timesheet4sp</id>
     <name>TimeSheet</name>
     <appname>TimeSheet</appname>
-    <version>1.48.01</version>
+    <version>1.49.00</version>
     <publisher>Digital Stacks Corporation</publisher>
     <url>https://www.digitalstacks.net/</url>
     <description>timesheet</description>
-    <copyright>2019 by digitalstacks.net</copyright>
+    <copyright>2020 by digitalstacks.net</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>true</prerendered-icon>
@@ -39,6 +39,8 @@
                 <array>
                     <string>UIInterfaceOrientationPortrait</string>
                 </array>
+                <key>GADIsAdManagerApp</key>
+                <true/>
             </dict>
         </plist>
     </ios>
@@ -51,7 +53,7 @@
         </manifest>
     </android>
     <modules>
-        <module platform="iphone" version="2.4.0">ti.admob</module>
+        <module platform="iphone" version="2.5.0">ti.admob</module>
         <module platform="iphone" version="4.3.2">ti.storekit</module>
     </modules>
 </ti:app>

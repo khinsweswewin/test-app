@@ -1026,6 +1026,7 @@ if (typeof VCC.Utils == 'undefined') {
           textAlign: 'right',
           left: dataItem.left,
           right: 10,
+          height: 40,
           value: dataItem.value,
           type: dataItem.type,
           hintText: dataItem.hintText

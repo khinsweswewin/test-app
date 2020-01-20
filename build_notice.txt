@@ -7,6 +7,7 @@ ti build -p ios --device-id <device-id>
 
 #実機
 ti build -T device -p ios --pp-uuid <test-provisioning-profile-uuid> --developer-name "Kenji Shimada (LYGXZY7M2K)"
+ti build -T device -p ios --pp-uuid <test-provisioning-profile-uuid> --developer-name "iPhone Developer: Kenji Shimada (LYGXZY7M2K)"
 
 #Release Build
 ti build -T dist-appstore -p ios --pp-uuid <distribution-provisioning-profile-uuid> --distribution-name "Virtual Communications Corporation (VF826BVVD5)"
