@@ -89,6 +89,8 @@ Ti.API.info(VCC.Utils.getDateTime());
       value: dataDate,
       minDate: minDate,
       maxDate: maxDate,
+      backgroundColor: 'white',
+      dateTimeColor: 'black',
       useSpinner: isAndroid//,
       //top: (isAndroid ? 94 : 50)
     });
@@ -96,8 +98,10 @@ Ti.API.info(VCC.Utils.getDateTime());
 
   if (picker.height) {
     picker.top = Math.min(winHeight / 2, winHeight - picker.height);
-  } else if (winHeight < 600) {
-    if (winHeight > 500) {
+  } else if (!Ti.App.VCC.isTablet) {
+    if (winHeight >= 600) {
+      picker.top = winHeight / 2.5;
+    } else if (winHeight > 500) {
       picker.top = winHeight / 3;
     } else {
       picker.bottom = 0;

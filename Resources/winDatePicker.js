@@ -46,6 +46,7 @@ function initialize(win) {
         text: text,
         font: {fontSize:24, fontWeight:'bold'},
         textAlign: 'center',
+        color: 'black',
         width: Ti.UI.SIZE,
         height: Ti.UI.SIZE
       });
@@ -63,6 +64,7 @@ function initialize(win) {
   columns.push(pickerColumn);
   picker = Ti.UI.createPicker({
     columns: columns,
+    backgroundColor: 'white',
     useSpinner: true
   });
 //  picker.top = Math.min(winHeight / 2, winHeight - picker.height - 60);

@@ -13,6 +13,13 @@ var tabIndex = Ti.App.Properties.getInt('tabIndex') || 0;
 if (tabIndex < 0 || tabIndex >= Ti.App.VCC.Windows.length) {
   tabIndex = 0;
 }
+var isForeground = true;
+Ti.App.addEventListener('pause', function() {
+  isForeground = false;
+});
+Ti.App.addEventListener('resume', function() {
+  isForeground = true;
+});
 
 if (isAndroid) {
   // open home window, not use tabgroup(for hide tabbar)
@@ -89,6 +96,17 @@ if (isAndroid) {
     }, 2000);
   });
   */
+  var userInterfaceStyle = Ti.App.iOS.userInterfaceStyle;
+  Ti.App.iOS.addEventListener('traitcollectionchange', function() {
+    if (isForeground && userInterfaceStyle != Ti.App.iOS.userInterfaceStyle) {
+      tabGroup.tabs.forEach(function(tab) {
+        var win = tab.window;
+        win.backgroundColor = Ti.App.iOS.userInterfaceStyle == Ti.App.iOS.USER_INTERFACE_STYLE_DARK ? '#464646' : 'white';
+        win.toolBar.title.color = Ti.App.iOS.userInterfaceStyle == Ti.App.iOS.USER_INTERFACE_STYLE_DARK ? 'white' : null;
+      });
+      userInterfaceStyle = Ti.App.iOS.userInterfaceStyle;
+    }
+  });
 }
 if (!VCC.Utils.isPurchased(Ti.App.VCC.PRODUCT_IDENTIFIER_REMOVE_ADS)) {
   var controller = VCC.Utils.getSettingController();

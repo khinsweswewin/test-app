@@ -371,7 +371,7 @@ if (typeof VCC.Utils == 'undefined') {
     if (isTabWin || Ti.App.VCC.isAndroid) {
       lblTitle = Ti.UI.createLabel({
         text: title,
-        color: null,
+        color: VCC.Utils.isDarkMode() ? 'white' : null,
         font: {fontSize:20, fontWeight: 'bold'},
         textAlign: 'center'
       });
@@ -429,6 +429,7 @@ if (typeof VCC.Utils == 'undefined') {
   };
   VCC.Utils.createWin = function (url, parent, options, isUnsetUrl) {
     var isTabWin = parent == +parent;
+    var isDarkMode = VCC.Utils.isDarkMode();
     var opt = {  
       backgroundColor: '#fff',
       //url: url,
@@ -439,6 +440,9 @@ if (typeof VCC.Utils == 'undefined') {
     };
     if (isTabWin) {
       opt.tabIndex = parent;
+      if (isDarkMode) {
+        opt.backgroundColor = '#464646';
+      }
     } else if (parent) {
       opt.parentWin = parent;
     }
@@ -518,6 +522,15 @@ if (typeof VCC.Utils == 'undefined') {
       opt.backButtonTitle = backButtonTitle;
     }
     var newWin = Ti.UI.createWindow(opt);
+    if (isTabWin) {
+      var view = Titanium.UI.createView({
+        backgroundColor:'white',
+        top: VCC.Utils.statusBarHeight(),
+        width:Titanium.Platform.displayCaps.platformHeight,
+        height:Titanium.Platform.displayCaps.platformHeight - VCC.Utils.statusBarHeight()
+      });
+      newWin.add(view);
+    }
     if (toolbar) {
       if (toolbar.toolbar) {
         newWin.add(toolbar.toolbar);
@@ -1029,7 +1042,9 @@ if (typeof VCC.Utils == 'undefined') {
           height: 40,
           value: dataItem.value,
           type: dataItem.type,
-          hintText: dataItem.hintText
+          color: 'black',
+          hintText: dataItem.hintText,
+          hintTextColor: '#ccc'
         };
         if (dataItem.keyboardType) {
           opt2.keyboardType = dataItem.keyboardType;
@@ -1171,8 +1186,10 @@ if (typeof VCC.Utils == 'undefined') {
     }
     return storeKit;
   };
-  
-  VCC.Utils.storeKit = VCC.Utils.getStoreKit();
+
+  if (!Ti.App.VCC.isAndroid) {
+    VCC.Utils.storeKit = VCC.Utils.getStoreKit();
+  }
 
   VCC.Utils.alert = function (msg, title) {
     var dialog = Ti.UI.createAlertDialog();
@@ -1206,6 +1223,10 @@ if (typeof VCC.Utils == 'undefined') {
   VCC.Utils.statusBarHeight = function () {
     //info('Ti.Platform.displayCaps.platformWidth, platformHeight:' + Ti.Platform.displayCaps.platformWidth + ',' + Ti.Platform.displayCaps.platformHeight);
     return (Ti.Platform.displayCaps.platformWidth / Ti.Platform.displayCaps.platformHeight) < 0.5 ? 44 : 20;
+  };
+
+  VCC.Utils.isDarkMode = function () {
+    return Ti.App.iOS && Ti.App.iOS.userInterfaceStyle == Ti.App.iOS.USER_INTERFACE_STYLE_DARK;
   };
 
   setGlobal('_VCC_Utils', VCC.Utils);

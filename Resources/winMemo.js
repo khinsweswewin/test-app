@@ -34,6 +34,7 @@ function initialize(win) {
     borderWidth: 2,
     borderColor: '#bbb',
     borderRadius: 5,
+    backgroundColor: 'white',
     suppressReturn: false
   });
   win.add(ta1);
