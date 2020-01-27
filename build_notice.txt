@@ -10,7 +10,7 @@ ti build -T device -p ios --pp-uuid <test-provisioning-profile-uuid> --developer
 ti build -T device -p ios --pp-uuid <test-provisioning-profile-uuid> --developer-name "iPhone Developer: Kenji Shimada (LYGXZY7M2K)"
 
 #Release Build
-ti build -T dist-appstore -p ios --pp-uuid <distribution-provisioning-profile-uuid> --distribution-name "Virtual Communications Corporation (VF826BVVD5)"
+ti build -T dist-appstore -p ios --pp-uuid <distribution-provisioning-profile-uuid> --distribution-name "Digital Stacks Corporation (VF826BVVD5)"
 
 #最新のSDKの取得
 ti sdk install latest
