@@ -388,10 +388,24 @@ if (typeof VCC.Utils == 'undefined') {
       partsLeft = lblBlank;
     }
     if (rightOpt) {
+      var image = null;
       if (!Ti.App.VCC.isAndroid) {
         rightOpt.style = Ti.UI.iOS.SystemButtonStyle.BORDERED;
+      } else {
+        rightOpt.backgroundColor = 'transparent';
+        rightOpt.font = {fontSize: 16};
+        if (rightOpt.image) {
+          image = Ti.UI.createImageView({image: rightOpt.image});
+          rightOpt.image = null;
+        }
       }
       partsRight = Ti.UI.createButton(rightOpt);
+      if (image) {
+        var newPartsRight = Ti.UI.createView({width: Ti.UI.SIZE});
+        newPartsRight.add(partsRight);
+        newPartsRight.add(image);
+        partsRight = newPartsRight;
+      }
     } else {
       partsRight = lblBlank;
     }
@@ -590,17 +604,8 @@ if (typeof VCC.Utils == 'undefined') {
       };
       function addEvent(menuItem, index) {
         menuItem.onclick = function() {
-          var wins = VCC.Utils.getGlobal('wins');
-          var win = wins[index];
-          if (!win) {
-            win = VCC.Utils.createWin(Ti.App.VCC.Windows[index].winjs, index);
-            var winjs = require(Ti.App.VCC.Windows[index].winjs);
-            winjs.initialize(win);
-            wins[index] = win;
-            VCC.Utils.setGlobal('wins', wins);
-          }
-          win.open({animated: true});
-          Ti.App.Properties.setInt('tabIndex', index);
+          var tabGroup = VCC.Utils.getGlobal('tabGroup');
+          tabGroup.setActiveTab(index);
           newWin.close();
         };
         menuItem.addEventListener('click', menuItem.onclick);
@@ -622,7 +627,7 @@ if (typeof VCC.Utils == 'undefined') {
   };
   VCC.Utils.setToolbarButton = function (toolBar) {
     var toolbar = toolBar.toolbar;
-    if (!toolbar) return;
+    if (!toolbar || Ti.App.VCC.isAndroid) return;
     var items = toolbar.items;
     var setItems = false;
     if (toolBar.btnLeft.enabled !== undefined) {
@@ -945,6 +950,7 @@ if (typeof VCC.Utils == 'undefined') {
   VCC.Utils.createHeaderButton = function (title, action, clickCallback) {
     var opt = {
       title: title,
+      backgroundColor: 'transparent',
       color: '#000',
       width: 57,
       height: 28,
@@ -1039,7 +1045,7 @@ if (typeof VCC.Utils == 'undefined') {
           textAlign: 'right',
           left: dataItem.left,
           right: 10,
-          height: 40,
+          height: 100,
           value: dataItem.value,
           type: dataItem.type,
           color: 'black',

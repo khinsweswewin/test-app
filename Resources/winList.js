@@ -278,7 +278,9 @@ function initialize(win) {
         isUpdate = true;
       }
       view.tableData.sectionRows[k] = rows;
-      section.rows = rows;
+      rows.forEach(function(row) {
+        section.add(row);
+      });
       data[k + 1] = section;
       //data[k + 1].rows = rows;
       //if (imgLoading) {

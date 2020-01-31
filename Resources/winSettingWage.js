@@ -23,10 +23,14 @@ function initialize(win) {
     win.close();
   });
 
-  var s1 = Ti.UI.createSwitch({
+  var opt = {
     value: win.data.enabled == 1,
     top: (isAndroid ? 74 : 30)
-  });
+  };
+  if (isAndroid) {
+    opt.style = Ti.UI.Android.SWITCH_STYLE_TOGGLEBUTTON;
+  }
+  var s1 = Ti.UI.createSwitch(opt);
   win.add(s1);
 
   // create table view data object
@@ -60,7 +64,7 @@ function initialize(win) {
     data: data,
     backgroundColor: 'transparent',
     rowBackgroundColor: 'white',
-    top: (isAndroid ? 124 : 80),
+    top: (isAndroid ? 224 : 80),
     scrollable: false
   };
   if (!isAndroid) {
