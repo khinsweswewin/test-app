@@ -59,7 +59,7 @@ function initialize(win) {
       color: '#888',
       font: {fontSize: 20},
       top: winHeight / 3 + 65,
-      width: 200,
+      width: 300,
       textAlign: 'center'
     });
     statusLabel = Ti.UI.createLabel({
