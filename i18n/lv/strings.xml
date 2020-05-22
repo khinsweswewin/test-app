@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Nosūti</string>
 	<string name="str_setting_mail_address_hint">Ievadiet e-pasta adresi</string>
 	<string name="str_mail_address">Adrese</string>
-	<string name="str_month_prev">Iepriekšējā</string>
-	<string name="str_month_next">Nākamais</string>
-	<string name="str_day_prev">Iepriekšējā</string>
-	<string name="str_day_next">Nākamais</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">Janv.</string>
 	<string name="str_month_2">Febr.</string>
 	<string name="str_month_3">Marts</string>

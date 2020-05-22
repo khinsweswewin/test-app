@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Siųsti</string>
 	<string name="str_setting_mail_address_hint">Įveskite elektroninio pašto adresą</string>
 	<string name="str_mail_address">Adresas</string>
-	<string name="str_month_prev">Ankstesnis</string>
-	<string name="str_month_next">Sekantis</string>
-	<string name="str_day_prev">Ankstesnis</string>
-	<string name="str_day_next">Sekantis</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">Saus.</string>
 	<string name="str_month_2">Vas.</string>
 	<string name="str_month_3">Kov.</string>

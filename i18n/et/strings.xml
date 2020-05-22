@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Saada</string>
 	<string name="str_setting_mail_address_hint">Sisestage e-posti aadress</string>
 	<string name="str_mail_address">Aadress</string>
-	<string name="str_month_prev">Eelmine</string>
-	<string name="str_month_next">Järgmine</string>
-	<string name="str_day_prev">Eelmine</string>
-	<string name="str_day_next">Järgmine</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">Jaan</string>
 	<string name="str_month_2">Veebr</string>
 	<string name="str_month_3">Märts</string>

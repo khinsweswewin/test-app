@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Pošalji</string>
 	<string name="str_setting_mail_address_hint">Unesite e-mail adresu</string>
 	<string name="str_mail_address">Adresa</string>
-	<string name="str_month_prev">Prijašnji</string>
-	<string name="str_month_next">Sljedeći</string>
-	<string name="str_day_prev">Prijašnji</string>
-	<string name="str_day_next">Sljedeći</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">Sij</string>
 	<string name="str_month_2">Velj</string>
 	<string name="str_month_3">Ožu</string>

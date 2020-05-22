@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Trimite catre</string>
 	<string name="str_setting_mail_address_hint">Introduceți adresa de e-mail</string>
 	<string name="str_mail_address">Adresa</string>
-	<string name="str_month_prev">Anterior</string>
-	<string name="str_month_next">Următor →</string>
-	<string name="str_day_prev">Anterior</string>
-	<string name="str_day_next">Următor →</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">Ian</string>
 	<string name="str_month_2">Feb</string>
 	<string name="str_month_3">Mar</string>

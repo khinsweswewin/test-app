@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Küldés</string>
 	<string name="str_setting_mail_address_hint">Írja be az e-mail címet</string>
 	<string name="str_mail_address">Cím</string>
-	<string name="str_month_prev">Előző</string>
-	<string name="str_month_next">Következő</string>
-	<string name="str_day_prev">Előző</string>
-	<string name="str_day_next">Következő</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">Jan.</string>
 	<string name="str_month_2">Febr.</string>
 	<string name="str_month_3">Márc.</string>

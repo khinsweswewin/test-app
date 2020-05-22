@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Dërgoni tek</string>
 	<string name="str_setting_mail_address_hint">Vendosni adresën e postës elektronike</string>
 	<string name="str_mail_address">Adresa</string>
-	<string name="str_month_prev">Imëparshëm</string>
-	<string name="str_month_next">Tjetër</string>
-	<string name="str_day_prev">Imëparshëm</string>
-	<string name="str_day_next">Tjetër</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">Jan</string>
 	<string name="str_month_2">Shk</string>
 	<string name="str_month_3">Mar</string>

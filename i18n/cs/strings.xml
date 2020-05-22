@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Odeslat</string>
 	<string name="str_setting_mail_address_hint">Vložte e-mailovou adresu</string>
 	<string name="str_mail_address">Adresa</string>
-	<string name="str_month_prev">Předch</string>
-	<string name="str_month_next">Další</string>
-	<string name="str_day_prev">Předch</string>
-	<string name="str_day_next">Další</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">Led</string>
 	<string name="str_month_2">Úno</string>
 	<string name="str_month_3">Bře</string>

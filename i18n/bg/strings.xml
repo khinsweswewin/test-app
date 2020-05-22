@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Изпрати</string>
 	<string name="str_setting_mail_address_hint">Въведете е-мейл адрес</string>
 	<string name="str_mail_address">адрес</string>
-	<string name="str_month_prev">Предишна</string>
-	<string name="str_month_next">следващия</string>
-	<string name="str_day_prev">Предишна</string>
-	<string name="str_day_next">следващия</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">Яну</string>
 	<string name="str_month_2">Фев</string>
 	<string name="str_month_3">Март</string>

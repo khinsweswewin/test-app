@@ -63,10 +63,10 @@
 	<string name="str_setting_mail_address">Wyślij</string>
 	<string name="str_setting_mail_address_hint">Wprowadź adres e-mail</string>
 	<string name="str_mail_address">Adres</string>
-	<string name="str_month_prev">Poprzedni</string>
-	<string name="str_month_next">Kolejny</string>
-	<string name="str_day_prev">Poprzedni</string>
-	<string name="str_day_next">Kolejny</string>
+	<string name="str_month_prev">＜</string>
+	<string name="str_month_next">＞</string>
+	<string name="str_day_prev">＜</string>
+	<string name="str_day_next">＞</string>
 	<string name="str_month_1">stycz</string>
 	<string name="str_month_2">luty</string>
 	<string name="str_month_3">mar</string>
