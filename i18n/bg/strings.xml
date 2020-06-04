@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="appname">график</string>
+	<string name="appname">TimeSheet</string>
 	<string name="str_to_work">проверка?</string>
 	<string name="str_to_delete">Изтрий?</string>
 	<string name="str_work_only_onece">Можете да проверите в само веднъж на ден</string>
