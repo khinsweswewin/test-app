@@ -3,10 +3,10 @@
 	<string name="appname">Rozvrh hodin</string>
 	<string name="str_to_work">Kontrola v?</string>
 	<string name="str_to_delete">Vymazat?</string>
-	<string name="str_work_only_onece">Můžete check-in jednou denně pouze</string>
-	<string name="str_change_work_time">Změna dnešní check-in time</string>
+	<string name="str_work_only_onece">Můžete Odbavení jednou denně pouze</string>
+	<string name="str_change_work_time">Změna dnešní Odbavení time</string>
 	<string name="str_leave_time_since_now">Doba odhlášení z hotelu je pozdější než aktuální čas</string>
-	<string name="str_change_leave_time">Změna check-out čas</string>
+	<string name="str_change_leave_time">Změna Překontrolovat čas</string>
 	<string name="str_open_setting">Otevřete nastavení</string>
 	<string name="str_notice_mail_address">Set e-mailovou adresu k tomu, aby tuto funkci</string>
 	<string name="str_notice_going_to_work">Funkce nedostupné v důsledku nastavených pracovních hodin (%1$s-%2$s)</string>
@@ -42,7 +42,7 @@
 	<string name="str_total_worktime2">Celkem odpracovaných hodin</string>
 	<string name="str_mail_subject">Rozvrh hodin %s</string>
 	<string name="str_mail_header">Total,%s</string>
-	<string name="str_mail_header2">Datum, den v týdnu, Check-in Check-out, pracovní doba, doba přestávek Total, Total doba pauzy, přesčasy, Memo</string>
+	<string name="str_mail_header2">Datum, den v týdnu, Odbavení Překontrolovat, pracovní doba, doba přestávek Total, Total doba pauzy, přesčasy, Memo</string>
 	<string name="str_now">Aktuální čas</string>
 	<string name="str_rest_start">Start přestávka</string>
 	<string name="str_rest_end">Konec přestávka</string>

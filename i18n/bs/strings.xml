@@ -3,8 +3,8 @@
 	<string name="appname">TimeSheet</string>
 	<string name="str_to_work">Provjeri ?</string>
 	<string name="str_to_delete">Izbrisati?</string>
-	<string name="str_work_only_onece">Možete samo check-in jednom dnevno</string>
-	<string name="str_change_work_time">Promijeni današnje check-in vrijeme</string>
+	<string name="str_work_only_onece">Možete samo Prijavite se jednom dnevno</string>
+	<string name="str_change_work_time">Promijeni današnje Prijavite se vrijeme</string>
 	<string name="str_leave_time_since_now">Vrijeme za odjavu je kasnije od trenutnog vremena</string>
 	<string name="str_change_leave_time">Promijenite vrijeme odjave</string>
 	<string name="str_open_setting">Open postavki</string>
@@ -42,7 +42,7 @@
 	<string name="str_total_worktime2">Ukupan broj sati radili</string>
 	<string name="str_mail_subject">TimeSheet %s</string>
 	<string name="str_mail_header">Ukupan,%s</string>
-	<string name="str_mail_header2">Datum, dan u tjednu, Check-in, Check-out, radno vrijeme, Ukupno break vremena, Ukupno pauze vrijeme, prekovremeni rad, Memo</string>
+	<string name="str_mail_header2">Datum, dan u tjednu, Prijavite se, Provjeravanje, radno vrijeme, Ukupno break vremena, Ukupno pauze vrijeme, prekovremeni rad, Memo</string>
 	<string name="str_now">Trenutno vrijeme</string>
 	<string name="str_rest_start">Početak pauze</string>
 	<string name="str_rest_end">Kraj break</string>

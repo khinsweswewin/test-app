@@ -6,7 +6,7 @@
 	<string name="str_work_only_onece">Prijaviti se možete samo jednom dnevno</string>
 	<string name="str_change_work_time">Promjena današnje vrijeme prijave</string>
 	<string name="str_leave_time_since_now">Vrijeme za odjavu je kasnije od trenutnog vremena</string>
-	<string name="str_change_leave_time">Promjena check-out vrijeme</string>
+	<string name="str_change_leave_time">Promjena Provjeriti vrijeme</string>
 	<string name="str_open_setting">Otvori postavke</string>
 	<string name="str_notice_mail_address">Postavljanje e-mail adresu kako bi omogućili ovu funkciju</string>
 	<string name="str_notice_going_to_work">Funkcija nije dostupna zbog postavljenih radnog vremena (%1$s-%2$s)</string>
