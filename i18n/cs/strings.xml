@@ -42,7 +42,7 @@
 	<string name="str_total_worktime2">Celkem odpracovaných hodin</string>
 	<string name="str_mail_subject">Rozvrh hodin %s</string>
 	<string name="str_mail_header">Total,%s</string>
-	<string name="str_mail_header2">Datum, den v týdnu, Odbavení Překontrolovat, pracovní doba, doba přestávek Total, Total doba pauzy, přesčasy, Memo</string>
+	<string name="str_mail_header2">Datum, den v týdnu, Odbavení, Překontrolovat, pracovní doba, doba přestávek Total, Total doba pauzy, přesčasy, Memo</string>
 	<string name="str_now">Aktuální čas</string>
 	<string name="str_rest_start">Start přestávka</string>
 	<string name="str_rest_end">Konec přestávka</string>
