@@ -59,7 +59,7 @@ function initialize(win) {
       color: '#888',
       font: {fontSize: 20},
       top: winHeight / 3 + 65,
-      width: 200,
+      width: 300,
       textAlign: 'center'
     });
     statusLabel = Ti.UI.createLabel({
@@ -69,7 +69,7 @@ function initialize(win) {
       color: '#888',
       font: {fontSize:20},
       top: winHeight / 2 + 110,
-      width: 300,
+      width: 320,
       textAlign: 'center'
     });
     
@@ -168,22 +168,32 @@ function initialize(win) {
       }
       winButtons = [];
       var winWidth = Ti.Platform.displayCaps.platformWidth;
-      var buttonWidth = newButtons.length == 1 ? 215 : 120;
+      var buttonWidths = newButtons.length == 1 ? [215] : [120, 120];
       var buttonPitch = winWidth > 320 ? 30 : 15;
+      var buttonTitles = [L('str_' + newButtons[0], null, true)];
+      if (newButtons.length == 2) {
+        buttonTitles.push(L('str_' + newButtons[1], null, true));
+        if (buttonTitles[1].length > 10) {
+          var margin = Math.ceil((buttonTitles[1].length - 10) * 0.7) * 10 + 5;
+          buttonWidths[1] += margin;
+          buttonPitch = Math.max(10, buttonPitch - margin);
+        }
+      }
+      var buttonLefts = newButtons.length == 1 ? [- buttonWidths[0] / 2] : [- (buttonWidths[0] + buttonWidths[1] + buttonPitch) / 2, (buttonWidths[0] - buttonWidths[1] + buttonPitch) / 2];
       for (var i = 0; i < newButtons.length; i++) {
         var button = Ti.UI.createButton({
-          title: L('str_' + newButtons[i], null, true),
+          title: buttonTitles[i],
           color: '#000',
           font: {fontSize:20},
           backgroundImage: 'images/button_large.png',
           backgroundLeftCap: 30.0,
           height: 66,
-          width: buttonWidth,
+          width: buttonWidths[i],
           top: winHeight / 2 + 50,
           action: newButtons[i]
         });
         button.addEventListener('click', onButtonClick);
-        button.left = winWidth / 2 - ((buttonWidth + buttonPitch) * newButtons.length - buttonPitch) / 2 + (buttonWidth + buttonPitch) * i;
+        button.left = winWidth / 2 + buttonLefts[i];
         win.add(button);
         winButtons.push(button);
         //info('button.title:' + button.title);
