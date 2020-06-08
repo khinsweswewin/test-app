@@ -1232,7 +1232,7 @@ if (typeof VCC.Utils == 'undefined') {
   };
 
   VCC.Utils.isDarkMode = function () {
-    return Ti.App.iOS && Ti.App.iOS.userInterfaceStyle == Ti.App.iOS.USER_INTERFACE_STYLE_DARK;
+    return Ti.App.iOS && Ti.App.VCC.versionInt >= 13 && Ti.App.iOS.userInterfaceStyle == Ti.App.iOS.USER_INTERFACE_STYLE_DARK;
   };
 
   setGlobal('_VCC_Utils', VCC.Utils);

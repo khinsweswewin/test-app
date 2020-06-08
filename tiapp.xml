@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <sdk-version>9.0.2.GA</sdk-version>
+    <sdk-version>8.3.1.GA</sdk-version>
     <deployment-targets>
         <target device="tizen">false</target>
         <target device="mobileweb">false</target>
@@ -12,7 +12,7 @@
     <id>net.vccorp.timesheet4sp</id>
     <name>TimeSheet</name>
     <appname>TimeSheet</appname>
-    <version>1.410.00</version>
+    <version>1.411.00</version>
     <publisher>Digital Stacks Corporation</publisher>
     <url>https://www.digitalstacks.net/</url>
     <description>timesheet</description>
