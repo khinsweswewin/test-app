@@ -1,3 +1,5 @@
+var utils = require('utils.js');
+var VCC = utils.VCC;
 
 var offsetTop = VCC.Utils.statusBarHeight();
 
