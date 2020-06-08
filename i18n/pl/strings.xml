@@ -102,5 +102,5 @@
 	<string name="err_buying_failed">Wystąpił błąd podczas zakupu</string>
 	<string name="err_no_purchase_to_store">Brak informacji o zakupie</string>
 	<string name="str_thanks_purchase">Dziękujemy za zakupy</string>
-	<string name="str_notification_remove_ads_info"Dodaliśmy funkcję usuwania reklam.\n Kup ją z opcji „Kup dodatek” na ekranie „Ustawienia”.</string>
+	<string name="str_notification_remove_ads_info">Dodaliśmy funkcję usuwania reklam.\n Kup ją z opcji „Kup dodatek” na ekranie „Ustawienia”.</string>
 </resources>

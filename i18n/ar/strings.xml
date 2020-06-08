@@ -99,7 +99,7 @@
 	<string name="err_failed_talk_to_apple">فشل الحصول على البيانات </string>
 	<string name="err_request_invalid_product">خطأ: منتج غير صحيح</string>
 	<string name="err_purchse_canceled">تم إلغاء عملية الشراء الخاصة بك</string>
-	<string name="err_buying_failed"حدث خطأ في عملية الشراء الخاصة بك </string>
+	<string name="err_buying_failed">حدث خطأ في عملية الشراء الخاصة بك </string>
 	<string name="err_no_purchase_to_store">لا يوجد معلومات لعملية الشراء</string>
 	<string name="str_thanks_purchase">نشكرك على شرائك</string>
 	<string name="str_notification_remove_ads_info">لقد أضفنا وظيفة لإزالة الإعلانات. يرجى شرائها من خيار "شراء\n الوظيفة الإضافية" في شاشة "الإعدادات"</string>
